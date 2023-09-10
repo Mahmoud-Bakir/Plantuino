@@ -7,7 +7,7 @@ import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
 import { GoogleButton } from "../Buttons/GoogleButton";
 
-export default function RegisterationForm() {
+export default function RegisterationForm () {
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
@@ -23,19 +23,19 @@ export default function RegisterationForm() {
       <Text style={styles.title}>Welcome</Text>
       <Text style={styles.subtitle}>Let's Get Growing!</Text>
       <LabeledInput holder="Full Name" title="Full Name" />
-      <LabeledInput holder="Email" title="Email" />
+      <LabeledInput holder="Email" title="Email" input_type="email-address" />
       <LabeledInput holder="Password" title="Password" secure={true} />
       <LabeledInput
         holder="Phone Number"
         title="Phone Number"
-        number="numeric"
+        input_type="numeric"
       />
       <LabeledInput title="Are you a?" holder="test" picker={true} />
       <LargeButton title="Register" />
       <Text style={styles.footer}>
         Already registerd?
         <TouchableOpacity onPress={console.log("Lets check")}>
-          <Text style={styles.login}> Login</Text>
+          <Text style={styles.login} onPress={() => navigation.navigate('SigninScreen')}> Login</Text>
         </TouchableOpacity>
       </Text>
     </View>

@@ -7,7 +7,7 @@ export default function LabeledInput({
   title,
   holder,
   secure = false,
-  number = "default",
+  input_type = "default",
   picker = false,
 }) {
   const hold = {
@@ -41,7 +41,7 @@ export default function LabeledInput({
             style={styles.input}
             placeholder={holder}
             secureTextEntry={secure}
-            keyboardType={number}
+            keyboardType={type}
           />
         )}
       </View>
