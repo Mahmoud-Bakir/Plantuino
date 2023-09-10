@@ -6,14 +6,14 @@ import colors from "../../assets/colors/colors";
 import Logo from "../../assets/pictures/logo.svg";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
-export default function AuthenticationScreen() {
+export default function RegisterationScreen() {
   const navigation = useNavigation();
 
   return (
     <ScrollView style={{backgroundColor:Colors.Green}} bounces={false} showsVerticalScrollIndicator={false} >
       <View style={styles.container}>
         <Logo style={styles.logo} />
-        <RegisterationForm />
+        <RegisterationForm  />
       </View>
      </ScrollView> 
   );
