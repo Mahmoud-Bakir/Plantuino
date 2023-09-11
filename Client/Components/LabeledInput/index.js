@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
-import RNPickerSelect from 'react-native-picker-select';
+import RNPickerSelect from "react-native-picker-select";
 import { useFonts } from "expo-font";
 
 export default function LabeledInput({
@@ -9,15 +9,15 @@ export default function LabeledInput({
   secure = false,
   input_type = "default",
   picker = false,
+  onChange,
+  naming
 }) {
   const hold = {
-    test:holder
-};
+    test: holder,
+  };
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
-  const [type, SetType] = useState("Plant Owner");
-
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -27,21 +27,27 @@ export default function LabeledInput({
       <View style={styles.formGroup}>
         <Text style={styles.label}>{title}</Text>
         {picker ? (
-            <RNPickerSelect
+          <RNPickerSelect
             style={styles.inputIOS}
             placeholder={hold.holder}
             onValueChange={(value) => console.log(value)}
             items={[
-                { key:"plant owner", label: 'Plant Owner', value: 'plant owner' },
-                { key:"seller", label: 'Seller', value: 'seller' },
+              {
+                key: "plant owner",
+                label: "Plant Owner",
+                value: "plant owner",
+              },
+              { key: "seller", label: "Seller", value: "seller" },
             ]}
-        />
+          />
         ) : (
           <TextInput
             style={styles.input}
             placeholder={holder}
             secureTextEntry={secure}
-            keyboardType={type}
+            keyboardType={input_type}
+            autoCapitalize="none"
+            onChangeText={(text) => onChange(naming, text)}
           />
         )}
       </View>
@@ -66,5 +72,4 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 16,
   },
-
 });
