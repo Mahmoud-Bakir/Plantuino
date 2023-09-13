@@ -21,4 +21,21 @@ const login = async (req, res) => {
   });
 };
 
+const register = async (req, res) => {
+  console.log(req.body);
+  const { password } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const token = jwt.sign({}, process.env.JWT_SECRET);
+  const user = new User({
+    ...req.body,
+    password: hashedPassword,
+  });
+
+  user.save();
+
+  res.send({ token, user });
+  console.log(user);
+};
+
 module.exports = { login, register };
