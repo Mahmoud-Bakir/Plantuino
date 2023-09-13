@@ -7,6 +7,7 @@ import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
 import { GoogleButton } from "../Buttons/GoogleButton";
+import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 
 export default function SigninForm() {
@@ -47,18 +48,24 @@ export default function SigninForm() {
   const signinHandler = async () => {
     if (is_empty(data.email) || is_empty(data.password))
       return setErr("All inputs are required");
-    if(!is_valid_email(data.email))
-    return setErr("Incorrect credentials")
+    if (!is_valid_email(data.email)) return setErr("Incorrect credentials");
     try {
       const response = await axios.post(
         "http://192.168.1.14:8000/auth/login",
         data
       );
-      console.log(response.data)
+      const token = response.data.token;
+      try {
+        await SecureStore.setItemAsync("token", token);
+        console.log("saved succesfully");
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(response.data);
     } catch (error) {
       console.log(error.message);
-      if(error.message==="Request failed with status code 404")
-      setErr("Incorrect credentials")
+      if (error.message === "Request failed with status code 404")
+        setErr("Incorrect credentials");
     }
   };
 
