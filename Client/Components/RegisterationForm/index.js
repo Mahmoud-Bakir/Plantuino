@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import axios from "axios";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -28,12 +29,30 @@ export default function RegisterationForm() {
       ...prevData,
       [key]: value,
     }));
-   
+    if (key === "user_type") {
+      const user_type_value = value === "plant owner" ? 0 : 1;
+      setData((prevData) => ({
+        ...prevData,
+        user_type: user_type_value,
+      }));
+    }
     console.log(data);
     Seterr("");
   };
 
-
+  function is_valid_email(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+  function is_empty(name) {
+    const test = name.trim();
+    return test === "";
+  }
+  function is_valid_password(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    return regex.test(password);
+  }
+  
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -82,7 +101,7 @@ export default function RegisterationForm() {
         onChange={handleDataChange}
         naming="user_type"
       />
-      <LargeButton title="Register" />
+    
       <Text style={styles.footer}>
         Already registerd?
         <TouchableOpacity>
