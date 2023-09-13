@@ -5,14 +5,14 @@ import { useFonts } from "expo-font";
 
 
 
-export const LargeButton = ({title}) => {
+export const LargeButton = ({title,handle}) => {
       const [fontsLoaded] = useFonts({
     "Raleway-SemiBold": require("../../../assets/fonts/Raleway-SemiBold.ttf"),
   });
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => {}}>
-        <Text style={styles.customButton}>{title}</Text>
+      <TouchableOpacity >
+        <Text style={styles.customButton} onPress={handle} >{title}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop:20,
         marginBottom:20,
-        backgroundColor: Colors.Blue,
+        backgroundColor: Colors.Black,
         borderRadius:5
       },
       customButton: {
         textAlign:'center',
         fontSize: 18,
-        color: Colors.Black,
+        color: Colors.White,
         padding: 10,
         width:150,
         height:40,
