@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
@@ -52,7 +51,30 @@ export default function RegisterationForm() {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     return regex.test(password);
   }
-  
+  const handle_register = async () => {
+    try {
+      if (is_empty(data.name)) return Seterr("Please provide a name");
+      if (!is_valid_email(data.email))
+        return Seterr("The email should be similiar to john.doe@example.com");
+      if (!is_valid_password(data.password))
+        return Seterr(
+          "Your password should contain at least one lowercase letter, one uppercase letter, one digit, and a minimum length of 8 characters"
+        );
+      if (is_empty(data.phone_number))
+        return Seterr("Please provide a phone number");
+      if (is_empty(data.user_type.toString()))
+        return Seterr("Please choose a type");
+
+      const response = await axios.post(
+        "http://192.168.1.14:8000/auth/register",
+        data
+      );
+      console.log("Registration successful:", response.data);
+      console.log("Hi");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -101,7 +123,8 @@ export default function RegisterationForm() {
         onChange={handleDataChange}
         naming="user_type"
       />
-    
+      <Text style={styles.error}>{err}</Text>
+      <LargeButton title="Register" handle={handle_register} />
       <Text style={styles.footer}>
         Already registerd?
         <TouchableOpacity>
