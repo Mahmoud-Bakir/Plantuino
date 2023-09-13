@@ -10,7 +10,8 @@ export default function LabeledInput({
   input_type = "default",
   picker = false,
   onChange,
-  naming
+  naming,
+  capital="none"
 }) {
   const hold = {
     test: holder,
@@ -28,9 +29,9 @@ export default function LabeledInput({
         <Text style={styles.label}>{title}</Text>
         {picker ? (
           <RNPickerSelect
-            style={styles.inputIOS}
+            style={styles.input}
             placeholder={hold.holder}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => onChange(naming,value)}
             items={[
               {
                 key: "plant owner",
@@ -46,7 +47,7 @@ export default function LabeledInput({
             placeholder={holder}
             secureTextEntry={secure}
             keyboardType={input_type}
-            autoCapitalize="none"
+            autoCapitalize={capital}
             onChangeText={(text) => onChange(naming, text)}
           />
         )}
@@ -60,16 +61,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 12,
     marginBottom: 4,
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Raleway-SemiBold",
   },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
     padding: 8,
-    fontSize: 16,
+    fontSize: 14,
   },
 });
