@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     marginBottom: 20,
-    backgroundColor: Colors.White,
+    backgroundColor: Colors.LigherGrey,
     width:250,
     borderRadius: 5,
     alignSelf:"center",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   logo_container:{
     justifyContent:"center",    
     width:50,
-    alignItems:4,
+    alignItems:"center",
     flexDirection: 'row',
   }
 });
