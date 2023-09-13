@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LabeledInput from "../LabeledInput";
@@ -6,18 +7,64 @@ import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
 import { GoogleButton } from "../Buttons/GoogleButton";
+import axios from "axios";
 
 export default function SigninForm() {
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
   });
+  const navigation = useNavigation();
+  const info = {
+    email: "",
+    password: "",
+  };
+  const [data, setData] = useState(info);
+  const [err, setErr] = useState("");
+  const handleDataChange = (key, value) => {
+    setData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
+    if (key === "user_type") {
+      const user_type_value = value === "plant owner" ? 0 : 1;
+      setData((prevData) => ({
+        ...prevData,
+        user_type: user_type_value,
+      }));
+    }
+    console.log(data);
+    setErr("");
+  };
+  function is_empty(name) {
+    const test = name.trim();
+    return test === "";
+  }
+  function is_valid_email(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+  const signinHandler = async () => {
+    if (is_empty(data.email) || is_empty(data.password))
+      return setErr("All inputs are required");
+    if(!is_valid_email(data.email))
+    return setErr("Incorrect credentials")
+    try {
+      const response = await axios.post(
+        "http://192.168.1.14:8000/auth/login",
+        data
+      );
+      console.log(response.data)
+    } catch (error) {
+      console.log(error.message);
+      if(error.message==="Request failed with status code 404")
+      setErr("Incorrect credentials")
+    }
+  };
 
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-  const navigation = useNavigation();
-  
 
   return (
     <>
@@ -29,15 +76,17 @@ export default function SigninForm() {
           title="Email"
           input_type="email-address"
           naming="email"
+          onChange={handleDataChange}
         />
         <LabeledInput
           holder="Password"
           title="Password"
           secure={true}
           naming="password"
+          onChange={handleDataChange}
         />
         <Text style={styles.error}>{err}</Text>
-        <LargeButton title="Login"  />
+        <LargeButton title="Login" handle={signinHandler} />
         <Text style={styles.footer}>
           Don't have an account?
           <TouchableOpacity>
