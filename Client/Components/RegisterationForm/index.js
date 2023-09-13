@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LabeledInput from "../../Components/LabeledInput";
@@ -15,18 +16,23 @@ export default function RegisterationForm() {
     phone_number: "",
     user_type: "",
   };
+
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
   });
   const [data, setData] = useState(info);
+  const [err, Seterr] = useState("");
   const handleDataChange = (key, value) => {
     setData((prevData) => ({
       ...prevData,
       [key]: value,
     }));
+   
     console.log(data);
+    Seterr("");
   };
+
 
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -34,71 +40,74 @@ export default function RegisterationForm() {
   const navigation = useNavigation();
 
   return (
-    <>
-      <View style={styles.form}>
-        <Text style={styles.title}>Welcome</Text>
-        <Text style={styles.subtitle}>Let's Get Growing!</Text>
-        <LabeledInput
-          holder="Full Name"
-          title="Full Name"
-          naming="name"
-          onChange={handleDataChange}
-          value={data.name}
-        />
-        <LabeledInput
-          holder="Email"
-          title="Email"
-          input_type="email-address"
-          onChange={handleDataChange}
-          value={data.email}
-          naming="email"
-        />
-        <LabeledInput
-          holder="Password"
-          title="Password"
-          secure={true}
-          naming="password"
-          onChange={handleDataChange}
-          value={data.password}
-        />
-        <LabeledInput
-          holder="Phone Number"
-          title="Phone Number"
-          input_type="numeric"
-          naming="phone_number"
-          onChange={handleDataChange}
-          value={data.phone_number}
-        />
-        <LabeledInput title="Are you a?" holder="test" picker={true} />
-        <LargeButton title="Register" />
-        <Text style={styles.footer}>
-          Already registerd?
-          <TouchableOpacity>
-            <Text
-              style={styles.login}
-              onPress={() => navigation.navigate("SigninScreen")}
-            >
-              {" "}
-              Login
-            </Text>
-          </TouchableOpacity>
-        </Text>
-      </View>
+    <View style={styles.form}>
+      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.subtitle}>Let's Get Growing!</Text>
+      <LabeledInput
+        holder="Full Name"
+        title="Full Name"
+        naming="name"
+        capital="words"
+        onChange={handleDataChange}
+        value={data.name}
+      />
+      <LabeledInput
+        holder="Email"
+        title="Email"
+        input_type="email-address"
+        onChange={handleDataChange}
+        value={data.email}
+        naming="email"
+      />
+      <LabeledInput
+        holder="Password"
+        title="Password"
+        secure={true}
+        naming="password"
+        onChange={handleDataChange}
+        value={data.password}
+      />
+      <LabeledInput
+        holder="Phone Number"
+        title="Phone Number"
+        input_type="numeric"
+        naming="phone_number"
+        onChange={handleDataChange}
+        value={data.phone_number}
+      />
+      <LabeledInput
+        title="Are you a?"
+        holder="test"
+        picker={true}
+        onChange={handleDataChange}
+        naming="user_type"
+      />
+      <LargeButton title="Register" />
+      <Text style={styles.footer}>
+        Already registerd?
+        <TouchableOpacity>
+          <Text
+            style={styles.login}
+            onPress={() => navigation.navigate("SigninScreen")}
+          >
+            {" "}
+            Login
+          </Text>
+        </TouchableOpacity>
+      </Text>
       <Text style={styles.Or}>Or</Text>
       <GoogleButton title="Register with Google" />
-    </>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   form: {
+    flex: 1,
+    marginTop: 20,
     backgroundColor: Colors.White,
-    paddingHorizontal: 60,
-    borderWidth: 5,
-    borderColor: Colors.Black,
+    paddingHorizontal: 30,
     borderTopLeftRadius: 100,
     borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 100,
     marginHorizontal: 35,
   },
   title: {
@@ -124,13 +133,16 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontSize: 14,
     fontFamily: "Raleway-Regular",
-    marginBottom: 40,
+    marginBottom: 25,
   },
   Or: {
-    marginTop: 30,
     alignSelf: "center",
-    fontSize: 32,
+    fontSize: 16,
     fontFamily: "Raleway-SemiBold",
-    color: Colors.White,
+    color: Colors.Grey,
+  },
+  error: {
+    color: Colors.Red,
+    fontFamily: "Raleway-Regular",
   },
 });
