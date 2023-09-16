@@ -6,15 +6,27 @@ import ScreenHeader from "../../Components/ScreensHeader";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import Home from "../../assets/pictures/homeLabel.svg";
+import Toggle from "../../Components/Toggle";
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader component={Home} />
+      <View style={styles.toggleContainer}>
+        <Toggle
+          choice1="My Garden"
+          choice2="Market"
+          style={styles.toggle}
+        />
+      </View>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>No Plants</Text>
         <Text style={styles.subtitle}>
@@ -44,5 +56,12 @@ const styles = StyleSheet.create({
     color: colors.Grey,
     fontSize: 14,
     marginBottom: 25,
+  },
+  toggle: {
+    alignSelf: "center",
+  },
+  toggleContainer: {
+    marginHorizontal: 20,
+    alignSelf: "center",
   },
 });
