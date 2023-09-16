@@ -7,6 +7,7 @@ export default function Toggle({
   choice1,
   choice2,
   choice3,
+  onChoiceSelected,
 }) {
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
@@ -15,10 +16,14 @@ export default function Toggle({
 
   const [selectedChoice, setSelectedChoice] = useState(choice1);
 
+  const handlePress = (choice) => {
+    setSelectedChoice(choice);
+    onChoiceSelected(choice);
+  };
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-
 
   return (
     <View style={styles.container}>
@@ -27,6 +32,7 @@ export default function Toggle({
           styles.contentContainer,
           selectedChoice === choice1 && styles.selectedContentContainer,
         ]}
+        onPress={() => handlePress(choice1)}
       >
         <Text style={styles.content}>{choice1}</Text>
       </TouchableOpacity>
@@ -35,6 +41,7 @@ export default function Toggle({
           styles.contentContainer,
           selectedChoice === choice2 && styles.selectedContentContainer,
         ]}
+        onPress={() => handlePress(choice2)}
       >
         <Text style={styles.content}>{choice2}</Text>
       </TouchableOpacity>
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: colors.Grey,
+    backgroundColor: colors.DarkGrey,
     borderRadius: 5,
   },
   selectedContentContainer: {
