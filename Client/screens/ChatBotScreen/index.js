@@ -12,10 +12,21 @@ import ScreenHeader from "../../Components/ScreensHeader";
 import Message from "../../Components/Message";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
+import { useState } from "react";
+import { NotificationsScreen } from "../NotificationsScreen";
 import ChatBot from "../../assets/pictures/ChatBot.svg";
+import Notification from "../../assets/pictures/notification.svg";
+
 import Toggle from "../../Components/Toggle";
 
 export default function ChatBotScreen() {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
+  const handleChoiceSelection = (choice) => {
+    setSelectedChoice(choice);
+    console.log(choice);
+  };
+
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
@@ -26,21 +37,46 @@ export default function ChatBotScreen() {
   }
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader component={ChatBot} />
+      {selectedChoice === "Notifications" ? (
+        <>
+          <ScreenHeader component={Notification} />
+        </>
+      ) : (
+        <>
+          <ScreenHeader component={ChatBot} />
+        </>
+      )}
       <View style={styles.toggleContainer}>
         <Toggle
-          choice1="Notifications"
-          choice2="ChatBot"
+          choice1="ChatBot"
+          choice2="Notifications"
           style={styles.toggle}
+          onChoiceSelected={handleChoiceSelection}
         />
       </View>
       <ScrollView style={styles.chatArea}>
-        <View style={styles.userMessage}>
-          <Message type="user" message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque commodo aliquet sagittis. Sed iaculis ut nulla eu rhoncus. Maecenas consequat neque vel euismod interdum. Aliquam lacinia eros sed neque condimentum rhoncus vel sed erat. Praesent nec odio augue. Proin dignissim, nisl sed tempor interdum, quam massa egestas sem, vel m" time="10:52pm" />
-        </View>
-        <View style={styles.botMessage}>
-          <Message type="bot" message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque commodo aliquet sagittis. Sed iaculis ut nulla eu rhoncus. Maecenas consequat neque vel euismod interdum. Aliquam lacinia eros sed neque condimentum rhoncus vel sed erat. Praesent nec odio augue. Proin dignissim, nisl sed tempor interdum, quam massa egestas sem, vel m" time="10:53 pm" />
-        </View>
+        {selectedChoice === "Notifications" ? (
+          <>
+            <NotificationsScreen />
+          </>
+        ) : (
+          <>
+            <View style={styles.userMessage}>
+              <Message
+                type="user"
+                message="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+                time="10:52pm"
+              />
+            </View>
+            <View style={styles.botMessage}>
+              <Message
+                type="bot"
+                message="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+                time="10:53 pm"
+              />
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -69,7 +105,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   toggleContainer: {
-    marginTop:30,
+    marginTop: 30,
     marginHorizontal: 20,
     alignSelf: "center",
   },
