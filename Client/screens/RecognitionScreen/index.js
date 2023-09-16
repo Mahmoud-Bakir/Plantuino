@@ -81,14 +81,18 @@ export default function RecognitionScreen() {
   return (
     <Camera style={styles.container} ref={cameraRef}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity >
+        <TouchableOpacity>
           <View style={styles.captureButton}>
             <TouchableOpacity onPress={takePic}>
-              <View style={styles.inner}/>
+              <View style={styles.inner} />
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
       </View>
+      <View style={styles.topLeftEdge} />
+      <View style={styles.topRightEdge} />
+      <View style={styles.bottomRightEdge} />
+      <View style={styles.bottonLeftEdge} />
       <StatusBar style="auto" />
     </Camera>
   );
@@ -107,25 +111,80 @@ const styles = StyleSheet.create({
   buttonContainer: {
     position: "absolute",
     bottom: 16,
-    width: "100%", 
+    width: "100%",
     alignItems: "center",
   },
   captureButton: {
-    justifyContent:"center",
+    justifyContent: "center",
     width: 70,
     height: 70,
     borderRadius: 50,
     backgroundColor: "white",
   },
   inner: {
-    alignSelf:"center",
+    alignSelf: "center",
 
     width: 60,
     height: 60,
     borderRadius: 30,
-    borderWidth:3,
-    borderColor:"black",
+    borderWidth: 3,
+    borderColor: "black",
     backgroundColor: "white",
   },
-
+  topLeftEdge: {
+    position: "absolute",
+    top: "20%",
+    left: "15%",
+    width: "25%",
+    height: "15%",
+    borderColor: "white",
+    borderRadius: 15,
+    borderWidth: 7,
+    borderTopWidth: 5,
+    borderBottomWidth: 0,
+    borderLeftWidth: 5,
+    borderRightWidth: 0,
+  },
+  topRightEdge: {
+    position: "absolute",
+    top: "20%",
+    right: "15%",
+    width: "25%",
+    height: "15%",
+    borderColor: "white",
+    borderRadius: 15,
+    borderWidth: 7,
+    borderTopWidth: 5,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 5,
+  },
+  bottomRightEdge: {
+    position: "absolute",
+    bottom: "30%",
+    right: "15%",
+    width: "25%",
+    height: "15%",
+    borderColor: "white",
+    borderRadius: 15,
+    borderWidth: 7,
+    borderTopWidth: 0,
+    borderBottomWidth: 5,
+    borderLeftWidth: 0,
+    borderRightWidth: 5,
+  },
+  bottonLeftEdge: {
+    position: "absolute",
+    bottom: "30%",
+    left: "15%",
+    width: "25%",
+    height: "15%",
+    borderColor: "white",
+    borderRadius: 15,
+    borderWidth: 7,
+    borderTopWidth: 0,
+    borderBottomWidth: 5,
+    borderLeftWidth: 5,
+    borderRightWidth: 0,
+  },
 });
