@@ -12,8 +12,14 @@ import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import colors from "../../assets/colors/colors";
+import { useFonts } from "expo-font";
 
 export default function RecognitionScreen() {
+  const [fontsLoaded] = useFonts({
+    "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+  });
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -28,7 +34,9 @@ export default function RecognitionScreen() {
       setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
     })();
   }, []);
-
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
   if (hasCameraPermission === undefined) {
     return <Text>Requesting permissions...</Text>;
   } else if (!hasCameraPermission) {
@@ -80,6 +88,12 @@ export default function RecognitionScreen() {
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
+      <View style={styles.captureMessageContainer}>
+        <Text style={styles.captureMessage}>
+          kindly set your plant inside the frame
+        </Text>
+      </View>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
           <View style={styles.captureButton}>
@@ -186,5 +200,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     borderLeftWidth: 5,
     borderRightWidth: 0,
+  },
+  captureMessage: {
+    fontFamily: "Raleway-Regular",
+    fontSize: 14,
+    color: "white",
+    fontSize: 18,
+  },
+  captureMessageContainer: {
+    position: "absolute",
+    bottom: 100,
+    borderRadius: 10,
+    padding: 8,
+    backgroundColor: colors.GreyTransparent,
   },
 });
