@@ -18,6 +18,8 @@ export default function LabeledInput({
   };
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "Raleway-Regular": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+
   });
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -71,5 +73,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     fontSize: 14,
+    fontFamily: "Raleway-Regular",
   },
 });
