@@ -6,6 +6,10 @@ app.use(express.json());
 
 const authRouter = require("./routes/auth.routes")
 app.use("/auth", authRouter)
+const authMiddleware = require("./middlewares/auth.middleware");
+
+const usersRouter = require("./routes/user.routes");
+app.use("/users", authMiddleware, usersRouter)
 
 app.listen(8000, (err) => {
   if (err) {
