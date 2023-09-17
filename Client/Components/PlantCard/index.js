@@ -31,4 +31,41 @@ export default function PlantCard({ name, price, destination }) {
   );
 }
 
-
+const styles = StyleSheet.create({
+  cardContainer: {
+    width: 180,
+    height: 350, 
+    backgroundColor: colors.LightBlue,
+    borderRadius: 20,
+  },
+  imageContainer: {
+    height: 270, 
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: "hidden", 
+  },
+  image: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    resizeMode: "contain",
+  },
+  detailsContainer: {
+    padding: 10,
+    gap:2,
+  },
+  name: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 18,
+  },
+  price: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 16,
+    color: colors.Black,
+  },
+  description: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 12,
+    color: colors.Grey,
+  },
+});
