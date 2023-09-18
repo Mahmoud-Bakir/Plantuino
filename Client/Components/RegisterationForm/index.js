@@ -66,13 +66,13 @@ export default function RegisterationForm() {
         return Seterr("Please choose a type");
 
       const response = await axios.post(
-        "http://192.168.1.14:8000/auth/register",
+        "http://192.168.1.5:8000/auth/register",
         data
       );
       console.log("Registration successful:", response.data);
       console.log("Hi");
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
   if (!fontsLoaded) {
@@ -125,20 +125,6 @@ export default function RegisterationForm() {
       />
       <Text style={styles.error}>{err}</Text>
       <LargeButton title="Register" handle={handle_register} />
-      <Text style={styles.footer}>
-        Already registerd?
-        <TouchableOpacity>
-          <Text
-            style={styles.login}
-            onPress={() => navigation.navigate("SigninScreen")}
-          >
-            {" "}
-            Login
-          </Text>
-        </TouchableOpacity>
-      </Text>
-      <Text style={styles.Or}>Or</Text>
-      <GoogleButton title="Register with Google" />
     </View>
   );
 }
@@ -170,18 +156,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     fontSize: 14,
     fontFamily: "Raleway-SemiBold",
-  },
-  footer: {
-    lineHeight: 20,
-    fontSize: 14,
-    fontFamily: "Raleway-Regular",
-    marginBottom: 25,
-  },
-  Or: {
-    alignSelf: "center",
-    fontSize: 16,
-    fontFamily: "Raleway-SemiBold",
-    color: Colors.Grey,
   },
   error: {
     color: Colors.Red,
