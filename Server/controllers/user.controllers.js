@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 
-const getMarketPlants = async (req, res) => {
+const publicMarket = async (req, res) => {
   const users = await User.find();
   const plants = [];
   for (const user of users) {
@@ -8,9 +8,15 @@ const getMarketPlants = async (req, res) => {
       plants.push(...user.products);
     }
   }
-
   res.send(plants);
 };
+const personalMarket = async (req, res) => {
+  const products = req.user.products;
+  res.json({
+    products,
+  });
+};
+
 const addProduct = async (req, res) => {
   try {
     const { name, price, location, imageUrl, _id } = req.body;
@@ -36,4 +42,4 @@ const addProduct = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-module.exports = { getMarketPlants, addProduct };
+module.exports = { addProduct, publicMarket, personalMarket };
