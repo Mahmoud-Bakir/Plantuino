@@ -16,12 +16,14 @@ import { useState, useEffect } from "react";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import Home from "../../assets/pictures/homeLabel.svg";
 import Market from "../../assets/pictures/market.svg";
-
+import axios from "axios";
 import Toggle from "../../Components/Toggle";
 import SearchInput from "../../Components/SearchInput";
 import PlantCard from "../../Components/PlantCard";
+import UserMarket from "../../Components/UserMarket";
 
 export default function HomeScreen() {
+  const [data, setData] = useState([]);
   const [id, setId] = useState("");
   const [token, setToken] = useState("");
   const [userType, setUserType] = useState();
@@ -32,6 +34,7 @@ export default function HomeScreen() {
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -41,12 +44,10 @@ export default function HomeScreen() {
         setId(id);
         const token = await SecureStore.getItemAsync("token");
         setToken(token);
-        console.log(userType);
         if (userType == 0) {
           setSelectedChoice("My Garden");
         } else {
           setSelectedChoice("My Market");
-          console.log(selectedChoice);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -59,7 +60,6 @@ export default function HomeScreen() {
   const handleChoiceSelection = (choice) => {
     setSelectedChoice(choice);
     if (choice === "Add a Plant") setModalVisible(true);
-    console.log(choice);
   };
   // IS it okay to leave it like this or should I put each part as a component?
   if (!fontsLoaded) {
@@ -100,38 +100,7 @@ export default function HomeScreen() {
         ) : (
           <>
             <ScrollView style={styles.scroll}>
-              <View style={styles.productsContainer}>
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-              </View>
+              <UserMarket />
             </ScrollView>
           </>
         )}
@@ -242,13 +211,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 50,
     marginTop: 20,
-  },
-  productsContainer: {
-    marginTop: 20,
-    marginHorizontal: 20,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 12,
   },
   scroll: {
     marginTop: 20,
