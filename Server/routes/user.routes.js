@@ -4,6 +4,8 @@ const userController = require("../controllers/user.controllers");
 
 
 router.get("/market", userController.getMarketPlants)
+router.post("/add", userController.addProduct)
+
 
 
 

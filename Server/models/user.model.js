@@ -5,7 +5,6 @@ const productsSchema = new Schema({
   price:Number,
   location:String,
   imageUrl : String,
-  user_id: mongoose.Types.ObjectId,
 });
 const plantsSchema = new Schema({
   name: String,
