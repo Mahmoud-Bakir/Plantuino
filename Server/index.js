@@ -11,11 +11,11 @@ const authMiddleware = require("./middlewares/auth.middleware");
 const usersRouter = require("./routes/user.routes");
 app.use("/users", authMiddleware, usersRouter);
 
-app.listen(80, (err) => {
+app.listen(8000, (err) => {
   if (err) {
     console.error(err);
     return;
   }
-  console.log("server running on port: ", 80);
+  console.log("server running on port: ", 8000);
   mongooseConnect();
 });
