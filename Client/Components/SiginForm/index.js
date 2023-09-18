@@ -27,13 +27,6 @@ export default function SigninForm() {
       ...prevData,
       [key]: value,
     }));
-    if (key === "user_type") {
-      const user_type_value = value === "plant owner" ? 0 : 1;
-      setData((prevData) => ({
-        ...prevData,
-        user_type: user_type_value,
-      }));
-    }
     console.log(data);
     setErr("");
   };
@@ -51,24 +44,38 @@ export default function SigninForm() {
     if (!is_valid_email(data.email)) return setErr("Incorrect credentials");
     try {
       const response = await axios.post(
-        "http://192.168.1.14:8000/auth/login",
+        "http://54.171.137.106:8000/auth/login",
         data
       );
       const token = response.data.token;
-      try {
-        await SecureStore.setItemAsync("token", token);
-        console.log("saved succesfully");
-      } catch (error) {
-        console.log(error);
-      }
+      const id = response.data.user._id;
+      const name = response.data.user.name;
+      const phoneNumber = response.data.user.phone_number;
+      const email = response.data.user.email;
+      const userType = response.data.user.user_type;
+      await SecureStore.deleteItemAsync("token");
+      await SecureStore.deleteItemAsync("id");
+      await SecureStore.deleteItemAsync("name");
+      await SecureStore.deleteItemAsync("phoneNumber");
+      await SecureStore.deleteItemAsync("email");
+      await SecureStore.deleteItemAsync("userType");
+      await SecureStore.setItemAsync("token", JSON.stringify(token));
+      await SecureStore.setItemAsync("id", JSON.stringify(id));
+      await SecureStore.setItemAsync("name", JSON.stringify(name));
+      await SecureStore.setItemAsync(
+        "phoneNumber",
+        JSON.stringify(phoneNumber)
+      );
+      await SecureStore.setItemAsync("email", JSON.stringify(email));
+      await SecureStore.setItemAsync("userType", JSON.stringify(userType));
       console.log(response.data);
+      navigation.navigate("NavigationScreen");// search this  (replace)
     } catch (error) {
-      console.log(error.message);
+      console.log("Error" + error.message);
       if (error.message === "Request failed with status code 404")
         setErr("Incorrect credentials");
     }
   };
-
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
