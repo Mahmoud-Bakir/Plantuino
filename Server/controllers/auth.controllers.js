@@ -6,13 +6,15 @@ const login = async (req, res) => {
   console.log(req.body);
   const { email: login, password } = req.body;
   const user = await User.findOne({ email: login });
-  if (!user) return res.status(404).send({ message: "email not found" });
+  if (!user)
+    return res.status(404).send({ message: "email/password incorrect" });
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid)
     return res.status(404).send({ message: "email/password incorrect" });
 
-  const { password: hashedPassword, ...userInfo } = user.toJSON();
-  const token = jwt.sign({}, process.env.JWT_SECRET);
+  const { password: hashedPassword, email, ...userInfo } = user.toJSON();
+
+  const token = jwt.sign(userInfo, process.env.JWT_SECRET);
 
   console.log(userInfo);
   res.send({
