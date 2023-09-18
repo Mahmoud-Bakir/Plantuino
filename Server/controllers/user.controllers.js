@@ -11,4 +11,25 @@ const getMarketPlants = async (req, res) => {
 
   res.send(plants);
 };
-module.exports = { getMarketPlants };
+const addProduct = async (req, res) => {
+  try {
+    const { name, price, location, imageUrl, _id} = req.body;
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.products.push({
+      name,
+      price,
+      location,
+      imageUrl,
+      user_id: _id,
+    });
+    await user.save();
+
+    res.json({ message: "Product added successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+module.exports = { getMarketPlants, addProduct };
