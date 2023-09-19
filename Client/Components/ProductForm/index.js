@@ -115,4 +115,43 @@ export default function ProductForm() {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  form: {
+    width:350,
+    flex: 1,
+    paddingHorizontal:20,
+    marginTop: 20,
+    backgroundColor: Colors.LightBlue,
+    marginHorizontal: 10,
+    borderRadius:10
+  },
+  title: {
+    alignSelf: "center",
+    fontSize: 32,
+    fontFamily: "Raleway-Regular",
+    marginTop: 30,
+    marginBottom:50
+  },
+  login: {
+    textDecorationLine: "underline",
+    fontSize: 14,
+    fontFamily: "Raleway-SemiBold",
+  },
+  error: {
+    color: Colors.Red,
+    fontFamily: "Raleway-Regular",
+  },
+  uploadButton: {
+    backgroundColor: Colors.Green,
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: "center",
+  },
 
+  uploadButtonText: {
+    color: Colors.White,
+    fontFamily: "Raleway-Bold",
+    fontSize: 16,
+  },
+});
