@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { useFonts } from "expo-font";
+import { AntDesign } from "@expo/vector-icons";
+import colors from "../../assets/colors/colors";
 
 export default function LabeledInput({
   title,
@@ -9,9 +17,11 @@ export default function LabeledInput({
   secure = false,
   input_type = "default",
   picker = false,
+  file = false,
   onChange,
   naming,
-  capital="none"
+  capital = "none",
+  handleAdd
 }) {
   const hold = {
     test: holder,
@@ -19,7 +29,6 @@ export default function LabeledInput({
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-SemiBold.ttf"),
-
   });
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -33,7 +42,7 @@ export default function LabeledInput({
           <RNPickerSelect
             style={styles.input}
             placeholder={hold.holder}
-            onValueChange={(value) => onChange(naming,value)}
+            onValueChange={(value) => onChange(naming, value)}
             items={[
               {
                 key: "plant owner",
@@ -43,6 +52,12 @@ export default function LabeledInput({
               { key: "seller", label: "Seller", value: "seller" },
             ]}
           />
+        ) : file ? (
+          <View style={styles.fileContainer}>
+            <TouchableOpacity style={styles.fileInput} onPress={handleAdd}>
+            <AntDesign name="plus" size={36} color="white" />
+            </TouchableOpacity>
+          </View>
         ) : (
           <TextInput
             style={styles.input}
@@ -75,4 +90,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Raleway-Regular",
   },
+  fileInput: {
+    padding: 40,
+    flex: 1,
+  },
+  fileContainer:{
+    width: 120,
+    height: 110,
+    backgroundColor:colors.LightGrey,
+    alignItems:"center",
+  }
 });
