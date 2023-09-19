@@ -9,21 +9,30 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SecureStore from "expo-secure-store";
+import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
+import { useFocusEffect } from "@react-navigation/native";
 import ScreenHeader from "../../Components/ScreensHeader";
 import { useFonts } from "expo-font";
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import Home from "../../assets/pictures/homeLabel.svg";
 import Market from "../../assets/pictures/market.svg";
-import axios from "axios";
 import Toggle from "../../Components/Toggle";
 import SearchInput from "../../Components/SearchInput";
 import PlantCard from "../../Components/PlantCard";
 import UserMarket from "../../Components/UserMarket";
+import ProductForm from "../../Components/ProductForm";
 
 export default function HomeScreen() {
+  const route = useRoute();
+  const test = route.params?.refresh;
+  console.log(test)
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [id, setId] = useState("");
   const [token, setToken] = useState("");
   const [userType, setUserType] = useState();
@@ -59,9 +68,12 @@ export default function HomeScreen() {
 
   const handleChoiceSelection = (choice) => {
     setSelectedChoice(choice);
-    if (choice === "Add a Plant") setModalVisible(true);
+    console.log(choice);
   };
-  // IS it okay to leave it like this or should I put each part as a component?
+  const toggleRefresh = () => {
+    setRefresh((prevRefresh) => !prevRefresh);
+    console.log(refresh);
+  };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -72,38 +84,20 @@ export default function HomeScreen() {
         <View style={styles.toggleContainer}>
           <Toggle
             choice1="My Market"
-            choice2="Add a Plant"
+            choices={1}
             style={styles.toggle}
             onChoiceSelected={handleChoiceSelection}
           />
         </View>
-        {selectedChoice === "Add a Plant" ? (
-          <View style={styles.container}>
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(false);
-              }}
-            >
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text>Modal Content</Text>
-                  <TouchableOpacity onPress={() => setModalVisible(false)}>
-                    <Text>Close Modal</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-          </View>
-        ) : (
-          <>
-            <ScrollView style={styles.scroll}>
-              <UserMarket />
-            </ScrollView>
-          </>
-        )}
+        <ScrollView style={styles.marketContainer}>
+          <UserMarket refresh={test} />
+        </ScrollView>
+        <TouchableOpacity
+          style={styles.addIcon}
+          onPress={() => navigation.navigate("AddProductScreen")}
+        >
+          <AntDesign name="pluscircle" size={50} color="Black" />
+        </TouchableOpacity>
       </SafeAreaView>
     );
   } else {
@@ -140,38 +134,7 @@ export default function HomeScreen() {
               <SearchInput />
             </View>
             <ScrollView style={styles.scroll}>
-              <View style={styles.productsContainer}>
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-                <PlantCard
-                  name="Dracaena reflexa"
-                  price="15"
-                  destination="Tripoli-Abi Samraa"
-                />
-              </View>
+              <View style={styles.productsContainer}></View>
             </ScrollView>
           </>
         )}
@@ -233,5 +196,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     elevation: 5,
+  },
+  addIcon: {
+    position: "absolute",
+    bottom: "10%",
+    right: "10%",
+  },
+  marketContainer: {
+    marginTop: 20,
   },
 });
