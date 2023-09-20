@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
@@ -14,6 +15,8 @@ import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
+import { LargeButton } from "../../Components/Buttons/LargeButton";
+import axios from "axios";
 
 export default function RecognitionScreen() {
   const [fontsLoaded] = useFonts({
@@ -24,6 +27,9 @@ export default function RecognitionScreen() {
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
+  const [loading, setLoading] = useState(false);
+  const apiKey = "IFykZgJSYBNFi6uMZIa1LUe20qm5dbhXxkBqQ7K6uY9XiisSGB";
+  const apiUrl = "https://plant.id/api/v3/identification";
 
   useEffect(() => {
     (async () => {
@@ -34,6 +40,7 @@ export default function RecognitionScreen() {
       setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
     })();
   }, []);
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -59,17 +66,42 @@ export default function RecognitionScreen() {
   };
 
   if (photo) {
+    const base64Image = "data:image/jpg;base64," + photo.base64;
     let sharePic = () => {
       shareAsync(photo.uri).then(() => {
         setPhoto(undefined);
       });
     };
+    const identify = () => {
+      setLoading(true);
+      const requestData = {
+        images: [`data:image/jpg;base64,${photo.base64}`],
+        latitude: 34.4397567,
+        longitude: 35.829828,
+      };
 
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
+      axios
+        .post(apiUrl, requestData, {
+          headers: {
+            "Api-Key": apiKey,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("Response:", response.data);
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     };
+    if (loading) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <ActivityIndicator size="large" color={colors.Green} />
+        </SafeAreaView>
+      );
+    }
 
     return (
       <SafeAreaView style={styles.container}>
@@ -77,11 +109,10 @@ export default function RecognitionScreen() {
           style={styles.preview}
           source={{ uri: "data:image/jpg;base64," + photo.base64 }}
         />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+        <View style={styles.options}>
+          <LargeButton title="Identify" handle={identify} />
+          <LargeButton title="Discard" handle={() => setPhoto(undefined)} />
+        </View>
       </SafeAreaView>
     );
   }
@@ -137,13 +168,16 @@ const styles = StyleSheet.create({
   },
   inner: {
     alignSelf: "center",
-
     width: 60,
     height: 60,
     borderRadius: 30,
     borderWidth: 3,
     borderColor: "black",
     backgroundColor: "white",
+  },
+  options: {
+    alignItems: "center",
+    flexDirection:"row"
   },
   topLeftEdge: {
     position: "absolute",
