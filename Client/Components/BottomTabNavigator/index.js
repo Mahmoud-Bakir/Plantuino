@@ -13,6 +13,8 @@ import NotificationsActive from "../../assets/pictures/notifications_active.svg"
 import ProfileActive from "../../assets/pictures/profile_active.svg";
 import RecognitionScreen from "../../screens/RecognitionScreen";
 import HomeScreen from "../../screens/HomeScreen";
+import ChatScreen from "../../screens/ChatBotScreen";
+
 export default function BottomTabNavigator() {
   const Tab = createBottomTabNavigator();
 
@@ -29,15 +31,15 @@ export default function BottomTabNavigator() {
         tabBarIcon: ({ focused }) => {
           let icon;
 
-          if (route.name === "Home") {
+          if (route.name === "HomeScreen") {
             icon = focused ? <HomeActive /> : <Home />;
-          } else if (route.name === "Camera") {
+          } else if (route.name === "CameraScreen") {
             icon = focused ? <CameraActive /> : <Camera />;
-          } else if (route.name === "Analytics") {
+          } else if (route.name === "AnalyticsScreen") {
             icon = focused ? <AnalyticsActive /> : <Analytics />;
-          } else if (route.name === "Notifications") {
+          } else if (route.name === "ChatBotScreen") {
             icon = focused ? <NotificationsActive /> : <Notifications />;
-          } else if (route.name === "Profile") {
+          } else if (route.name === "ProfileScreen") {
             icon = focused ? <ProfileActive /> : <Profile />;
           }
 
@@ -46,13 +48,18 @@ export default function BottomTabNavigator() {
       })}
     >
       <Tab.Screen
-        name="Camera"
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="CameraScreen"
         component={RecognitionScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ChatBotScreen"
+        component={ChatScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
