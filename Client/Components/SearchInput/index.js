@@ -28,7 +28,7 @@ export default function SearchInput() {
         keyboardType="web-search"
       />
       <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
-        <AntDesign name="search1" size={24} color="white" />
+        <AntDesign name="search1" size={25} color="white" />
       </TouchableOpacity>
     </View>
   );
@@ -36,17 +36,19 @@ export default function SearchInput() {
 
 const styles = StyleSheet.create({
   searchContainer: {
+    marginTop:10,
+    marginHorizontal:40,
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    padding: 8,
   },
   searchInput: {
     flex: 1,
-    marginRight: 8,
+    padding:10,
     fontFamily: "Raleway-Regular",
+
   },
   searchButton: {
     backgroundColor: "black",
