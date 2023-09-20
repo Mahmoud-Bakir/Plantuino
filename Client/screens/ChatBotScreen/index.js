@@ -14,7 +14,7 @@ import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import { useState } from "react";
 import { NotificationsScreen } from "../NotificationsScreen";
-import ChatBot from "../../assets/pictures/ChatBot.svg";
+import ChatBot from "../../assets/pictures/chatBot.svg";
 import Notification from "../../assets/pictures/notification.svg";
 
 import Toggle from "../../Components/Toggle";
@@ -46,14 +46,13 @@ export default function ChatBotScreen() {
           <ScreenHeader component={ChatBot} />
         </>
       )}
-      <View style={styles.toggleContainer}>
-        <Toggle
-          choice1="ChatBot"
-          choice2="Notifications"
-          style={styles.toggle}
-          onChoiceSelected={handleChoiceSelection}
-        />
-      </View>
+      <Toggle
+        choice1="ChatBot"
+        choice2="Notifications"
+        style={styles.toggle}
+        choices={2}
+        onChoiceSelected={handleChoiceSelection}
+      />
       <ScrollView style={styles.chatArea}>
         {selectedChoice === "Notifications" ? (
           <>
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   toggleContainer: {
-    marginTop: 30,
+    marginTop: 5,
     marginHorizontal: 20,
     alignSelf: "center",
   },
