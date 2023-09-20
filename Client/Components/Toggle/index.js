@@ -8,7 +8,7 @@ export default function Toggle({
   choice2,
   choice3,
   onChoiceSelected,
-  several = false,
+  choices = 0,
 }) {
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
@@ -28,7 +28,7 @@ export default function Toggle({
 
   return (
     <>
-      {several == true ? (
+      {choices === 2 ? (
         <View style={styles.container}>
           <TouchableOpacity
             style={[
@@ -68,19 +68,22 @@ export default function Toggle({
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
+    marginHorizontal: 20,
+    alignSelf: "center",
     width: 350,
-    height: 50,
+    height: 40,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: colors.Grey,
+    backgroundColor: colors.DarkGrey,
     borderRadius: 5,
   },
   content: {
     fontFamily: "Raleway-SemiBold",
     fontSize: 18,
     color: colors.White,
-    paddingVertical: 15,
+    paddingVertical: 10,
     borderRadius: 20,
   },
   contentContainer: {
