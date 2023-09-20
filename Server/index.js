@@ -11,11 +11,13 @@ const authMiddleware = require("./middlewares/auth.middleware");
 const usersRouter = require("./routes/user.routes");
 app.use("/users", authMiddleware, usersRouter);
 
-app.listen(22, (err) => {
+const PORT = process.env.PORT || 3000; // Use process.env.PORT if defined, otherwise use 3000
+
+app.listen(PORT, (err) => {
   if (err) {
     console.error(err);
     return;
   }
-  console.log("server running on port: ", 22);
+  console.log("Server running on port:", PORT);
   mongooseConnect();
 });
