@@ -8,6 +8,9 @@ import LabeledInput from "../../Components/LabeledInput";
 import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthState } from "../../Redux/Store/authSlice";
+import { setProducts, selectProducts } from "../../Redux/Store/productSlice";
 
 export default function ProductForm() {
   const info = {
@@ -16,15 +19,21 @@ export default function ProductForm() {
     location: "default",
     imageUrl: "",
   };
-
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
   });
-  const [token, setToken] = useState("");
+  const authState = useSelector(selectAuthState);
+  const dispatch = useDispatch();
+  const products = useSelector(selectProducts);
+  const token = authState.token;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   const [data, setData] = useState(info);
   const [err, Seterr] = useState("");
   const navigation = useNavigation();
+
   const handleImageUpload = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -42,19 +51,7 @@ export default function ProductForm() {
       console.error("Error picking image", error);
     }
   };
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const verify = await SecureStore.getItemAsync("token");
-        const token = verify.slice(1, -1);
-        setToken(token);
-      } catch (error) {
-        console.error("Error fetching :", error);
-      }
-    };
 
-    getData();
-  }, []);
   const handleDataChange = (key, value) => {
     setData((prevData) => ({
       ...prevData,
@@ -75,17 +72,25 @@ export default function ProductForm() {
         "http://192.168.1.5:8000/users/add",
         data,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers,
         }
       );
-      console.log("Registration successful:", response.data);
-      console.log("Hi");
+      const newProduct = {
+        name: response.data.newProduct.name,
+        price: response.data.newProduct.price,
+        destination: response.data.newProduct.location,
+        image_url: `data:image/jpeg;base64,${response.data.newProduct.imageUrl}`,
+      };
+
+      console.log("Added Successfully:", newProduct);
+      const updatedProducts = [...products, newProduct];
+      dispatch(setProducts(updatedProducts));
+      navigation.navigate("HomeScreen");
     } catch (error) {
       console.log(error.message);
     }
   };
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -109,7 +114,13 @@ export default function ProductForm() {
         value={data.email}
         naming="price"
       />
-      <LabeledInput title="Image" value={data.imageUrl} naming={"imageUrl"} file={true}/>
+      <LabeledInput
+        title="Image"
+        value={data.imageUrl}
+        naming={"imageUrl"}
+        file={true}
+        handleAdd={handleImageUpload}
+      />
       <Text style={styles.error}>{err}</Text>
       <LargeButton title="Add Product" handle={handleAdd} />
     </View>
@@ -117,20 +128,20 @@ export default function ProductForm() {
 }
 const styles = StyleSheet.create({
   form: {
-    width:350,
+    width: 350,
     flex: 1,
-    paddingHorizontal:20,
+    paddingHorizontal: 20,
     marginTop: 20,
     backgroundColor: Colors.LightBlue,
     marginHorizontal: 10,
-    borderRadius:10
+    borderRadius: 10,
   },
   title: {
     alignSelf: "center",
     fontSize: 32,
     fontFamily: "Raleway-Regular",
     marginTop: 30,
-    marginBottom:50
+    marginBottom: 50,
   },
   login: {
     textDecorationLine: "underline",
