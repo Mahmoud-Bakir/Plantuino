@@ -25,11 +25,11 @@ const devicesSchema = new Schema({
   user_id: mongoose.Types.ObjectId,
 });
 const usersSchema = new Schema({
-  user_type: Number,
+  userType: Number,
   name: String,
   email: String,
   password: String,
-  phone_number: String,
+  phoneNumber: String,
   location: String,
   plants: [plantsSchema],
   devices: [devicesSchema],
