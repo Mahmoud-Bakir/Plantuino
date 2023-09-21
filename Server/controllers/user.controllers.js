@@ -11,16 +11,16 @@ const publicMarket = async (req, res) => {
   res.send(plants);
 };
 const personalMarket = async (req, res) => {
-  const products = req.user.products;
-  res.send({
-    products,
-  });
+  const id = req.user._id;
+  const user = await User.findById(id);
+  const products = user.products;
+  res.send(products);
 };
 
 const addProduct = async (req, res) => {
   try {
     const { name, price, location, imageUrl } = req.body;
-    const id = req.user._id
+    const id = req.user._id;
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -37,7 +37,7 @@ const addProduct = async (req, res) => {
       message: "Product added successfully",
       products,
     });
-  } catch (error) { 
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
