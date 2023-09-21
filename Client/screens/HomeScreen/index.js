@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   scroll: {
+    marginTop: 10,
   },
   testContainer: {
     flex: 1,
@@ -201,5 +202,6 @@ const styles = StyleSheet.create({
     right: "10%",
   },
   marketContainer: {
+    marginTop: 5,
   },
 });
