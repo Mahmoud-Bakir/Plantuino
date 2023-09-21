@@ -1,31 +1,26 @@
-import { SET_USER_INFO } from "../Types";
+import { SET_USER_INFO, SET_PRODUCTS } from './types';
 
 const initialState = {
-  name: "",
-  email: "",
-  token: "",
-  userType:0,
-  phoneNumber: "",
-  id: "",
+  email: '',
+  token: '',
+  name: '',
+  phoneNumber: '',
+  id: '',
+  products: [],
 };
 
 const userReducer = (state = initialState, action) => {
-  let nextState;
-
   switch (action.type) {
     case SET_USER_INFO:
-      console.log("SET_USER_INFO Action:", action);
-      console.log("Previous State:", state);
-
-      nextState = {
+      return {
         ...state,
         ...action.payload,
       };
-
-      console.log("Next State:", nextState);
-
-      return nextState;
-
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+      };
     default:
       return state;
   }
