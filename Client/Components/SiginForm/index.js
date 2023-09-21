@@ -9,8 +9,11 @@ import { LargeButton } from "../Buttons/LargeButton";
 import { GoogleButton } from "../Buttons/GoogleButton";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
+import { registerIndieID } from "native-notify";
+import { connect } from "react-redux";
+import { setUserInfo } from "../../Redux/Actions";
 
-export default function SigninForm() {
+function SigninForm(props) {
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
@@ -44,7 +47,7 @@ export default function SigninForm() {
     if (!is_valid_email(data.email)) return setErr("Incorrect credentials");
     try {
       const response = await axios.post(
-        "http://54.171.137.106:8000/auth/login",
+        "http://192.168.1.5:8000/auth/login",
         data
       );
       const token = response.data.token;
@@ -53,29 +56,32 @@ export default function SigninForm() {
       const phoneNumber = response.data.user.phone_number;
       const email = response.data.user.email;
       const userType = response.data.user.user_type;
-      await SecureStore.deleteItemAsync("token");
-      await SecureStore.deleteItemAsync("id");
-      await SecureStore.deleteItemAsync("name");
-      await SecureStore.deleteItemAsync("phoneNumber");
-      await SecureStore.deleteItemAsync("email");
-      await SecureStore.deleteItemAsync("userType");
-      await SecureStore.setItemAsync("token", JSON.stringify(token));
-      await SecureStore.setItemAsync("id", JSON.stringify(id));
-      await SecureStore.setItemAsync("name", JSON.stringify(name));
-      await SecureStore.setItemAsync(
-        "phoneNumber",
-        JSON.stringify(phoneNumber)
-      );
-      await SecureStore.setItemAsync("email", JSON.stringify(email));
-      await SecureStore.setItemAsync("userType", JSON.stringify(userType));
+      props.setUserInfo({
+        email,
+        token,
+        name,
+        phoneNumber,
+        id,
+        userType
+      });
+
       console.log(response.data);
-      navigation.navigate("NavigationScreen");// search this  (replace)
+      await axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+        subID: { id },
+        appId: 12377,
+        appToken: "YCjAsF4USBdjSLbUwETH8H",
+        title: "Damn Son",
+        message: "IT IS FUCKING WORKING ",
+      });
+      registerIndieID({ id }, 12377, "YCjAsF4USBdjSLbUwETH8H");
+      navigation.navigate("Home");
     } catch (error) {
       console.log("Error" + error.message);
       if (error.message === "Request failed with status code 404")
         setErr("Incorrect credentials");
     }
   };
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -119,6 +125,11 @@ export default function SigninForm() {
     </>
   );
 }
+const mapDispatchToProps = {
+  setUserInfo,
+};
+export default connect(null, mapDispatchToProps)(SigninForm);
+
 const styles = StyleSheet.create({
   form: {
     marginTop: 40,
