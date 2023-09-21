@@ -8,13 +8,12 @@ import {
   Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as SecureStore from "expo-secure-store";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
 import { useFocusEffect } from "@react-navigation/native";
 import ScreenHeader from "../../Components/ScreensHeader";
 import { useFonts } from "expo-font";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
@@ -25,38 +24,45 @@ import SearchInput from "../../Components/SearchInput";
 import PlantCard from "../../Components/PlantCard";
 import UserMarket from "../../Components/UserMarket";
 import ProductForm from "../../Components/ProductForm";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function HomeScreen() {
   const route = useRoute();
   const test = route.params?.refresh;
-  console.log(test)
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-  const [id, setId] = useState("");
-  const [token, setToken] = useState("");
-  const [userType, setUserType] = useState();
+  const [products, setProducts] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
   const [selectedChoice, setSelectedChoice] = useState("");
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
-
+  const token = useSelector((state) => state.user.token);
+  const userType = useSelector((state) => state.user.userType);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   useEffect(() => {
     const getData = async () => {
       try {
-        const userType = await SecureStore.getItemAsync("userType");
-        setUserType(userType);
-        const id = await SecureStore.getItemAsync("_id");
-        setId(id);
-        const token = await SecureStore.getItemAsync("token");
-        setToken(token);
-        if (userType == 0) {
-          setSelectedChoice("My Garden");
-        } else {
+        if (userType == 1) {
           setSelectedChoice("My Market");
+          const response = await axios.get(
+            "http://192.168.1.5:8000/users/personalMarket",
+            {headers}
+          );
+          const data = response.data.products;
+          setProducts(data);
+        } else {
+          setSelectedChoice("My Garden");
+          const response = await axios.get(
+            "http://192.168.1.5:8000/users/publicMarket",
+            {headers}
+          );
+          const data = response.data;
+          setProducts(data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,30 +73,27 @@ export default function HomeScreen() {
   }, []);
 
   const handleChoiceSelection = (choice) => {
+    console.log(selectedChoice);
     setSelectedChoice(choice);
     console.log(choice);
-  };
-  const toggleRefresh = () => {
-    setRefresh((prevRefresh) => !prevRefresh);
-    console.log(refresh);
   };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
   if (userType == 1) {
+    console.log(selectedChoice);
+
     return (
       <SafeAreaView style={styles.testContainer}>
         <ScreenHeader component={Market} />
-        <View style={styles.toggleContainer}>
-          <Toggle
-            choice1="My Market"
-            choices={1}
-            style={styles.toggle}
-            onChoiceSelected={handleChoiceSelection}
-          />
-        </View>
+        <Toggle
+          choice1="My Market"
+          choices={1}
+          style={styles.toggle}
+          onChoiceSelected={handleChoiceSelection}
+        />
         <ScrollView style={styles.marketContainer}>
-          <UserMarket refresh={test} />
+          <UserMarket products={products} />
         </ScrollView>
         <TouchableOpacity
           style={styles.addIcon}
@@ -108,14 +111,13 @@ export default function HomeScreen() {
         ) : (
           <ScreenHeader component={Market} />
         )}
-        <View style={styles.toggleContainer}>
-          <Toggle
-            choice1="My Garden"
-            choice2="Market"
-            style={styles.toggle}
-            onChoiceSelected={handleChoiceSelection}
-          />
-        </View>
+        <Toggle
+          choice1="My Garden"
+          choice2="Market"
+          style={styles.toggle}
+          choices={2}
+          onChoiceSelected={handleChoiceSelection}
+        />
         {selectedChoice === "My Garden" ? (
           <ScrollView>
             <SafeAreaView style={styles.container}>
@@ -128,15 +130,17 @@ export default function HomeScreen() {
               </View>
             </SafeAreaView>
           </ScrollView>
-        ) : (
+        ) : selectedChoice === "Market" ? (
           <>
-            <View style={styles.search}>
-              <SearchInput />
-            </View>
+            <SearchInput />
             <ScrollView style={styles.scroll}>
-              <View style={styles.productsContainer}></View>
+              <View style={styles.productsContainer}>
+                <UserMarket products={products} />
+              </View>
             </ScrollView>
           </>
+        ) : (
+          <></>
         )}
       </SafeAreaView>
     );
@@ -165,18 +169,12 @@ const styles = StyleSheet.create({
   toggle: {
     alignSelf: "center",
   },
-  toggleContainer: {
-    marginTop: 30,
-    marginHorizontal: 20,
-    alignSelf: "center",
-  },
   search: {
     alignItems: "center",
     marginHorizontal: 50,
     marginTop: 20,
   },
   scroll: {
-    marginTop: 20,
   },
   testContainer: {
     flex: 1,
@@ -203,6 +201,5 @@ const styles = StyleSheet.create({
     right: "10%",
   },
   marketContainer: {
-    marginTop: 20,
   },
 });
