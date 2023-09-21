@@ -1,4 +1,4 @@
-import { SET_USER_INFO } from './types';
+import { SET_USER_INFO } from '../Types';
 
 export const setUserInfo = (userInfo) => {
   return {
