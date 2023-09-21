@@ -13,8 +13,8 @@ export default function RegisterationForm() {
     name: "",
     email: "",
     password: "",
-    phone_number: "",
-    user_type: "",
+    phoneNumber: "",
+    userType: "",
   };
 
   const [fontsLoaded] = useFonts({
@@ -23,16 +23,17 @@ export default function RegisterationForm() {
   });
   const [data, setData] = useState(info);
   const [err, Seterr] = useState("");
+  const navigation = useNavigation();
   const handleDataChange = (key, value) => {
     setData((prevData) => ({
       ...prevData,
       [key]: value,
     }));
-    if (key === "user_type") {
-      const user_type_value = value === "plant owner" ? 0 : 1;
+    if (key === "userType") {
+      const userTypeValue = value === "plant owner" ? 0 : 1;
       setData((prevData) => ({
         ...prevData,
-        user_type: user_type_value,
+        userType: userTypeValue,
       }));
     }
     console.log(data);
@@ -60,9 +61,9 @@ export default function RegisterationForm() {
         return Seterr(
           "Your password should contain at least one lowercase letter, one uppercase letter, one digit, and a minimum length of 8 characters"
         );
-      if (is_empty(data.phone_number))
+      if (is_empty(data.phoneNumber))
         return Seterr("Please provide a phone number");
-      if (is_empty(data.user_type.toString()))
+      if (is_empty(data.userType.toString()))
         return Seterr("Please choose a type");
 
       const response = await axios.post(
@@ -71,6 +72,7 @@ export default function RegisterationForm() {
       );
       console.log("Registration successful:", response.data);
       console.log("Hi");
+      navigation.navigate("SigninScreen")
     } catch (error) {
       console.log(error.message);
     }
@@ -78,7 +80,6 @@ export default function RegisterationForm() {
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-  const navigation = useNavigation();
 
   return (
     <View style={styles.form}>
@@ -112,16 +113,16 @@ export default function RegisterationForm() {
         holder="Phone Number"
         title="Phone Number"
         input_type="numeric"
-        naming="phone_number"
+        naming="phoneNumber"
         onChange={handleDataChange}
-        value={data.phone_number}
+        value={data.phoneNumber}
       />
       <LabeledInput
         title="Are you a?"
         holder="test"
         picker={true}
         onChange={handleDataChange}
-        naming="user_type"
+        naming="userType"
       />
       <Text style={styles.error}>{err}</Text>
       <LargeButton title="Register" handle={handle_register} />
