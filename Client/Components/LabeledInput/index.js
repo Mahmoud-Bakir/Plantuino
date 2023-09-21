@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 14,
     fontFamily: "Raleway-Regular",
+    backgroundColor:colors.White
   },
   fileInput: {
     padding: 40,
