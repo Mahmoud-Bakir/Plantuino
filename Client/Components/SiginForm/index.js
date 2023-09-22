@@ -11,6 +11,10 @@ import axios from "axios";
 import { registerIndieID } from "native-notify";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../../Redux/Store/authSlice";
+import {
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
 
 function SigninForm() {
   const [fontsLoaded] = useFonts({
@@ -35,30 +39,62 @@ function SigninForm() {
     setErr("");
   };
 
-  function is_empty(name) {
+  const getUserLocation = async () => {
+    try {
+      const { status } = await requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        throw new Error("Location permission not granted");
+      }
+      const location = await getCurrentPositionAsync({});
+      console.log(location.coords);
+      const latitude = location.coords.latitude;
+      const longitude = location.coords.longitude;
+      
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
+  const is_empty = (name) => {
     const test = name.trim();
     return test === "";
-  }
+  };
 
-  function is_valid_email(email) {
+  const is_valid_email = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
-  }
+  };
 
   const signinHandler = async () => {
-
     if (is_empty(data.email) || is_empty(data.password))
       return setErr("All inputs are required");
     if (!is_valid_email(data.email)) return setErr("Incorrect credentials");
+
     try {
       const response = await axios.post(
         "http://192.168.1.5:8000/auth/login",
         data
       );
+
       const token = response.data.token;
       const { email, name, phoneNumber, _id, userType } = response.data.user;
-      dispatch(setAuthData({ email, token, name, phoneNumber, _id,userType }));
-      console.log(response.data);
+
+      const userLocation = getUserLocation();
+
+      dispatch(
+        setAuthData({
+          email,
+          token,
+          name,
+          phoneNumber,
+          _id,
+          userType,
+          userLocation,
+        })
+      );
+
       axios.post(`https://app.nativenotify.com/api/indie/notification`, {
         subID: { _id },
         appId: 12377,
@@ -66,11 +102,9 @@ function SigninForm() {
         title: "Damn Son",
         message: "IT IS WORKING",
       });
+
       registerIndieID({ _id }, 12377, "YCjAsF4USBdjSLbUwETH8H");
       navigation.navigate("Home");
-
-
-
     } catch (error) {
       console.log("Error" + error.message);
       if (error.message === "Request failed with status code 404")
