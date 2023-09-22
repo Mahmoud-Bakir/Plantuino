@@ -15,4 +15,30 @@ export const EditButton = ({ title,handle}) => {
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 20,
+    backgroundColor: Colors.Black,
+    width:180,
+    borderRadius: 5,
+    alignSelf:"center",
+    paddingHorizontal:20,
+    paddingVertical:5
+  },
+  customButton: {
+    textAlign: "center",
+    fontSize: 18,
+    color: Colors.White,
+    padding: 10,
+    fontFamily: "Raleway-SemiBold",
+  },
+  logo_container:{
+    justifyContent:"center",    
+    width:150,
+    alignItems:"center",
+    flexDirection: 'row',
+  }
+});
