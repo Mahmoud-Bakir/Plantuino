@@ -17,28 +17,50 @@ const PlantModal = ({
   imageUrl,
   closeModal,
   visible,
-  phoneNumber
-  
+  phoneNumber,
+  userType,
 }) => {
-  return (
-    <Modal animationType="slide" transparent={true} visible={visible}>
-      <View style={styles.modalContainer}>
-        <SafeAreaView style={styles.modalContent}>
-          <TouchableOpacity style={styles.exit} onPress={closeModal}>
-            <AntDesign name="close" size={25} color="Black" />
-          </TouchableOpacity>
-          <PlantCard
-            contact={true}
-            name={name}
-            price={price}
-            imageUrl={imageUrl}
-            destination={destination}
-            phoneNumber={phoneNumber}
-          />
-        </SafeAreaView>
-      </View>
-    </Modal>
-  );
+  if (userType === "seller") {
+    return (
+      <Modal animationType="slide" transparent={true} visible={visible}>
+        <View style={styles.modalContainer}>
+          <SafeAreaView style={styles.modalContent}>
+            <TouchableOpacity style={styles.exit} onPress={closeModal}>
+              <AntDesign name="close" size={25} color="Black" />
+            </TouchableOpacity>
+            <PlantCard
+              edit={true}
+              name={name}
+              price={price}
+              imageUrl={imageUrl}
+              destination={destination}
+              phoneNumber={phoneNumber}
+            />
+          </SafeAreaView>
+        </View>
+      </Modal>
+    );
+  }else{
+    return (
+      <Modal animationType="slide" transparent={true} visible={visible}>
+        <View style={styles.modalContainer}>
+          <SafeAreaView style={styles.modalContent}>
+            <TouchableOpacity style={styles.exit} onPress={closeModal}>
+              <AntDesign name="close" size={25} color="Black" />
+            </TouchableOpacity>
+            <PlantCard
+              contact={true}
+              name={name}
+              price={price}
+              imageUrl={imageUrl}
+              destination={destination}
+              phoneNumber={phoneNumber}
+            />
+          </SafeAreaView>
+        </View>
+      </Modal>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
