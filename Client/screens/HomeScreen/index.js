@@ -25,7 +25,7 @@ import SearchInput from "../../Components/SearchInput";
 import PlantCard from "../../Components/PlantCard";
 import UserMarket from "../../Components/UserMarket";
 import axios from "axios";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { setProducts } from "../../Redux/Store/productSlice";
 
@@ -35,7 +35,6 @@ export default function HomeScreen() {
   const userType = authState.userType;
   const token = authState.token;
   const navigation = useNavigation();
-  const [data, setData] = useState([]);
   const [selectedChoice, setSelectedChoice] = useState("");
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -61,7 +60,7 @@ export default function HomeScreen() {
             "http://192.168.1.5:8000/users/publicMarket",
             { headers }
           );
-          dispatch(setProducts(response.data.products));
+          dispatch(setProducts(response.data));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
