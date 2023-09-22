@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const fs = require("fs");
 
 const publicMarket = async (req, res) => {
   const users = await User.find();
@@ -19,26 +20,38 @@ const personalMarket = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { name, price, location, imageUrl } = req.body;
+    const { name, price, location } = req.body;
+
     const id = req.user._id;
     const user = await User.findById(id);
+    const userPhoneNumber=user.phoneNumber
+
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    user.products.push({
+
+    const newProduct = {
       name,
       price,
       location,
-      imageUrl,
-    });
+      imageUrl: "req.file.path",
+      userId:id,
+      userPhoneNumber,
+    };
+
+    user.products.push(newProduct);
     await user.save();
     const products = user.products;
+
     res.json({
       message: "Product added successfully",
+      newProduct,
       products,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 module.exports = { addProduct, publicMarket, personalMarket };
