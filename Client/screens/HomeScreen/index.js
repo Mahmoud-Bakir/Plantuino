@@ -8,6 +8,7 @@ import {
   Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as SecureStore from "expo-secure-store";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
 import { useFocusEffect } from "@react-navigation/native";
@@ -23,27 +24,27 @@ import Toggle from "../../Components/Toggle";
 import SearchInput from "../../Components/SearchInput";
 import PlantCard from "../../Components/PlantCard";
 import UserMarket from "../../Components/UserMarket";
-import ProductForm from "../../Components/ProductForm";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
+import { selectAuthState } from "../../Redux/Store/authSlice";
+import { setProducts } from "../../Redux/Store/productSlice";
 
 export default function HomeScreen() {
-  const route = useRoute();
-  const test = route.params?.refresh;
+  const dispatch = useDispatch();
+  const authState = useSelector(selectAuthState);
+  const userType = authState.userType;
+  const token = authState.token;
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState("");
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
-  const token = useSelector((state) => state.user.token);
-  const userType = useSelector((state) => state.user.userType);
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -51,18 +52,16 @@ export default function HomeScreen() {
           setSelectedChoice("My Market");
           const response = await axios.get(
             "http://192.168.1.5:8000/users/personalMarket",
-            {headers}
+            { headers }
           );
-          const data = response.data.products;
-          setProducts(data);
+          dispatch(setProducts(response.data));
         } else {
           setSelectedChoice("My Garden");
           const response = await axios.get(
             "http://192.168.1.5:8000/users/publicMarket",
-            {headers}
+            { headers }
           );
-          const data = response.data;
-          setProducts(data);
+          dispatch(setProducts(response.data.products));
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -70,13 +69,14 @@ export default function HomeScreen() {
     };
 
     getData();
-  }, []);
+  }, [dispatch]);
 
   const handleChoiceSelection = (choice) => {
     console.log(selectedChoice);
     setSelectedChoice(choice);
     console.log(choice);
   };
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -93,7 +93,7 @@ export default function HomeScreen() {
           onChoiceSelected={handleChoiceSelection}
         />
         <ScrollView style={styles.marketContainer}>
-          <UserMarket products={products} />
+          <UserMarket />
         </ScrollView>
         <TouchableOpacity
           style={styles.addIcon}
@@ -135,7 +135,7 @@ export default function HomeScreen() {
             <SearchInput />
             <ScrollView style={styles.scroll}>
               <View style={styles.productsContainer}>
-                <UserMarket products={products} />
+                <UserMarket />
               </View>
             </ScrollView>
           </>
