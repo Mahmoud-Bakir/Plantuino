@@ -1,25 +1,38 @@
 import React from "react";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image,Linking } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
-import { LargeButton } from "../Buttons/LargeButton";
 import { ContactButton } from "../Buttons/ContactButton";
 
 export default function PlantCard({
   name,
   price,
   destination,
-  phoneNumber,
   imageUrl,
   contact = false,
   edit = false,
   result = false,
+  phoneNumber,
 }) {
+
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
 
+  const sendMessage = () => {
+    console.log(phoneNumber)
+    const message = "Hello! ";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+    Linking.canOpenURL(whatsappUrl).then((supported) => {
+      if (supported) {
+        return Linking.openURL(whatsappUrl);
+      } else {
+        console.log("WhatsApp is not installed on the device");
+      }
+    });
+  };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -39,9 +52,7 @@ export default function PlantCard({
           <Text style={styles.resultPrice}>{price} $</Text>
           <Text style={styles.resultDesciptions}>{destination}</Text>
         </View>
-        <View style={styles.contactButtonContainer}>
-          <ContactButton title="Contact" phoneNumber={phoneNumber}/>
-        </View>
+        <ContactButton title="Contact" handle={sendMessage} />
       </View>
     );
   }
@@ -126,9 +137,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.Grey,
   },
-  contactButtonContainer:{
-    width:"100%",
-    justifyContent:"flex-end",
-    alignItems:"center"
-  }
+  contactButtonContainer: {
+    borderWidth: 1,
+    borderColor: "black",
+    width: "100%",
+    height: "10%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
 });
