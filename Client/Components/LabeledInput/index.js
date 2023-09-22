@@ -10,10 +10,12 @@ import RNPickerSelect from "react-native-picker-select";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
+import CountryCodeDropdown from "../CountryCodeDropdown";
 
 export default function LabeledInput({
   title,
-  holder,
+  firstHolder,
+  secondHolder,
   secure = false,
   input_type = "default",
   picker = false,
@@ -21,10 +23,11 @@ export default function LabeledInput({
   onChange,
   naming,
   capital = "none",
-  handleAdd
+  handleAdd,
+  numberInput,
 }) {
   const hold = {
-    test: holder,
+    test: firstHolder,
   };
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
@@ -41,7 +44,7 @@ export default function LabeledInput({
         {picker ? (
           <RNPickerSelect
             style={styles.input}
-            placeholder={hold.holder}
+            placeholder={hold.firstHolder}
             onValueChange={(value) => onChange(naming, value)}
             items={[
               {
@@ -55,13 +58,32 @@ export default function LabeledInput({
         ) : file ? (
           <View style={styles.fileContainer}>
             <TouchableOpacity style={styles.fileInput} onPress={handleAdd}>
-            <AntDesign name="plus" size={36} color="white" />
+              <AntDesign name="plus" size={36} color="white" />
             </TouchableOpacity>
+          </View>
+        ) : numberInput ? (
+          <View style={styles.phoneInputContainer}>
+            <TextInput
+              style={styles.country}
+              placeholder={firstHolder}
+              secureTextEntry={secure}
+              keyboardType={input_type}
+              autoCapitalize={capital}
+              onChangeText={(text) => onChange(naming, text)}
+            />
+            <TextInput
+              style={styles.numberInput}
+              placeholder={secondHolder}
+              secureTextEntry={secure}
+              keyboardType={input_type}
+              autoCapitalize={capital}
+              onChangeText={(text) => onChange(naming, text)}
+            />
           </View>
         ) : (
           <TextInput
             style={styles.input}
-            placeholder={holder}
+            placeholder={firstHolder}
             secureTextEntry={secure}
             keyboardType={input_type}
             autoCapitalize={capital}
@@ -89,16 +111,42 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 14,
     fontFamily: "Raleway-Regular",
-    backgroundColor:colors.White
+    backgroundColor: colors.White,
   },
   fileInput: {
     padding: 40,
     flex: 1,
   },
-  fileContainer:{
+  fileContainer: {
     width: 120,
     height: 110,
-    backgroundColor:colors.LightGrey,
-    alignItems:"center",
-  }
+    backgroundColor: colors.LightGrey,
+    alignItems: "center",
+  },
+  phoneInputContainer: {
+    width: "100%",
+    flexDirection: "row",
+    gap: 5,
+  },
+  country: {
+    width: "20%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    padding: 8,
+    fontSize: 14,
+    fontFamily: "Raleway-Regular",
+    backgroundColor: colors.White,
+    textAlign: "center",
+  },
+  numberInput: {
+    width: "78%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    padding: 8,
+    fontSize: 14,
+    fontFamily: "Raleway-Regular",
+    backgroundColor: colors.White,
+  },
 });
