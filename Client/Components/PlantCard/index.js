@@ -2,12 +2,17 @@ import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
+import { LargeButton } from "../Buttons/LargeButton";
+import { ContactButton } from "../Buttons/ContactButton";
 
 export default function PlantCard({
   name,
   price,
   destination,
+  phoneNumber,
   imageUrl,
+  contact = false,
+  edit = false,
   result = false,
 }) {
   const [fontsLoaded] = useFonts({
@@ -19,7 +24,7 @@ export default function PlantCard({
     return <Text>Loading...</Text>;
   }
 
-  if (result == true) {
+  if (contact == true) {
     return (
       <View style={styles.resultContainer}>
         <View style={styles.restultImageContainer}>
@@ -33,6 +38,9 @@ export default function PlantCard({
           <Text style={styles.resultName}>{name}</Text>
           <Text style={styles.resultPrice}>{price} $</Text>
           <Text style={styles.resultDesciptions}>{destination}</Text>
+        </View>
+        <View style={styles.contactButtonContainer}>
+          <ContactButton title="Contact" phoneNumber={phoneNumber}/>
         </View>
       </View>
     );
@@ -118,4 +126,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.Grey,
   },
+  contactButtonContainer:{
+    width:"100%",
+    justifyContent:"flex-end",
+    alignItems:"center"
+  }
 });
