@@ -13,8 +13,10 @@ export default function RegisterationForm() {
     name: "",
     email: "",
     password: "",
-    phoneNumber: "",
+    number: "",
+    country: "",
     userType: "",
+    phoneNumber: "",
   };
 
   const [fontsLoaded] = useFonts({
@@ -39,7 +41,6 @@ export default function RegisterationForm() {
     console.log(data);
     Seterr("");
   };
-
   function is_valid_email(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -54,22 +55,29 @@ export default function RegisterationForm() {
   }
   const handle_register = async () => {
     try {
+    
       if (is_empty(data.name)) return Seterr("Please provide a name");
       if (!is_valid_email(data.email))
-        return Seterr("The email should be similiar to john.doe@example.com");
+        return Seterr("The email should be similar to john.doe@example.com");
       if (!is_valid_password(data.password))
         return Seterr(
           "Your password should contain at least one lowercase letter, one uppercase letter, one digit, and a minimum length of 8 characters"
         );
-      if (is_empty(data.phoneNumber))
+      if (is_empty(data.number))
         return Seterr("Please provide a phone number");
       if (is_empty(data.userType.toString()))
         return Seterr("Please choose a type");
-
+        const { country, number, ...rest } = data;
+        const combinedPhoneNumber = `${country}${number}`;
+        const updatedData = { ...rest, phoneNumber: combinedPhoneNumber };
+  
+        setData(updatedData);
+  
       const response = await axios.post(
         "http://192.168.1.5:8000/auth/register",
-        data
+        updatedData 
       );
+
       console.log("Registration successful:", response.data);
       navigation.navigate("SigninScreen");
     } catch (error) {
@@ -85,7 +93,7 @@ export default function RegisterationForm() {
       <Text style={styles.title}>Welcome</Text>
       <Text style={styles.subtitle}>Let's Get Growing!</Text>
       <LabeledInput
-        firstHolder="Full Name"
+        holder="Full Name"
         title="Full Name"
         naming="name"
         capital="words"
@@ -93,7 +101,7 @@ export default function RegisterationForm() {
         value={data.name}
       />
       <LabeledInput
-        firstHolder="Email"
+        holder="Email"
         title="Email"
         input_type="email-address"
         onChange={handleDataChange}
@@ -101,7 +109,7 @@ export default function RegisterationForm() {
         naming="email"
       />
       <LabeledInput
-        firstHolder="Password"
+        holder="Password"
         title="Password"
         secure={true}
         naming="password"
@@ -110,11 +118,18 @@ export default function RegisterationForm() {
       />
       <View style={styles.phoneNumber}>
         <LabeledInput
-          firstHolder="+961"
-          secondHolder="phone Number"
+          holder="+961"
           title="Phone Number"
           input_type="phone-pad"
-          naming="phoneNumber"
+          naming="country"
+          onChange={handleDataChange}
+          value={data.country}
+          country={true}
+        />
+        <LabeledInput
+          holder="Phone Number"
+          input_type="phone-pad"
+          naming="number"
           onChange={handleDataChange}
           value={data.phoneNumber}
           numberInput={true}
@@ -123,7 +138,7 @@ export default function RegisterationForm() {
 
       <LabeledInput
         title="Are you a?"
-        firstHolder="test"
+        holder="test"
         picker={true}
         onChange={handleDataChange}
         naming="userType"
@@ -166,7 +181,7 @@ const styles = StyleSheet.create({
     color: Colors.Red,
     fontFamily: "Raleway-Regular",
   },
-  phoneNumber:{
-    flexDirection:"row"
-  }
+  phoneNumber: {
+    flexDirection: "row",
+  },
 });
