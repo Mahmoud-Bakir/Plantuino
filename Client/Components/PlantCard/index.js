@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image,Linking } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { ContactButton } from "../Buttons/ContactButton";
+import { EditButton } from "../Buttons/EditButton";
 
 export default function PlantCard({
   name,
@@ -33,6 +34,10 @@ export default function PlantCard({
       }
     });
   };
+
+  const switchInputs = () =>{
+    console.log("Okay")
+  }
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -53,6 +58,25 @@ export default function PlantCard({
           <Text style={styles.resultDesciptions}>{destination}</Text>
         </View>
         <ContactButton title="Contact" handle={sendMessage} />
+      </View>
+    );
+  }
+  if (edit == true) {
+    return (
+      <View style={styles.resultContainer}>
+        <View style={styles.restultImageContainer}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.resultName}>{name}</Text>
+          <Text style={styles.resultPrice}>{price} $</Text>
+          <Text style={styles.resultDesciptions}>{destination}</Text>
+        </View>
+        <EditButton title="Edit" handle={switchInputs} />
       </View>
     );
   }
