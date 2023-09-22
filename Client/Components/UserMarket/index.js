@@ -10,10 +10,12 @@ import PlantCard from "../PlantCard";
 import colors from "../../assets/colors/colors";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../Redux/Store/productSlice";
+import { selectAuthState } from "../../Redux/Store/authSlice";
 import PlantModal from "../PlantModal";
-import { ContactButton } from "../Buttons/ContactButton";
 
 export default function UserMarket() {
+  const authState = useSelector(selectAuthState);
+  const userType = authState.userType;
   const products = useSelector(selectProducts);
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
@@ -30,6 +32,8 @@ export default function UserMarket() {
 
   const closeModal = () => {
     setModalVisible(false);
+    setSelectedPlant(null);
+
   };
 
   return (
@@ -41,7 +45,7 @@ export default function UserMarket() {
       ) : (
         <View style={styles.productsContainer}>
           {products.map((plant, index) => {
-            console.log("Phone Number:", plant.userPhoneNumber); 
+            console.log("Phone Number:", plant.userPhoneNumber);
             return (
               <TouchableOpacity key={index} onPress={() => openModal(plant)}>
                 <PlantCard
@@ -56,7 +60,7 @@ export default function UserMarket() {
         </View>
       )}
 
-      {selectedPlant && (
+      {userType === 1 && selectedPlant && (
         <PlantModal
           name={selectedPlant.name}
           imageUrl={selectedPlant.imageUrl}
@@ -65,6 +69,19 @@ export default function UserMarket() {
           closeModal={closeModal}
           visible={isModalVisible}
           phoneNumber={selectedPlant.userPhoneNumber}
+          userType="seller"
+        />
+      )}
+          {userType === 0 && selectedPlant && (
+        <PlantModal
+          name={selectedPlant.name}
+          imageUrl={selectedPlant.imageUrl}
+          destination={selectedPlant.destination}
+          price={selectedPlant.price}
+          closeModal={closeModal}
+          visible={isModalVisible}
+          phoneNumber={selectedPlant.userPhoneNumber}
+          userType="plantOwner"
         />
       )}
     </>
