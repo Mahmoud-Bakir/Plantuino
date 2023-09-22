@@ -11,6 +11,7 @@ import colors from "../../assets/colors/colors";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../Redux/Store/productSlice";
 import PlantModal from "../PlantModal";
+import { ContactButton } from "../Buttons/ContactButton";
 
 export default function UserMarket() {
   const products = useSelector(selectProducts);
@@ -18,7 +19,7 @@ export default function UserMarket() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
 
-  const handlePress = (plant) => {
+  const openModal = (plant) => {
     setSelectedPlant(plant);
     setModalVisible(true);
   };
@@ -39,16 +40,19 @@ export default function UserMarket() {
         </View>
       ) : (
         <View style={styles.productsContainer}>
-          {products.map((plant, index) => (
-            <TouchableOpacity key={index} onPress={() => handlePress(plant)}>
-              <PlantCard
-                name={plant.name}
-                price={plant.price}
-                destination={plant.destination}
-                imageUrl={plant.imageUrl}
-              />
-            </TouchableOpacity>
-          ))}
+          {products.map((plant, index) => {
+            console.log("Phone Number:", plant.userPhoneNumber); 
+            return (
+              <TouchableOpacity key={index} onPress={() => openModal(plant)}>
+                <PlantCard
+                  name={plant.name}
+                  price={plant.price}
+                  destination={plant.destination}
+                  imageUrl={plant.imageUrl}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </View>
       )}
 
@@ -60,6 +64,7 @@ export default function UserMarket() {
           price={selectedPlant.price}
           closeModal={closeModal}
           visible={isModalVisible}
+          phoneNumber={selectedPlant.userPhoneNumber}
         />
       )}
     </>
