@@ -50,7 +50,22 @@ function SigninForm() {
       console.log(location.coords);
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
-      
+      fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const address = data.address;
+          const country = address.country;
+          const city = address.city;
+          const street = address.road;
+
+          console.log(`Country: ${country}`);
+          console.log(`City: ${city}`);
+          console.log(`Street: ${street}`);
+        })
+        .catch((error) => console.error("Error:", error));
+      return location.coords;
     } catch (error) {
       console.error(error);
       throw error;
