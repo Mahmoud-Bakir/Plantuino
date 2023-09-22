@@ -2,13 +2,15 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const productsSchema = new Schema({
   name: String,
-  price:Number,
-  location:String,
-  imageUrl : String,
+  price: Number,
+  location: String,
+  imageUrl: Buffer,
+  userId: mongoose.Types.ObjectId,
+  userPhoneNumber:String
 });
 const plantsSchema = new Schema({
   name: String,
-  minTemp:Number,
+  minTemp: Number,
   maxTemp: Number,
   minMoisture: Number,
   maxMoisture: Number,
@@ -17,8 +19,8 @@ const plantsSchema = new Schema({
     moisture: Number,
     waterLevel: Number,
     sunlight: Number,
-    time:Date,
-  }
+    time: Date,
+  },
 });
 const devicesSchema = new Schema({
   name: String,
