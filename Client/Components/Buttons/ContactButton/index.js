@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity,Linking  } from "react-native"
 import Colors from "../../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import Whatsapp from "../../../assets/pictures/Whatsapp.svg"
-export const ContactButton = ({ title, handle }) => {
+export const ContactButton = ({ title, handle, phoneNumber}) => {
   const [fontsLoaded] = useFonts({
     "Raleway-SemiBold": require("../../../assets/fonts/Raleway-SemiBold.ttf"),
   });
   const openWhatsAppChat = () => {
-    const phoneNumber = '+96170336942'; 
     const message = 'Hello! I saw this on Plantuino'; 
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
   
