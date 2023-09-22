@@ -71,8 +71,7 @@ export default function RegisterationForm() {
         data
       );
       console.log("Registration successful:", response.data);
-      console.log("Hi");
-      navigation.navigate("SigninScreen")
+      navigation.navigate("SigninScreen");
     } catch (error) {
       console.log(error.message);
     }
@@ -86,7 +85,7 @@ export default function RegisterationForm() {
       <Text style={styles.title}>Welcome</Text>
       <Text style={styles.subtitle}>Let's Get Growing!</Text>
       <LabeledInput
-        holder="Full Name"
+        firstHolder="Full Name"
         title="Full Name"
         naming="name"
         capital="words"
@@ -94,7 +93,7 @@ export default function RegisterationForm() {
         value={data.name}
       />
       <LabeledInput
-        holder="Email"
+        firstHolder="Email"
         title="Email"
         input_type="email-address"
         onChange={handleDataChange}
@@ -102,24 +101,29 @@ export default function RegisterationForm() {
         naming="email"
       />
       <LabeledInput
-        holder="Password"
+        firstHolder="Password"
         title="Password"
         secure={true}
         naming="password"
         onChange={handleDataChange}
         value={data.password}
       />
-      <LabeledInput
-        holder="Phone Number"
-        title="Phone Number"
-        input_type="numeric"
-        naming="phoneNumber"
-        onChange={handleDataChange}
-        value={data.phoneNumber}
-      />
+      <View style={styles.phoneNumber}>
+        <LabeledInput
+          firstHolder="+961"
+          secondHolder="phone Number"
+          title="Phone Number"
+          input_type="phone-pad"
+          naming="phoneNumber"
+          onChange={handleDataChange}
+          value={data.phoneNumber}
+          numberInput={true}
+        />
+      </View>
+
       <LabeledInput
         title="Are you a?"
-        holder="test"
+        firstHolder="test"
         picker={true}
         onChange={handleDataChange}
         naming="userType"
@@ -162,4 +166,7 @@ const styles = StyleSheet.create({
     color: Colors.Red,
     fontFamily: "Raleway-Regular",
   },
+  phoneNumber:{
+    flexDirection:"row"
+  }
 });
