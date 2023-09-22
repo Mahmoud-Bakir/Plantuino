@@ -7,10 +7,22 @@ export const ContactButton = ({ title, handle }) => {
   const [fontsLoaded] = useFonts({
     "Raleway-SemiBold": require("../../../assets/fonts/Raleway-SemiBold.ttf"),
   });
-
+  const openWhatsAppChat = () => {
+    const phoneNumber = '+96170336942'; 
+    const message = 'Hello! I saw this on Plantuino'; 
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+  
+    Linking.canOpenURL(whatsappUrl).then(supported => {
+      if (supported) {
+        return Linking.openURL(whatsappUrl);
+      } else {
+        console.log("WhatsApp is not installed on the device");
+      }
+    });
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={}>
+      <TouchableOpacity onPress={openWhatsAppChat}>
         <View style={styles.details}>
         <Text style={styles.customButton} onPress={handle}>
           {title}
