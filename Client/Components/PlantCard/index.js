@@ -18,16 +18,21 @@ export default function PlantCard({
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
+
   if (result == true) {
     return (
-      <View style={styles.cardContainer}>
-        <View style={styles.imageContainer}>
-          <Image source={imageUrl} style={styles.image} resizeMode="contain" />
+      <View style={styles.resultContainer}>
+        <View style={styles.restultImageContainer}>
+          <Image
+            source={{ uri: imageUrl }}
+            style={styles.image}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.price}>{price} $</Text>
-          <Text style={styles.description}>{destination}</Text>
+          <Text style={styles.resultName}>{name}</Text>
+          <Text style={styles.resultPrice}>{price} $</Text>
+          <Text style={styles.resultDesciptions}>{destination}</Text>
         </View>
       </View>
     );
@@ -35,7 +40,11 @@ export default function PlantCard({
   return (
     <View style={styles.cardContainer}>
       <View style={styles.imageContainer}>
-        <Image source={imageUrl} style={styles.image} resizeMode="contain" />
+        <Image
+          source={{ uri: imageUrl }}
+          style={styles.image}
+          resizeMode="contain"
+        />
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
@@ -81,6 +90,32 @@ const styles = StyleSheet.create({
   description: {
     fontFamily: "Raleway-Bold",
     fontSize: 12,
+    color: colors.Grey,
+  },
+  resultContainer: {
+    width: "100%",
+    height: "90%",
+    backgroundColor: colors.White,
+    borderRadius: 20,
+  },
+  restultImageContainer: {
+    height: "70%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: "hidden",
+  },
+  resultName: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 24,
+  },
+  resultPrice: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 20,
+    color: colors.Black,
+  },
+  resultDesciptions: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 18,
     color: colors.Grey,
   },
 });
