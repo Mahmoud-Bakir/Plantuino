@@ -10,11 +10,10 @@ import RNPickerSelect from "react-native-picker-select";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
-import CountryCodeDropdown from "../CountryCodeDropdown";
 
 export default function LabeledInput({
   title,
-  firstHolder,
+  holder,
   secondHolder,
   secure = false,
   input_type = "default",
@@ -25,9 +24,10 @@ export default function LabeledInput({
   capital = "none",
   handleAdd,
   numberInput,
+  country,
 }) {
   const hold = {
-    test: firstHolder,
+    test: holder,
   };
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
@@ -44,7 +44,7 @@ export default function LabeledInput({
         {picker ? (
           <RNPickerSelect
             style={styles.input}
-            placeholder={hold.firstHolder}
+            placeholder={hold.holder}
             onValueChange={(value) => onChange(naming, value)}
             items={[
               {
@@ -61,29 +61,28 @@ export default function LabeledInput({
               <AntDesign name="plus" size={36} color="white" />
             </TouchableOpacity>
           </View>
+        ) : country ? (
+          <TextInput
+            style={styles.country}
+            placeholder={holder}
+            secureTextEntry={secure}
+            keyboardType={input_type}
+            autoCapitalize={capital}
+            onChangeText={(text) => onChange(naming, text)}
+          />
         ) : numberInput ? (
-          <View style={styles.phoneInputContainer}>
-            <TextInput
-              style={styles.country}
-              placeholder={firstHolder}
-              secureTextEntry={secure}
-              keyboardType={input_type}
-              autoCapitalize={capital}
-              onChangeText={(text) => onChange(naming, text)}
-            />
-            <TextInput
-              style={styles.numberInput}
-              placeholder={secondHolder}
-              secureTextEntry={secure}
-              keyboardType={input_type}
-              autoCapitalize={capital}
-              onChangeText={(text) => onChange(naming, text)}
-            />
-          </View>
+          <TextInput
+            style={styles.numberInput}
+            placeholder={holder}
+            secureTextEntry={secure}
+            keyboardType={input_type}
+            autoCapitalize={capital}
+            onChangeText={(text) => onChange(naming, text)}
+          />
         ) : (
           <TextInput
             style={styles.input}
-            placeholder={firstHolder}
+            placeholder={holder}
             secureTextEntry={secure}
             keyboardType={input_type}
             autoCapitalize={capital}
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   country: {
-    width: "20%",
+    width: 70,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   numberInput: {
-    width: "78%",
+    width: 200,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 4,
