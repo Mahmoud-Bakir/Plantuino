@@ -34,6 +34,15 @@ export default function HomeScreen() {
   const authState = useSelector(selectAuthState);
   const userType = authState.userType;
   const token = authState.token;
+  const country = authState.country;
+  const city = authState.city;
+  const street = authState.street;
+  const located = authState.located;
+  const testing = {
+    country,
+    city,
+    street,
+  };
   const navigation = useNavigation();
   const [selectedChoice, setSelectedChoice] = useState("");
   const headers = {
@@ -48,19 +57,43 @@ export default function HomeScreen() {
     const getData = async () => {
       try {
         if (userType == 1) {
-          setSelectedChoice("My Market");
-          const response = await axios.get(
-            "http://192.168.1.5:8000/users/personalMarket",
-            { headers }
-          );
-          dispatch(setProducts(response.data));
+          try {
+            setSelectedChoice("My Market");
+            const response = await axios.get(
+              "http://192.168.1.5:8000/users/personalMarket",
+              { headers }
+            );
+            dispatch(setProducts(response.data));
+          } catch (error) {}
+          if (!located) {
+            try {
+              console.log("testing", testing);
+              await axios.put(
+                "http://192.168.1.5:8000/users/updateAddress",
+                testing,
+                { headers }
+              );
+            } catch (error) {}
+          }
         } else {
           setSelectedChoice("My Garden");
-          const response = await axios.get(
-            "http://192.168.1.5:8000/users/publicMarket",
-            { headers }
-          );
-          dispatch(setProducts(response.data));
+          try {
+            const response = await axios.get(
+              "http://192.168.1.5:8000/users/publicMarket",
+              { headers }
+            );
+            dispatch(setProducts(response.data));
+          } catch (error) {}
+          if (!located) {
+            try {
+              console.log("testing", testing);
+              await axios.put(
+                "http://192.168.1.5:8000/users/updateAddress",
+                testing,
+                { headers }
+              );
+            } catch (error) {}
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
