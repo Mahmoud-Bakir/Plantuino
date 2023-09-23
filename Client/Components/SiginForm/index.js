@@ -9,27 +9,26 @@ import { GoogleButton } from "../Buttons/GoogleButton";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { registerIndieID } from "native-notify";
-import { useDispatch } from "react-redux";
-import { setAuthData } from "../../Redux/Store/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setAddressData,
+  setAuthData,
+  selectAuthState,
+} from "../../Redux/Store/authSlice";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
 
-function SigninForm() {
+export default SigninForm = () => {
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
   });
-  const navigation = useNavigation();
   const info = {
     email: "",
     password: "",
   };
-  const [data, setData] = useState(info);
-  const [err, setErr] = useState("");
-  const dispatch = useDispatch();
-
   const handleDataChange = (key, value) => {
     setData((prevData) => ({
       ...prevData,
@@ -38,6 +37,12 @@ function SigninForm() {
     console.log(data);
     setErr("");
   };
+  const [data, setData] = useState(info);
+  const [err, setErr] = useState("");
+  const authState = useSelector(selectAuthState);
+  const [verified, setVerified] = useState(false);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const getUserLocation = async () => {
     try {
@@ -50,22 +55,27 @@ function SigninForm() {
       console.log(location.coords);
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
-      fetch(
+      await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
       )
-        .then((response) => response.json())
-        .then((data) => {
-          const address = data.address;
+        .then((result) => result.json())
+        .then((final) => {
+          const address = final.address;
           const country = address.country;
           const city = address.city;
           const street = address.road;
-
+          dispatch(
+            setAddressData({
+              country,
+              city,
+              street,
+            })
+          );
           console.log(`Country: ${country}`);
           console.log(`City: ${city}`);
           console.log(`Street: ${street}`);
         })
         .catch((error) => console.error("Error:", error));
-      return location.coords;
     } catch (error) {
       console.error(error);
       throw error;
@@ -94,10 +104,18 @@ function SigninForm() {
       );
 
       const token = response.data.token;
-      const { email, name, phoneNumber, _id, userType } = response.data.user;
-
-      const userLocation = getUserLocation();
-
+      const {
+        email,
+        name,
+        phoneNumber,
+        _id,
+        userType,
+        city,
+        country,
+        street,
+        located,
+      } = response.data.user;
+      
       dispatch(
         setAuthData({
           email,
@@ -106,9 +124,12 @@ function SigninForm() {
           phoneNumber,
           _id,
           userType,
-          userLocation,
         })
       );
+      console.log(city);
+      if (!located) {
+        await getUserLocation();
+      }
 
       axios.post(`https://app.nativenotify.com/api/indie/notification`, {
         subID: { _id },
@@ -169,10 +190,7 @@ function SigninForm() {
       </View>
     </>
   );
-}
-
-export default SigninForm;
-
+};
 const styles = StyleSheet.create({
   form: {
     marginTop: 40,
