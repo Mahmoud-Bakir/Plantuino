@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  plantName: "",
+  name: "",
   image: "",
 };
 
@@ -10,16 +10,16 @@ const plantSlice = createSlice({
   initialState,
   reducers: {
     setPlantName(state, action) {
-      state.plantName = action.payload;
+      state.name = action.payload;
     },
-    setImage(state, action) {
+    setPlantImage(state, action) {
       state.image = action.payload;
     },
   },
 });
 
-export const { setPlantName, setImage } = plantSlice.actions;
+export const { setPlantName, setPlantImage } = plantSlice.actions;
 export default plantSlice.reducer;
 
-export const selectPlantName = (state) => state.plant.plantName;
-export const selectImage = (state) => state.plant.image;
+export const selectPlantName = (state) => state.plant.name;
+export const selectPlantImage = (state) => state.plant.image;
