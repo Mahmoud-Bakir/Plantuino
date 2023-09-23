@@ -1,26 +1,28 @@
 import React from "react";
-import ProductForm from "../../Components/ProductForm";
+import { useSelector } from "react-redux";
 import ScreenHeader from "../../Components/ScreensHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import Result from "../../assets/pictures/Result.svg";
 import PlantCard from "../../Components/PlantCard";
+import {
+  selectPlantName,
+  selectPlantImage,
+} from "../../Redux/Store/plantSlice";
 
 export default function ResultScreen({}) {
+  const plantName = useSelector(selectPlantName);
+  const plantImage = useSelector(selectPlantImage);
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader component={Result} />
-        <PlantCard result={true} />
+      <ScreenHeader component={Result}/>
+      <PlantCard result={true} imageUrl={plantImage} name={plantName} />
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-    container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
