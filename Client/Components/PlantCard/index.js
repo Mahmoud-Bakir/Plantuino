@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, Image,Linking } from "react-native";
+import { View, StyleSheet, Text, Image, Linking } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { ContactButton } from "../Buttons/ContactButton";
@@ -15,14 +15,13 @@ export default function PlantCard({
   result = false,
   phoneNumber,
 }) {
-
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
 
   const sendMessage = () => {
-    console.log(phoneNumber)
+    console.log(phoneNumber);
     const message = "Hello! ";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
@@ -35,17 +34,17 @@ export default function PlantCard({
     });
   };
 
-  const switchInputs = () =>{
-    console.log("Okay")
-  }
+  const switchInputs = () => {
+    console.log("Okay");
+  };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
 
   if (contact == true) {
     return (
-      <View style={styles.resultContainer}>
-        <View style={styles.restultImageContainer}>
+      <View style={styles.previewContainer}>
+        <View style={styles.previewImageContainer}>
           <Image
             source={{ uri: imageUrl }}
             style={styles.image}
@@ -63,8 +62,8 @@ export default function PlantCard({
   }
   if (edit == true) {
     return (
-      <View style={styles.resultContainer}>
-        <View style={styles.restultImageContainer}>
+      <View style={styles.previewContainer}>
+        <View style={styles.previewImageContainer}>
           <Image
             source={{ uri: imageUrl }}
             style={styles.image}
@@ -77,6 +76,25 @@ export default function PlantCard({
           <Text style={styles.resultDesciptions}>{destination}</Text>
         </View>
         <EditButton title="Edit" handle={switchInputs} />
+      </View>
+    );
+  }
+  if (result == true) {
+    return (
+      <View style={styles.resultContainer}>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.resultName}>Test</Text>
+        </View>
+        <View style={styles.resultImageContainer}>
+          <Image
+            source={require("../../assets/pictures/test.jpg")}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.saveButtonContainer}>
+          <EditButton title="Save" handle={switchInputs} />
+        </View>
       </View>
     );
   }
@@ -135,13 +153,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.Grey,
   },
-  resultContainer: {
+  previewContainer: {
     width: "100%",
     height: "90%",
     backgroundColor: colors.White,
     borderRadius: 20,
   },
-  restultImageContainer: {
+  resultContainer: {
+    padding: 20,
+    marginVertical: 20,
+    width: "100%",
+    height: "90%",
+    backgroundColor: colors.White,
+    borderRadius: 20,
+  },
+  previewImageContainer: {
+    height: "70%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: "hidden",
+  },
+  resultImageContainer: {
+    marginTop: 10,
     height: "70%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -169,4 +202,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
+  saveButtonContainer:{
+    flex:1,
+    flexDirection:"row",
+    width:"100%",
+    justifyContent:"flex-end",
+  }
+
 });
