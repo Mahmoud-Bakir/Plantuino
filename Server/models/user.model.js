@@ -3,10 +3,9 @@ const { Schema } = mongoose;
 const productsSchema = new Schema({
   name: String,
   price: Number,
-  location: String,
   imageUrl: Buffer,
   userId: mongoose.Types.ObjectId,
-  userPhoneNumber:String
+  userPhoneNumber: String,
 });
 const plantsSchema = new Schema({
   name: String,
@@ -32,7 +31,10 @@ const usersSchema = new Schema({
   email: String,
   password: String,
   phoneNumber: String,
-  location: String,
+  country: { type: String, default: "" },
+  city: { type: String, default: "" },
+  street: { type: String, default: "" },
+  located: { type: Boolean, default: false },
   plants: [plantsSchema],
   devices: [devicesSchema],
   products: [productsSchema],
