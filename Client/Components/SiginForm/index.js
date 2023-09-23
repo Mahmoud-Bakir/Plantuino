@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LabeledInput from "../LabeledInput";
 import Colors from "../../assets/colors/colors";
@@ -38,6 +44,7 @@ export default SigninForm = () => {
     setErr("");
   };
   const [data, setData] = useState(info);
+  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const authState = useSelector(selectAuthState);
   const [verified, setVerified] = useState(false);
@@ -45,6 +52,7 @@ export default SigninForm = () => {
   const navigation = useNavigation();
 
   const getUserLocation = async () => {
+    setLoading(true);
     try {
       const { status } = await requestForegroundPermissionsAsync();
 
@@ -79,6 +87,8 @@ export default SigninForm = () => {
     } catch (error) {
       console.error(error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,19 +125,34 @@ export default SigninForm = () => {
         street,
         located,
       } = response.data.user;
-      
-      dispatch(
-        setAuthData({
-          email,
-          token,
-          name,
-          phoneNumber,
-          _id,
-          userType,
-        })
-      );
-      console.log(city);
-      if (!located) {
+
+      if (located) {
+        dispatch(
+          setAuthData({
+            email,
+            token,
+            name,
+            phoneNumber,
+            _id,
+            userType,
+            located,
+            city,
+            country,
+            street,
+          })
+        );
+      } else {
+        dispatch(
+          setAuthData({
+            email,
+            token,
+            name,
+            phoneNumber,
+            _id,
+            userType,
+            located,
+          })
+        );
         await getUserLocation();
       }
 
@@ -187,10 +212,16 @@ export default SigninForm = () => {
         </Text>
         <Text style={styles.Or}>Or</Text>
         <GoogleButton title="Continue with Google" />
+        {loading && (
+          <View style={styles.activityIndicator}>
+            <ActivityIndicator size="large" color={Colors.Green} />
+          </View>
+        )}
       </View>
     </>
   );
 };
+
 const styles = StyleSheet.create({
   form: {
     marginTop: 40,
