@@ -83,11 +83,11 @@ export default function PlantCard({
     return (
       <View style={styles.resultContainer}>
         <View style={styles.detailsContainer}>
-          <Text style={styles.resultName}>Test</Text>
+          <Text style={styles.resultName}>{name}</Text>
         </View>
         <View style={styles.resultImageContainer}>
           <Image
-            source={require("../../assets/pictures/test.jpg")}
+            source={{ uri: `${imageUrl}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: undefined,
-    height: undefined,
+    width: "100%",
+    height: "100%",
     resizeMode: "contain",
   },
   detailsContainer: {
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   },
   resultImageContainer: {
     marginTop: 10,
+    width: "80%",
     height: "70%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -202,11 +203,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  saveButtonContainer:{
-    flex:1,
-    flexDirection:"row",
-    width:"100%",
-    justifyContent:"flex-end",
-  }
-
+  saveButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "flex-end",
+  },
 });
