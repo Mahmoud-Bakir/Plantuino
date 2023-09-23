@@ -13,10 +13,13 @@ import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import axios from "axios";
+import { setPlantName, setPlantImage } from './path-to-plant-slice';
+
 
 export default function RecognitionScreen() {
   const [fontsLoaded] = useFonts({
@@ -24,6 +27,7 @@ export default function RecognitionScreen() {
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
   let cameraRef = useRef();
+  const navigation = useNavigation()
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
@@ -75,11 +79,8 @@ export default function RecognitionScreen() {
     const identify = () => {
       setLoading(true);
       const requestData = {
-        images: [`data:image/jpg;base64,${photo.base64}`],
-        latitude: 34.4397567,
-        longitude: 35.829828,
+        images:base64Image,
       };
-
       axios
         .post(apiUrl, requestData, {
           headers: {
@@ -88,8 +89,24 @@ export default function RecognitionScreen() {
           },
         })
         .then((response) => {
-          console.log("Response:", response.data);
-          setLoading(false)
+          setLoading(false);
+          const suggestions = response.data.result.classification.suggestions;
+          console.log(suggestions);
+          const plantProbabilities = suggestions.map((suggestion) => {
+            return {
+              name: suggestion.name,
+              probability: suggestion.probability,
+            };
+          });
+          const highestProbabilityPlant = plantProbabilities.reduce(
+            (max, current) => {
+              return max.probability > current.probability ? max : current;
+            }
+          );
+          console.log(
+            `The plant with the highest probability is ${highestProbabilityPlant.name} with a probability of ${highestProbabilityPlant.probability}`
+          );
+          navigation.navigate("ResultScreen");
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -176,8 +193,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   options: {
+    width: "100%",
+    paddingHorizontal: 20,
     alignItems: "center",
-    flexDirection:"row"
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topLeftEdge: {
     position: "absolute",
