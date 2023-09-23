@@ -18,8 +18,8 @@ import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import axios from "axios";
-import { setPlantName, setPlantImage } from './path-to-plant-slice';
-
+import { useDispatch } from "react-redux";
+import { setPlantName, setPlantImage } from "../../Redux/Store/plantSlice";
 
 export default function RecognitionScreen() {
   const [fontsLoaded] = useFonts({
@@ -27,13 +27,14 @@ export default function RecognitionScreen() {
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
   let cameraRef = useRef();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
   const [loading, setLoading] = useState(false);
   const apiKey = "IFykZgJSYBNFi6uMZIa1LUe20qm5dbhXxkBqQ7K6uY9XiisSGB";
   const apiUrl = "https://plant.id/api/v3/identification";
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -79,7 +80,7 @@ export default function RecognitionScreen() {
     const identify = () => {
       setLoading(true);
       const requestData = {
-        images:base64Image,
+        images: base64Image,
       };
       axios
         .post(apiUrl, requestData, {
@@ -91,7 +92,6 @@ export default function RecognitionScreen() {
         .then((response) => {
           setLoading(false);
           const suggestions = response.data.result.classification.suggestions;
-          console.log(suggestions);
           const plantProbabilities = suggestions.map((suggestion) => {
             return {
               name: suggestion.name,
@@ -103,9 +103,9 @@ export default function RecognitionScreen() {
               return max.probability > current.probability ? max : current;
             }
           );
-          console.log(
-            `The plant with the highest probability is ${highestProbabilityPlant.name} with a probability of ${highestProbabilityPlant.probability}`
-          );
+          dispatch(setPlantName(highestProbabilityPlant.name));
+          dispatch(setPlantImage(base64Image));
+
           navigation.navigate("ResultScreen");
         })
         .catch((error) => {
@@ -116,6 +116,7 @@ export default function RecognitionScreen() {
       return (
         <SafeAreaView style={styles.container}>
           <ActivityIndicator size="large" color={colors.Green} />
+          <Text>Applying the magic</Text>
         </SafeAreaView>
       );
     }
@@ -124,7 +125,7 @@ export default function RecognitionScreen() {
       <SafeAreaView style={styles.container}>
         <Image
           style={styles.preview}
-          source={{ uri: "data:image/jpg;base64," + photo.base64 }}
+          source={{ uri: base64Image }}
         />
         <View style={styles.options}>
           <LargeButton title="Identify" handle={identify} />
@@ -257,9 +258,15 @@ const styles = StyleSheet.create({
   },
   captureMessage: {
     fontFamily: "Raleway-Regular",
-    fontSize: 14,
     color: "white",
     fontSize: 18,
+  },
+  loadingText:{
+    fontFamily: "Raleway-Bold",
+    fontSize: 18,
+    color:"black"
+
+
   },
   captureMessageContainer: {
     position: "absolute",
