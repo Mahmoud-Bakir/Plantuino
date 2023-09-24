@@ -1,0 +1,34 @@
+:root {
+    --Green: #38D13E; 
+    --Black: #000000;
+    --Grey:#E8EBEE;
+  }
+.navContainer{
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    margin: 20px;
+    padding:20px;
+    background-color:var(--Green);
+}
+.logoContainer{
+    display: flex;
+    width: 50px;
+    height: 50px;
+}
+.logonNameContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 50px;
+}
+.logo{
+    width: 100%;
+    height: 100%;
+}
+.logoName{
+    padding-top: 15px;
+    scale:0.9
+}
+
