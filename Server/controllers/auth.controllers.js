@@ -20,6 +20,7 @@ const login = async (req, res) => {
   res.send({
     token,
     user: userInfo,
+    success:"success"
   });
 };
 
