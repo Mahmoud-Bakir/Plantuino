@@ -1,0 +1,20 @@
+.edit{
+    font-family: "Raleway";
+    padding: 5px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 50px;
+    text-align: center;
+}
+.delete{
+    text-align: center;
+    font-family: "Raleway";
+    padding: 5px;
+    width: 50px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+}
