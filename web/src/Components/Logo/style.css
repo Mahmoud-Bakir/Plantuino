@@ -1,0 +1,12 @@
+.authLogo{
+    display: flex;
+    align-self: flex-start;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 30px;
+    flex-direction: row;
+    padding: 5px;
+    background-color: var(--Green);
+    border-radius: 10px;
+}
