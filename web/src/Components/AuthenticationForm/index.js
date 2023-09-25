@@ -20,21 +20,24 @@ const AuthenticationForm = () => {
     setError("");
     console.log(data);
   };
+  function is_empty(name) {
+    const test = name.trim();
+    return test === "";
+  }
   const handleLogin = async () => {
+    if (is_empty(data.email) || is_empty(data.password) )
+    setError("All Inputs are required")
     try {
       const response = await axios.post(
         "http://localhost:8000/auth/login",
         data
       );
       window.localStorage.setItem("token", response.data.token);
-      window.localStorage.setItem("id", response.data.user._id);
-      window.localStorage.setItem("first_name", response.data.user.first_name);
-      window.localStorage.setItem("last_name", response.data.user.last_name);
       console.log(response.data.user.token);
       moveToDashboard();
     } catch (error) {
-      console.log(error.message)
-      if (error.message ==="Request failed with status code 404")
+      console.log(error.message);
+      if (error.message === "Request failed with status code 404")
         setError("Incorrect Credentials");
     }
   };
@@ -63,10 +66,10 @@ const AuthenticationForm = () => {
           />
         </div>
         <span className="error">{error}</span>
+        <button className="authButton" onClick={handleLogin}>
+          Sign In
+        </button>
       </div>
-      <button className="authButton" onClick={handleLogin}>
-        Sign In
-      </button>
     </div>
   );
 };
