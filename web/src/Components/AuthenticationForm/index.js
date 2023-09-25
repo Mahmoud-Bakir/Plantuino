@@ -5,7 +5,27 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const AuthenticationForm = () => {
+  const navigater = useNavigate();
+  const moveToHome = () => navigater("/home");
 
+  const defaultState = {
+    email: "",
+    password: "",
+  };
+  const [data, setData] = useState(defaultState);
+  const handleDataChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+    console.log(data);
+  };
+  const handleLogin = async () => {
+    const response = await axios.post("http://localhost:8000/auth/login", data);
+    window.localStorage.setItem("token", response.data.token);
+    window.localStorage.setItem("id", response.data.user._id);
+    window.localStorage.setItem("first_name", response.data.user.first_name);
+    window.localStorage.setItem("last_name", response.data.user.last_name);
+    console.log(response.data.user.token);
+    moveToHome();
+  };
   return (
     <div className="login-form-container">
       <span className="authTitle">Welcome</span>
