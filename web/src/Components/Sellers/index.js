@@ -39,7 +39,9 @@ const Sellers = () => {
     }
     getSellers();
   }, [records]);
-
+  if (records.length == 0) {
+    return <p>Loading</p>;
+  }
   return (
     <table>
       <Header
@@ -52,8 +54,9 @@ const Sellers = () => {
         t7={"Street"}
         t8={"Edit"}
         t9={"Delete"}
+        count={9}
       />
-      <Map records={records} setter={setRecords} />
+      <Map records={records} setter={setRecords} count={9} />
     </table>
   );
 };
