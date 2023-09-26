@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     border-radius: 20px;
-    margin: 20px;
+    margin: 18px;
     padding:20px;
     background-color:var(--Green);
 }
