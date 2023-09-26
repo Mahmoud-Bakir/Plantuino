@@ -6,12 +6,17 @@ import Dashboard from "../../Components/Dashboard";
 import Modal from "../../Components/Modal";
 import AddUserForm from "../../Components/AddUserForm";
 
-const AdminDashboard = (type) => {
+const AdminDashboard = () => {
   const [choice, setChoice] = useState(null);
 
   const getChoice = (choice) => {
     setChoice(choice);
   };
+
+  const handleModalClose = () => {
+    setChoice("All Users");
+  };
+
   if (choice === "Add User") {
     return (
       <div>
@@ -19,7 +24,7 @@ const AdminDashboard = (type) => {
         <div className="containerContent">
           <SideMenu handleChoice={getChoice} />
           <Dashboard title={"All Users"} />
-          <AddUserForm />
+          <AddUserForm handleModalClose={handleModalClose} />
         </div>
       </div>
     );
