@@ -47,3 +47,7 @@
     cursor: pointer;
     background-color: #000000;
 }
+.categoryContainer.selected {
+    background-color: #000000;
+  }
+  
