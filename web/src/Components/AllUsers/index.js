@@ -41,7 +41,9 @@ const AllUsers = () => {
     }
     getUsers();
   }, [records]);
-
+  if (records.length == 0) {
+    return <p>Loading</p>;
+  }
   return (
     <table>
       <Header
@@ -49,11 +51,13 @@ const AllUsers = () => {
         t2={"Name"}
         t3={"Email"}
         t4={"Number"}
-        t5={"Country"}
-        t6={"City"}
-        t7={"Street"}
-        t8={"Edit"}
-        t9={"Delete"}
+        t5={"User Type"}
+        t6={"Country"}
+        t7={"City"}
+        t8={"Street"}
+        t9={"Edit"}
+        t10={"Delete"}
+        count={10}
       />
       <Map records={records} setter={setRecords} />
     </table>
