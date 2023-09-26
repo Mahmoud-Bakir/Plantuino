@@ -20,7 +20,8 @@ input{
     color:#000000;
     align-self: flex-start;
     width: 100%;
+    gap:2px;
 }
 .lab{
-    font-weight: 700;
+    font-weight: 600;
 }
