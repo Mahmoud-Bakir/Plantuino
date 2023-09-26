@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./style.css";
 
 export const Records = ({
   id,
+  userType,
   name,
   email,
   number,
@@ -12,38 +14,48 @@ export const Records = ({
   handleDelete,
   handleEdit,
   all,
+  users,
   sellers,
   plantOwners,
 }) => {
   const token = localStorage.getItem("token");
-  if (all) {
-    return (
-      <tr>
-        <td>{id}</td>
-        <td>{name}</td>
-        <td>{email}</td>
-        <td>{number}</td>
-        <td>{country}</td>
-        <td>{city}</td>
-        <td>{street}</td>
+  const [type, setType] = useState();
 
-        <select>
-          {users.map((course) => (
-            <option>{course.course_name}</option>
-          ))}
-        </select>
-        <td>
-          <button className="edit action-button" onClick={handleEdit}>
-            edit
-          </button>
-        </td>
-        <td>
-          <button className="delete action-button" onClick={handleDelete}>
-            delete
-          </button>
-        </td>
-      </tr>
-    );
-  }
+  return (
+    <tr>
+      {all ? (
+        <>
+          <td>{id}</td>
+          <td>{name}</td>
+          <td>{email}</td>
+          <td>{userType === 1 ? "Seller" : "Plant Owner"}</td> 
+          <td>{number}</td>
+          <td>{country}</td>
+          <td>{city}</td>
+          <td>{street}</td>
+        </>
+      ) : (
+        <>
+          <td>{id}</td>
+          <td>{name}</td>
+          <td>{email}</td>
+          <td>{number}</td>
+          <td>{country}</td>
+          <td>{city}</td>
+          <td>{street}</td>
+        </>
+      )}
+      <td>
+        <button className="edit " onClick={handleEdit}>
+          edit
+        </button>
+      </td>
+      <td>
+        <button className="delete " onClick={handleDelete}>
+          delete
+        </button>
+      </td>
+    </tr>
+  );
 };
-export default TeacherRecord;
+export default Records;
