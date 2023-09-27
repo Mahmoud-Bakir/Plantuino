@@ -89,7 +89,7 @@ const saveMessage = async (req, res) => {
     }
 
     const newMessage = {
-      userId:id,
+      userId: id,
       messageType,
       messageContent,
     };
@@ -103,10 +103,26 @@ const saveMessage = async (req, res) => {
   }
 };
 
+const getUserMessages = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const messages = user.messages;
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 module.exports = {
   addProduct,
   publicMarket,
   personalMarket,
   updateAddress,
   saveMessage,
+  getUserMessages
 };
