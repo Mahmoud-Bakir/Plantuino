@@ -1,5 +1,4 @@
 const User = require("../models/user.model");
-const fs = require("fs");
 
 const publicMarket = async (req, res) => {
   const users = await User.find();
@@ -11,6 +10,7 @@ const publicMarket = async (req, res) => {
   }
   res.send(plants);
 };
+
 const personalMarket = async (req, res) => {
   const id = req.user._id;
   const user = await User.findById(id);
@@ -20,23 +20,26 @@ const personalMarket = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { name, price, location } = req.body;
-
+    const { name, price, imageUrl } = req.body;
     const id = req.user._id;
     const user = await User.findById(id);
     const userPhoneNumber = user.phoneNumber;
+    const country = user.country;
+    const city = user.city;
+    const street = user.street;
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     const newProduct = {
       name,
       price,
-      location,
-      imageUrl: "req.file.path",
+      imageUrl,
       userId: id,
       userPhoneNumber,
+      country,
+      city,
+      street,
     };
 
     user.products.push(newProduct);
@@ -48,15 +51,6 @@ const addProduct = async (req, res) => {
       newProduct,
       products,
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const deleteAllUsers = async (req, res) => {
-  try {
-    await User.deleteMany({});
-    res.json({ message: "All users deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -76,7 +70,7 @@ const updateAddress = async (req, res) => {
     user.country = country;
     user.city = city;
     user.street = street;
-    user.located=true;
+    user.located = true;
 
     await user.save();
 
@@ -85,6 +79,34 @@ const updateAddress = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const saveMessage = async (req, res) => {
+  try {
+    const { messageType, messageContent } = req.body;
+    const id = req.user._id;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    const newMessage = {
+      userId:id,
+      messageType,
+      messageContent,
+    };
 
-module.exports = { addProduct, publicMarket, personalMarket,deleteAllUsers,updateAddress};
+    user.messages.push(newMessage);
+    await user.save();
+
+    res.json({ message: "Message saved successfully", newMessage });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  addProduct,
+  publicMarket,
+  personalMarket,
+  updateAddress,
+  saveMessage,
+};
