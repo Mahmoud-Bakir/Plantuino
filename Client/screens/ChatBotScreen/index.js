@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../../assets/colors/colors";
@@ -12,11 +15,9 @@ import ScreenHeader from "../../Components/ScreensHeader";
 import Message from "../../Components/Message";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
-import { useState } from "react";
 import { NotificationsScreen } from "../NotificationsScreen";
 import ChatBot from "../../assets/pictures/chatBot.svg";
 import Notification from "../../assets/pictures/notification.svg";
-
 import Toggle from "../../Components/Toggle";
 
 export default function ChatBotScreen() {
@@ -27,6 +28,8 @@ export default function ChatBotScreen() {
     console.log(choice);
   };
 
+  const [message, setMessage] = useState("");
+
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
@@ -35,8 +38,10 @@ export default function ChatBotScreen() {
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.topSafeArea} edges={['top']} />
       {selectedChoice === "Notifications" ? (
         <>
           <ScreenHeader component={Notification} />
@@ -77,12 +82,36 @@ export default function ChatBotScreen() {
           </>
         )}
       </ScrollView>
-    </SafeAreaView>
+      <KeyboardAvoidingView
+        style={styles.keyboardContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type your message..."
+            value={message}
+            onChangeText={(text) => setMessage(text)}
+          />
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={() => handleSendMessage(message)}
+          >
+            <Text style={styles.sendButtonText}>Send</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
+  },
+  topSafeArea: {
+    flex: 0,
   },
   contentContainer: {
     flex: 1,
@@ -120,5 +149,37 @@ const styles = StyleSheet.create({
   },
   chatArea: {
     marginTop: 20,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    height: 60,
+    borderColor: colors.Grey,
+    backgroundColor: colors.White,
+    marginBottom:5
+  },
+
+  input: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: colors.Grey,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+
+  sendButton: {
+    backgroundColor: colors.Green,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+
+  sendButtonText: {
+    color: colors.White,
+    fontFamily: "Raleway-Bold",
+    fontSize: 16,
   },
 });
