@@ -6,6 +6,9 @@ const productsSchema = new Schema({
   imageUrl: Buffer,
   userId: mongoose.Types.ObjectId,
   userPhoneNumber: String,
+  country: String,
+  city: String,
+  street: String,
 });
 const plantsSchema = new Schema({
   name: String,
@@ -25,6 +28,12 @@ const devicesSchema = new Schema({
   name: String,
   user_id: mongoose.Types.ObjectId,
 });
+const messagesSchema = new Schema({
+  userId: mongoose.Types.ObjectId,
+  messageType: String,
+  messageContent: String,
+  timestamp: { type: Date, default: Date.now },
+});
 const usersSchema = new Schema({
   userType: Number,
   name: String,
@@ -38,6 +47,7 @@ const usersSchema = new Schema({
   plants: [plantsSchema],
   devices: [devicesSchema],
   products: [productsSchema],
+  messages:[messagesSchema]
 });
 
 const model = mongoose.model("User", usersSchema);
