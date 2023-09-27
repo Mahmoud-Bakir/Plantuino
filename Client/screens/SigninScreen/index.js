@@ -1,8 +1,7 @@
 import React from "react";
-import {StyleSheet, SafeAreaView, Pressable } from "react-native";
+import {StyleSheet, SafeAreaView } from "react-native";
 import colors from "../../assets/colors/colors";
 import Logo from "../../assets/pictures/logo.svg";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import SigninForm from "../../Components/SiginForm";
 import { StatusBar } from "expo-status-bar";
 
