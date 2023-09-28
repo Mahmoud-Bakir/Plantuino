@@ -157,6 +157,41 @@ const generateText = async (prompt) => {
   }
 };
 
+const generatePreference = async (prompt) => {
+  const apiKey = process.env.API_KEY;
+  const apiUrl = "https://api.openai.com/v1/completions";
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+  };
+  console.log(prompt);
+  const preparedPrompt = {
+    description: `Generate the JSON object with minimum and maximum light and moisture requirements for a ${prompt}`,
+    instructions: "The values should be of type integer.",
+    example: {
+      minLight: 50,
+      maxLight: 70,
+      minMoisture: 30,
+      maxMoisture: 70
+    },
+  };
+  const requestBody = {
+    model: "text-davinci-003",
+    prompt: JSON.stringify(preparedPrompt),
+    max_tokens: 100,
+  };
+  try {
+    console.log(requestBody.prompt);
+    const response = await axios.post(apiUrl, requestBody, { headers });
+    console.log("response", response.data.choices[0].text);
+    const answer = response.data.choices[0].text;
+    return answer;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
 
 const answer = async (req, res) => {
   const prompt = req.body.prompt;
@@ -186,5 +221,5 @@ module.exports = {
   saveMessage,
   getUserMessages,
   answer,
-  getPreferences
+  getPreferences,
 };
