@@ -1,17 +1,25 @@
 const express = require("express");
 require("dotenv").config();
-const mongooseConnect = require("./configs/mongoDB.connect");
 const app = express();
 
+app.use(express.static("public"));
+
 app.use(express.json());
-const authRouter = require("./routes/auth.routes");
-app.use("/auth", authRouter);
+const mongooseConnect = require("./configs/mongoDB.connect");
 const authMiddleware = require("./middlewares/auth.middleware");
 
+const authRouter = require("./routes/auth.routes");
 const usersRouter = require("./routes/user.routes");
-app.use("/users", authMiddleware, usersRouter);
+const adminRouter = require("./routes/admin.routes");
 
-const PORT = process.env.PORT || 3000; // Use process.env.PORT if defined, otherwise use 3000
+
+app.use("/auth", authRouter);
+app.use("/users", authMiddleware, usersRouter);
+app.use("/admin", adminRouter);
+
+
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, (err) => {
   if (err) {
