@@ -7,6 +7,7 @@ import Modal from "../../Components/Modal";
 import AddUserForm from "../../Components/AddUserForm";
 
 const AdminDashboard = () => {
+  const token = localStorage.getItem("token");
   const [choice, setChoice] = useState(null);
 
   const getChoice = (choice) => {
@@ -16,7 +17,7 @@ const AdminDashboard = () => {
   const handleModalClose = () => {
     setChoice("All Users");
   };
-
+  if (!token) return <></>;
   if (choice === "Add User") {
     return (
       <div>
