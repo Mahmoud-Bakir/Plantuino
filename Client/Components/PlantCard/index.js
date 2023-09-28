@@ -20,6 +20,10 @@ export default function PlantCard({
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Bold": require("../../assets/fonts/Roboto-Bold.ttf"),
+
+
   });
 
   const sendMessage = () => {
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   price: {
-    fontFamily: "Raleway-Bold",
+    fontFamily: "Roboto-Bold",
     fontSize: 16,
     color: colors.Black,
   },
@@ -191,7 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   resultPrice: {
-    fontFamily: "Raleway-Bold",
+    fontFamily: "Roboto-Bold",
     fontSize: 20,
     color: colors.Black,
   },
