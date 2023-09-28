@@ -4,7 +4,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  Button,
   Image,
   TouchableOpacity,
   ActivityIndicator,
@@ -29,7 +28,6 @@ export default function RecognitionScreen() {
   let cameraRef = useRef();
   const navigation = useNavigation();
   const [hasCameraPermission, setHasCameraPermission] = useState();
-  const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [photo, setPhoto] = useState();
   const [loading, setLoading] = useState(false);
   const apiKey = "IFykZgJSYBNFi6uMZIa1LUe20qm5dbhXxkBqQ7K6uY9XiisSGB";
@@ -116,17 +114,14 @@ export default function RecognitionScreen() {
       return (
         <SafeAreaView style={styles.container}>
           <ActivityIndicator size="large" color={colors.Green} />
-          <Text>Applying the magic</Text>
+          <Text style={styles.loadingText}>Analyzing plant... 🌱</Text>
         </SafeAreaView>
       );
     }
 
     return (
       <SafeAreaView style={styles.container}>
-        <Image
-          style={styles.preview}
-          source={{ uri: base64Image }}
-        />
+        <Image style={styles.preview} source={{ uri: base64Image }} />
         <View style={styles.options}>
           <LargeButton title="Identify" handle={identify} />
           <LargeButton title="Discard" handle={() => setPhoto(undefined)} />
@@ -261,12 +256,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
   },
-  loadingText:{
+  loadingText: {
+    marginTop: 5,
     fontFamily: "Raleway-Bold",
     fontSize: 18,
-    color:"black"
-
-
+    color: "black",
   },
   captureMessageContainer: {
     position: "absolute",
