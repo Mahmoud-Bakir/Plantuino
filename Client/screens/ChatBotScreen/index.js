@@ -57,7 +57,60 @@ export default function ChatBotScreen() {
     console.log(choice);
   };
 
- 
+  const sendeMessage = async () => {
+    const data = {
+      messageType: "user",
+      messageContent: message,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://192.168.1.5:3000/users/saveMessage",
+        data,
+        {
+          headers,
+        }
+      );
+
+      setMessage("");
+      setMessages([...messages, response.data.newMessage]);
+
+      // const conversation = [
+      //   ...messages,
+      //   {
+      //     messageType: "user",
+      //     messageContent: `message: ${messages.length + 1}\n${message}`,
+      //   },
+      // ];
+
+      const answerResponse = await axios.post(
+        "http://192.168.1.5:3000/users/answer",
+        { prompt: message },
+        { headers }
+      );
+
+      const generatedResponse = answerResponse.data.result;
+      
+      const botMessage = {
+        messageType: "bot",
+        messageContent: generatedResponse,
+      };
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { messageType: "bot", messageContent: generatedResponse },
+      ]);
+
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+      await axios.post(
+        "http://192.168.1.5:3000/users/saveMessage",
+        botMessage,
+        { headers }
+      );
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
@@ -122,7 +175,7 @@ export default function ChatBotScreen() {
           />
           <TouchableOpacity
             style={styles.sendButton}
-            onPress={handleSendMessage}
+            onPress={sendeMessage}
           >
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
