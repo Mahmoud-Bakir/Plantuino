@@ -7,6 +7,7 @@ app.use(express.static("public"));
 app.use(express.json());
 const mongooseConnect = require("./configs/mongoDB.connect");
 const authMiddleware = require("./middlewares/auth.middleware");
+const adminMiddleware = require("./middlewares/admin.middleware");
 
 const authRouter = require("./routes/auth.routes");
 const usersRouter = require("./routes/user.routes");
@@ -15,7 +16,7 @@ const adminRouter = require("./routes/admin.routes");
 
 app.use("/auth", authRouter);
 app.use("/users", authMiddleware, usersRouter);
-app.use("/admin", adminRouter);
+app.use("/admin", adminMiddleware, adminRouter);
 
 
 
