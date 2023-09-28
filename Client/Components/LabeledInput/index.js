@@ -14,7 +14,6 @@ import colors from "../../assets/colors/colors";
 export default function LabeledInput({
   title,
   holder,
-  secondHolder,
   secure = false,
   input_type = "default",
   picker = false,
@@ -32,6 +31,9 @@ export default function LabeledInput({
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
+
+
   });
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     fontSize: 14,
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Roboto-Regular",
     backgroundColor: colors.White,
     textAlign: "center",
   },
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     fontSize: 14,
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Roboto-Regular",
     backgroundColor: colors.White,
   },
 });
