@@ -36,7 +36,6 @@ const addProduct = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-
     const newProduct = {
       name,
       price,
@@ -83,6 +82,29 @@ const updateAddress = async (req, res) => {
     await user.save();
 
     res.json({ message: "Address updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+const updatePlants = async (req, res) => {
+  try {
+    const { maxLight, maxMoisture, minLight, minMoisture, plantName } =
+      req.body;
+    const id = req.user._id;
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const newPlant = {
+      plantName,
+      maxLight,
+      maxMoisture,
+      minLight,
+      minMoisture,
+    };
+    user.plants.push(newPlant);
+    await user.save();
+    res.json({ message: "plants updated successfully", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -164,7 +186,9 @@ const generatePreference = async (prompt) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${apiKey}`,
   };
+
   console.log(prompt);
+
   const preparedPrompt = {
     description: `Generate the JSON object with minimum and maximum light and moisture requirements for a ${prompt}`,
     instructions: "The values should be of type integer.",
@@ -172,26 +196,35 @@ const generatePreference = async (prompt) => {
       minLight: 50,
       maxLight: 70,
       minMoisture: 30,
-      maxMoisture: 70
+      maxMoisture: 70,
     },
   };
+
   const requestBody = {
     model: "text-davinci-003",
     prompt: JSON.stringify(preparedPrompt),
     max_tokens: 100,
   };
+
   try {
     console.log(requestBody.prompt);
     const response = await axios.post(apiUrl, requestBody, { headers });
     console.log("response", response.data.choices[0].text);
-    const answer = response.data.choices[0].text;
-    return answer;
+
+    const resultString = response.data.choices[0].text;
+    const resultJSON = JSON.parse(resultString);
+
+    const combinedResult = {
+      plantName: prompt,
+      ...resultJSON,
+    };
+    console.log(combinedResult);
+    return combinedResult;
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 };
-
 
 const answer = async (req, res) => {
   const prompt = req.body.prompt;
@@ -222,4 +255,5 @@ module.exports = {
   getUserMessages,
   answer,
   getPreferences,
+  updatePlants,
 };
