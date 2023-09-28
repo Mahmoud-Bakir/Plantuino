@@ -9,6 +9,9 @@ router.put("/updateAddress", userController.updateAddress);
 router.post("/saveMessage", userController.saveMessage);
 router.get("/getMessages", userController.getUserMessages);
 router.post("/answer",userController.answer)
+router.post("/getPreferences",userController.getPreferences)
+router.post("/updatePlants",userController.updatePlants)
+
 
 
 
