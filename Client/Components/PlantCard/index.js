@@ -4,6 +4,12 @@ import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { ContactButton } from "../Buttons/ContactButton";
 import { EditButton } from "../Buttons/EditButton";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthState } from "../../Redux/Store/authSlice";
+import { useNavigation } from "@react-navigation/native";
+import { setPlantDetails } from "../../Redux/Store/plantSlice";
+
+import axios from "axios";
 
 export default function PlantCard({
   name,
@@ -22,9 +28,13 @@ export default function PlantCard({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Bold": require("../../assets/fonts/Roboto-Bold.ttf"),
-
-
   });
+
+  const authState = useSelector(selectAuthState);
+  const token = authState.token;
+  const headers = { Authorization: `Bearer ${token}` };
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const sendMessage = () => {
     const message = "Hello! ";
@@ -39,7 +49,28 @@ export default function PlantCard({
     });
   };
 
-  const switchInputs = () => {};
+  const handleSave = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.1.82:3000/users/getPreferences",
+        { prompt: name },
+        { headers }
+      );
+
+      const combinedResult = {
+        plantName: response.data.result.plantName,
+        ...response.data.result,
+      };
+
+      console.log("Combined Result:", combinedResult);
+      dispatch(setPlantDetails(combinedResult));
+
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -49,7 +80,7 @@ export default function PlantCard({
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
           <Image
-            source={{ uri: imageUrl }}
+            source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -70,7 +101,7 @@ export default function PlantCard({
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
           <Image
-            source={{ uri: imageUrl }}
+            source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -100,7 +131,7 @@ export default function PlantCard({
           />
         </View>
         <View style={styles.saveButtonContainer}>
-          <EditButton title="Save" handle={switchInputs} />
+          <EditButton title="Save" handle={handleSave} />
         </View>
       </View>
     );
@@ -109,7 +140,7 @@ export default function PlantCard({
     <View style={styles.cardContainer}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: imageUrl }}
+          source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
           style={styles.image}
           resizeMode="contain"
         />
