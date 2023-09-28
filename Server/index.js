@@ -12,12 +12,13 @@ const adminMiddleware = require("./middlewares/admin.middleware");
 const authRouter = require("./routes/auth.routes");
 const usersRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
+const arduinoRouter = require('./routes/arduino.routes');
 
 
 app.use("/auth", authRouter);
 app.use("/users", authMiddleware, usersRouter);
 app.use("/admin", adminMiddleware, adminRouter);
-
+app.use('/arduino', arduinoRouter);
 
 
 const PORT = process.env.PORT || 3000;
