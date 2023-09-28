@@ -104,7 +104,16 @@ const saveMessage = async (req, res) => {
 
     user.messages.push(newMessage);
     await user.save();
-   
+    const lastMessage = await User.findById(id).select({
+      messages: { $slice: -1 },
+    });
+
+    console.log(lastMessage);
+
+    res.json({
+      message: "Message saved successfully",
+      newMessage: lastMessage.messages[0],
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
