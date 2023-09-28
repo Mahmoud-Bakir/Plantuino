@@ -65,6 +65,20 @@ export default function PlantCard({
       console.log("Combined Result:", combinedResult);
       dispatch(setPlantDetails(combinedResult));
 
+      const updateResponse = await axios.post(
+        "http://192.168.1.82:3000/users/updatePlants",
+        {
+          maxLight: combinedResult.maxLight,
+          maxMoisture: combinedResult.maxMoisture,
+          minLight: combinedResult.minLight,
+          minMoisture: combinedResult.minMoisture,
+          plantName: combinedResult.plantName,
+        },
+        { headers }
+      );
+
+      console.log("Update Response:", updateResponse.data.message);
+
       navigation.navigate("Home");
     } catch (error) {
       console.error("Error:", error);
