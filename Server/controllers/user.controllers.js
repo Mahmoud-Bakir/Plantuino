@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const axios = require("axios");
 
 const publicMarket = async (req, res) => {
   const users = await User.find();
@@ -106,6 +107,7 @@ const saveMessage = async (req, res) => {
 const getUserMessages = async (req, res) => {
   try {
     const id = req.user._id;
+    console.log(id);
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -116,6 +118,33 @@ const getUserMessages = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const generateText = async (prompt) => {
+  const apiKey = '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';
+  const apiUrl = 'https://api.openai.com/v1/completions';
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`
+  };
+
+  const requestBody = {
+    model: 'text-davinci-003',
+    prompt,
+    max_tokens: 100
+  };
+
+  try {
+    console.log(requestBody.prompt)
+    const response = await axios.post(apiUrl, requestBody, { headers });
+    console.log("response", response.data.choices[0].text);
+    const answer = response.data.choices[0].text.replace(/^(\?\n|\n)+/g, '');
+    return answer;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};
+
 
 
 module.exports = {
@@ -124,5 +153,5 @@ module.exports = {
   personalMarket,
   updateAddress,
   saveMessage,
-  getUserMessages
+  getUserMessages,
 };
