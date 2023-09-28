@@ -8,7 +8,9 @@ import { EditButton } from "../Buttons/EditButton";
 export default function PlantCard({
   name,
   price,
-  destination,
+  country,
+  city,
+  street,
   imageUrl,
   contact = false,
   edit = false,
@@ -21,7 +23,6 @@ export default function PlantCard({
   });
 
   const sendMessage = () => {
-    console.log(phoneNumber);
     const message = "Hello! ";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
@@ -34,9 +35,7 @@ export default function PlantCard({
     });
   };
 
-  const switchInputs = () => {
-    console.log("Okay");
-  };
+  const switchInputs = () => {};
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -54,9 +53,11 @@ export default function PlantCard({
         <View style={styles.detailsContainer}>
           <Text style={styles.resultName}>{name}</Text>
           <Text style={styles.resultPrice}>{price} $</Text>
-          <Text style={styles.resultDesciptions}>{destination}</Text>
+          <Text style={styles.resultDesciptions}>
+            {country},{city},{street}
+          </Text>
         </View>
-        <ContactButton title="Contact" handle={sendMessage} />
+        <ContactButton title="WhatsApp" handle={sendMessage} />
       </View>
     );
   }
@@ -73,7 +74,9 @@ export default function PlantCard({
         <View style={styles.detailsContainer}>
           <Text style={styles.resultName}>{name}</Text>
           <Text style={styles.resultPrice}>{price} $</Text>
-          <Text style={styles.resultDesciptions}>{destination}</Text>
+          <Text style={styles.resultDesciptions}>
+            {country},{city},{street}
+          </Text>
         </View>
         <EditButton title="Edit" handle={switchInputs} />
       </View>
@@ -110,7 +113,9 @@ export default function PlantCard({
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.price}>{price} $</Text>
-        <Text style={styles.description}>{destination}</Text>
+        <Text style={styles.description}>
+          {country},{city},{street}
+        </Text>
       </View>
     </View>
   );
