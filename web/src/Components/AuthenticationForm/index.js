@@ -25,11 +25,13 @@ const AuthenticationForm = () => {
     return test === "";
   }
   const handleLogin = async () => {
-    if (is_empty(data.email) || is_empty(data.password) )
-    setError("All Inputs are required")
+    if (is_empty(data.email) || is_empty(data.password)) {
+      return setError("All Inputs are required");
+    }
+
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/login",
+        "http://192.168.1.5:3000/auth/login",
         data
       );
       window.localStorage.setItem("token", response.data.token);
