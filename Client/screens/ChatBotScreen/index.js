@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,16 +19,45 @@ import { NotificationsScreen } from "../NotificationsScreen";
 import ChatBot from "../../assets/pictures/chatBot.svg";
 import Notification from "../../assets/pictures/notification.svg";
 import Toggle from "../../Components/Toggle";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthState } from "../../Redux/Store/authSlice";
 
 export default function ChatBotScreen() {
   const [selectedChoice, setSelectedChoice] = useState(null);
+  const [message, setMessage] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const authState = useSelector(selectAuthState);
+  const token = authState.token;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  useEffect(async () => {
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get(
+          "http://192.168.1.5:3000/users/getMessages",
+          {
+            headers,
+          }
+        );
+        setMessages(response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
 
   const handleChoiceSelection = (choice) => {
     setSelectedChoice(choice);
     console.log(choice);
   };
 
-  const [message, setMessage] = useState("");
+ 
 
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
@@ -41,7 +70,7 @@ export default function ChatBotScreen() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.topSafeArea} edges={['top']} />
+      <SafeAreaView style={styles.topSafeArea} edges={["top"]} />
       {selectedChoice === "Notifications" ? (
         <>
           <ScreenHeader component={Notification} />
@@ -59,28 +88,26 @@ export default function ChatBotScreen() {
         onChoiceSelected={handleChoiceSelection}
       />
       <ScrollView style={styles.chatArea}>
-        {selectedChoice === "Notifications" ? (
-          <>
-            <NotificationsScreen />
-          </>
-        ) : (
-          <>
-            <View style={styles.userMessage}>
-              <Message
-                type="user"
-                message="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
-                time="10:52pm"
-              />
-            </View>
-            <View style={styles.botMessage}>
-              <Message
-                type="bot"
-                message="Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
-                time="10:53 pm"
-              />
-            </View>
-          </>
-        )}
+        {messages.map((msg, index) => (
+          <View
+            style={
+              msg.messageType === "user"
+                ? styles.userMessage
+                : styles.botMessage
+            }
+            key={index}
+          >
+            <Message
+              type={msg.messageType}
+              message={msg.messageContent}
+              time={new Date(msg.timestamp).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            />
+            {console.log(msg.timestamp)}
+          </View>
+        ))}
       </ScrollView>
       <KeyboardAvoidingView
         style={styles.keyboardContainer}
@@ -95,7 +122,7 @@ export default function ChatBotScreen() {
           />
           <TouchableOpacity
             style={styles.sendButton}
-            onPress={() => handleSendMessage(message)}
+            onPress={handleSendMessage}
           >
             <Text style={styles.sendButtonText}>Send</Text>
           </TouchableOpacity>
@@ -157,7 +184,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderColor: colors.Grey,
     backgroundColor: colors.White,
-    marginBottom:5
+    marginBottom: 5,
   },
 
   input: {
