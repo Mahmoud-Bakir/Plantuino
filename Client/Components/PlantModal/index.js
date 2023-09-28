@@ -4,7 +4,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
-  Text,
   SafeAreaView,
 } from "react-native";
 import PlantCard from "../PlantCard";
@@ -12,13 +11,15 @@ import { AntDesign } from "@expo/vector-icons";
 
 const PlantModal = ({
   name,
-  destination,
   price,
   imageUrl,
   closeModal,
   visible,
   phoneNumber,
   userType,
+  city,
+  country,
+  street
 }) => {
   if (userType === "seller") {
     return (
@@ -33,7 +34,9 @@ const PlantModal = ({
               name={name}
               price={price}
               imageUrl={imageUrl}
-              destination={destination}
+              city={city}
+              country={country}
+              street={street}
               phoneNumber={phoneNumber}
             />
           </SafeAreaView>
@@ -52,8 +55,10 @@ const PlantModal = ({
               contact={true}
               name={name}
               price={price}
+              city={city}
+              country={country}
+              street={street}
               imageUrl={imageUrl}
-              destination={destination}
               phoneNumber={phoneNumber}
             />
           </SafeAreaView>
