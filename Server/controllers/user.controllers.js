@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const axios = require("axios");
+require("dotenv").config();
 
 const publicMarket = async (req, res) => {
   const users = await User.find();
@@ -119,28 +120,28 @@ const getUserMessages = async (req, res) => {
   }
 };
 const generateText = async (prompt) => {
-  const apiKey = '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';
-  const apiUrl = 'https://api.openai.com/v1/completions';
+  const apiKey = process.env.API_KEY;
+  const apiUrl = "https://api.openai.com/v1/completions";
 
   const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${apiKey}`
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
   };
 
   const requestBody = {
-    model: 'text-davinci-003',
+    model: "text-davinci-003",
     prompt,
-    max_tokens: 100
+    max_tokens: 100,
   };
 
   try {
-    console.log(requestBody.prompt)
+    console.log(requestBody.prompt);
     const response = await axios.post(apiUrl, requestBody, { headers });
     console.log("response", response.data.choices[0].text);
-    const answer = response.data.choices[0].text.replace(/^(\?\n|\n)+/g, '');
+    const answer = response.data.choices[0].text.replace(/^(\?\n|\n)+/g, "");
     return answer;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     throw error;
   }
 };
