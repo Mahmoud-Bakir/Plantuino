@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 const productsSchema = new Schema({
   name: String,
   price: Number,
-  imageUrl: Buffer,
+  imageUrl: String,
   userId: mongoose.Types.ObjectId,
   userPhoneNumber: String,
   country: String,
@@ -12,8 +12,8 @@ const productsSchema = new Schema({
 });
 const plantsSchema = new Schema({
   name: String,
-  minTemp: Number,
-  maxTemp: Number,
+  minLight: Number,
+  maxLight: Number,
   minMoisture: Number,
   maxMoisture: Number,
   user_id: mongoose.Types.ObjectId,
@@ -32,8 +32,9 @@ const messagesSchema = new Schema({
   userId: mongoose.Types.ObjectId,
   messageType: String,
   messageContent: String,
-  timestamp: { type: Date, default: Date.now },
-});
+},
+{timestamps: true},
+);
 const usersSchema = new Schema({
   userType: Number,
   name: String,
