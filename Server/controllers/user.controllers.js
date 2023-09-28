@@ -145,7 +145,16 @@ const generateText = async (prompt) => {
   }
 };
 
+const answer = async (req, res) => {
+  const prompt = req.body.prompt;
 
+  try {
+    const generatedText = await generateText(prompt);
+    res.json({ result: generatedText });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   addProduct,
@@ -154,4 +163,5 @@ module.exports = {
   updateAddress,
   saveMessage,
   getUserMessages,
+  answer,
 };
