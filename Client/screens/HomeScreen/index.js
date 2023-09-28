@@ -5,16 +5,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as SecureStore from "expo-secure-store";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../../assets/colors/colors";
-import { useFocusEffect } from "@react-navigation/native";
 import ScreenHeader from "../../Components/ScreensHeader";
 import { useFonts } from "expo-font";
-import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
@@ -22,23 +18,26 @@ import Home from "../../assets/pictures/homeLabel.svg";
 import Market from "../../assets/pictures/market.svg";
 import Toggle from "../../Components/Toggle";
 import SearchInput from "../../Components/SearchInput";
-import PlantCard from "../../Components/PlantCard";
 import UserMarket from "../../Components/UserMarket";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { setProducts } from "../../Redux/Store/productSlice";
+import { selectPlantName } from "../../Redux/Store/plantSlice";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const authState = useSelector(selectAuthState);
+  const plantName = useSelector(selectPlantName);
   const userType = authState.userType;
   const token = authState.token;
   const country = authState.country;
   const city = authState.city;
   const street = authState.street;
   const located = authState.located;
-  const testing = {
+  const selectedPlant = useSelector(selectPlantName);
+
+  const addressing = {
     country,
     city,
     street,
@@ -54,23 +53,26 @@ export default function HomeScreen() {
   });
 
   useEffect(() => {
+    console.log("Useeffect is running")
+    console.log(selectedPlant)
+    console.log(plantName);
     const getData = async () => {
       try {
         if (userType == 1) {
           try {
             setSelectedChoice("My Market");
             const response = await axios.get(
-              "http://192.168.1.5:8000/users/personalMarket",
+              "http://192.168.1.82:3000/users/personalMarket",
               { headers }
             );
             dispatch(setProducts(response.data));
           } catch (error) {}
           if (!located) {
             try {
-              console.log("testing", testing);
+              console.log("addressing", addressing);
               await axios.put(
-                "http://192.168.1.5:8000/users/updateAddress",
-                testing,
+                "http://192.168.1.82:3000/users/updateAddress",
+                addressing,
                 { headers }
               );
             } catch (error) {}
@@ -79,17 +81,17 @@ export default function HomeScreen() {
           setSelectedChoice("My Garden");
           try {
             const response = await axios.get(
-              "http://192.168.1.5:8000/users/publicMarket",
+              "http://192.168.1.82:3000/users/publicMarket",
               { headers }
             );
             dispatch(setProducts(response.data));
           } catch (error) {}
           if (!located) {
             try {
-              console.log("testing", testing);
+              console.log("addressing", addressing);
               await axios.put(
-                "http://192.168.1.5:8000/users/updateAddress",
-                testing,
+                "http://192.168.1.82:3000/users/updateAddress",
+                addressing,
                 { headers }
               );
             } catch (error) {}
@@ -153,13 +155,19 @@ export default function HomeScreen() {
         {selectedChoice === "My Garden" ? (
           <ScrollView>
             <SafeAreaView style={styles.container}>
-              <View style={styles.contentContainer}>
-                <Text style={styles.title}>No Plants</Text>
-                <Text style={styles.subtitle}>
-                  Start by connecting your arduino kit
-                </Text>
-                <LargeButton title={"Connect"} />
-              </View>
+              {selectedPlant ? (
+                <View style={styles.contentContainer}>
+                  <Text style={styles.title}>{selectedPlant}</Text>
+                </View>
+              ) : (
+                <View style={styles.contentContainer}>
+                  <Text style={styles.title}>No Plants</Text>
+                  <Text style={styles.subtitle}>
+                    Start by connecting your arduino kit
+                  </Text>
+                  <LargeButton title={"Connect"} />
+                </View>
+              )}
             </SafeAreaView>
           </ScrollView>
         ) : selectedChoice === "Market" ? (
@@ -179,9 +187,6 @@ export default function HomeScreen() {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   contentContainer: {
     flex: 1,
     justifyContent: "center",
