@@ -13,23 +13,20 @@ const login = async (req, res) => {
     return res.status(404).send({ message: "email/password incorrect" });
 
   const { password: hashedPassword, ...userInfo } = user.toJSON();
-
-  const token = jwt.sign(userInfo, process.env.JWT_SECRET);
+  const token = jwt.sign({ _id: user._id, userType: user.userType }, process.env.JWT_SECRET);
 
   console.log(userInfo);
   res.send({
     token,
     user: userInfo,
-    success:"success"
+    success: "success",
   });
 };
 
 const register = async (req, res) => {
   console.log(req.body);
   const { password } = req.body;
-
   const hashedPassword = await bcrypt.hash(password, 10);
-  const token = jwt.sign({}, process.env.JWT_SECRET);
   const user = new User({
     ...req.body,
     password: hashedPassword,
@@ -37,7 +34,7 @@ const register = async (req, res) => {
 
   user.save();
 
-  res.send({ token, user });
+  res.send({ user });
   console.log(user);
 };
 
