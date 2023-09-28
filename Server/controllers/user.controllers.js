@@ -1,5 +1,7 @@
 const User = require("../models/user.model");
 const axios = require("axios");
+const fs = require("fs");
+
 require("dotenv").config();
 
 const publicMarket = async (req, res) => {
@@ -22,7 +24,7 @@ const personalMarket = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { name, price, imageUrl } = req.body;
+    const { name, price, picture } = req.body;
     const id = req.user._id;
     const user = await User.findById(id);
     const userPhoneNumber = user.phoneNumber;
@@ -33,6 +35,8 @@ const addProduct = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+
     const newProduct = {
       name,
       price,
@@ -43,6 +47,8 @@ const addProduct = async (req, res) => {
       city,
       street,
     };
+
+    console.log(newProduct);
 
     user.products.push(newProduct);
     await user.save();
@@ -98,8 +104,7 @@ const saveMessage = async (req, res) => {
 
     user.messages.push(newMessage);
     await user.save();
-
-    res.json({ message: "Message saved successfully", newMessage });
+   
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -122,18 +127,15 @@ const getUserMessages = async (req, res) => {
 const generateText = async (prompt) => {
   const apiKey = process.env.API_KEY;
   const apiUrl = "https://api.openai.com/v1/completions";
-
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${apiKey}`,
   };
-
   const requestBody = {
     model: "text-davinci-003",
     prompt,
     max_tokens: 100,
   };
-
   try {
     console.log(requestBody.prompt);
     const response = await axios.post(apiUrl, requestBody, { headers });
@@ -146,12 +148,22 @@ const generateText = async (prompt) => {
   }
 };
 
+
 const answer = async (req, res) => {
   const prompt = req.body.prompt;
 
   try {
     const generatedText = await generateText(prompt);
     res.json({ result: generatedText });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+const getPreferences = async (req, res) => {
+  const prompt = req.body.prompt;
+  try {
+    const generatedResponse = await generatePreference(prompt);
+    res.json({ result: generatedResponse });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -165,4 +177,5 @@ module.exports = {
   saveMessage,
   getUserMessages,
   answer,
+  getPreferences
 };
