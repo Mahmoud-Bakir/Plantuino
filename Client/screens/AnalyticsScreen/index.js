@@ -48,11 +48,45 @@ export default function AnalyticsScreen() {
     return daysOfWeek[dayOfWeek];
   };
 
- 
+
+  const processData = () => {
+    const result = {
+      moisture: {},
+      sunlight: {},
+      count: {},
+    };
+
+    data.forEach((item) => {
+      const dayOfWeek = getDayOfWeek(item.createdAt);
+      if (!result.moisture[dayOfWeek]) {
+        result.moisture[dayOfWeek] = 0;
+        result.sunlight[dayOfWeek] = 0;
+        result.count[dayOfWeek] = 0;
+      }
+
+      result.moisture[dayOfWeek] += item.moisture;
+      result.sunlight[dayOfWeek] += item.sunlight;
+      result.count[dayOfWeek] += 1;
+    });
+
+    Object.keys(result.moisture).forEach((day) => {
+      if (result.count[day] !== 0) {
+        result.moisture[day] /= result.count[day];
+        result.sunlight[day] /= result.count[day];
+      }
+    });
+
+    return result;
+  };
+
+  const averagedData = processData();
+
+  const daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader component={Analytics} />
-      
+    
     </SafeAreaView>
   );
 }
