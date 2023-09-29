@@ -167,7 +167,47 @@ export default function AnalyticsScreen() {
             />
             <Text style={[styles.feedBack,styles.moisture]}>Last Moisture level: {latestMoisture} %</Text>
 
-       
+            <Text style={styles.title}>Weekly Average Sunlinght</Text>
+            <BarChart
+              data={{
+                labels: daysOfWeek,
+                datasets: [
+                  {
+                    data: [
+                      averagedData.sunlight.Sunday || 0,
+                      averagedData.sunlight.Monday || 0,
+                      averagedData.sunlight.Tuesday || 0,
+                      averagedData.sunlight.Wednesday || 0,
+                      averagedData.sunlight.Thursday || 0,
+                      averagedData.sunlight.Friday || 0,
+                      averagedData.sunlight.Saturday || 0,
+                    ],
+                  },
+                ],
+              }}
+              width={400}
+              height={500}
+              yAxisSuffix="%"
+              yAxisInterval={1}
+              chartConfig={{
+                backgroundColor: "#e26a00",
+                backgroundGradientFrom: "#000000",
+                backgroundGradientTo: "#000000",
+                decimalPlaces: 0,
+                color: (opacity = 1) => `rgba(227, 141, 62, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                barPercentage: 0.5,
+                categoryPercentage: 2,
+              }}
+              style={{
+                marginVertical: 20,
+                borderRadius: 16,
+              }}
+            />
+            <Text style={[styles.feedBack, styles.sunlight]}>Last Sunlight Level: {latestSunlight} %</Text>
           </View>
         </ScrollView>
       )}
