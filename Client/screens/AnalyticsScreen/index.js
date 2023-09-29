@@ -120,7 +120,57 @@ export default function AnalyticsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader component={Analytics} />
-    
+      {loading ? (
+        <ActivityIndicator size="large" color="#38D13E" />
+      ) : (
+        <ScrollView>
+          <View>
+            <Text style={[styles.title]}>Weekly Average Moisture</Text>
+            <BarChart
+              data={{
+                labels: daysOfWeek,
+                datasets: [
+                  {
+                    data: [
+                      averagedData.moisture.Sunday || 0,
+                      averagedData.moisture.Monday || 0,
+                      averagedData.moisture.Tuesday || 0,
+                      averagedData.moisture.Wednesday || 0,
+                      averagedData.moisture.Thursday || 0,
+                      averagedData.moisture.Friday || 0,
+                      averagedData.moisture.Saturday || 0,
+                    ],
+                  },
+                ],
+              }}
+              width={400}
+              height={500}
+              yAxisSuffix="%"
+              yAxisInterval={1}
+              chartConfig={{
+                backgroundColor: "#e26a00",
+                backgroundGradientFrom: "#000000",
+                backgroundGradientTo: "#000000",
+                decimalPlaces: 0,
+                color: (opacity = 1) => `rgba(78, 172, 222, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                style: {
+                  borderRadius: 16,
+                },
+                barPercentage: 0.5,
+                categoryPercentage: 2,
+              }}
+              style={{
+                marginVertical: 20,
+                borderRadius: 16,
+              }}
+            />
+            <Text style={[styles.feedBack,styles.moisture]}>Last Moisture level: {latestMoisture} %</Text>
+
+       
+          </View>
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
