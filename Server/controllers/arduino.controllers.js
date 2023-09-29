@@ -17,5 +17,13 @@ const Data = require("../models/data.model");
         res.status(500).json({ error: 'Internal Server Error' });
       });
   }
-
-module.exports = {sendData};
+  const deleteAllData = async (req, res) => {
+    try {
+      await Data.deleteMany({});
+      res.json({ message: 'All data deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting data:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+module.exports = {sendData,deleteAllData};
