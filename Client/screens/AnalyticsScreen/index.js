@@ -48,6 +48,40 @@ export default function AnalyticsScreen() {
     return daysOfWeek[dayOfWeek];
   };
 
+  useEffect(() => {
+    console.log("Hello from Analytics");
+    axios
+      .get("http://192.168.1.5:3000/arduino/getData")
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+        const lastItem = response.data[response.data.length - 1];
+        setLatestMoisture(lastItem.moisture);
+        setLatestSunlight(lastItem.sunlight);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+    const interval = setInterval(() => {
+      console.log("Second TIme")
+      axios
+        .get("http://192.168.1.5:3000/arduino/getData")
+        .then((response) => {
+          setData(response.data);
+          setLoading(false);
+          const lastItem = response.data[response.data.length - 1];
+          setLatestMoisture(lastItem.moisture);
+          setLatestSunlight(lastItem.sunlight);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
+    }, 1 * 60 * 1000); 
+
+    return () => clearInterval(interval);
+  }, []);
 
   const processData = () => {
     const result = {
