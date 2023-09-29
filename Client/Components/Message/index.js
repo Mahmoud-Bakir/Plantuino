@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   message: {
     color: colors.White,
     fontFamily: "Raleway-Regular",
-    fontSize: 14,
+    fontSize: 16,
   },
   botMessage: {
     color: colors.Black,
     fontFamily: "Raleway-Regular",
-    fontSize: 14,
+    fontSize: 16,
   },
   userTimeStamp: {
     fontFamily: "Raleway-Regular",
