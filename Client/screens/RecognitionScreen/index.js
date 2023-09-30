@@ -69,7 +69,7 @@ export default function RecognitionScreen() {
   };
 
   if (photo) {
-    const base64Image = "data:image/jpg;base64," + photo.base64;
+    const base64Image = "data:image/jpeg;base64," + photo.base64;
     let sharePic = () => {
       shareAsync(photo.uri).then(() => {
         setPhoto(undefined);
@@ -103,7 +103,6 @@ export default function RecognitionScreen() {
           );
           dispatch(setPlantName(highestProbabilityPlant.name));
           dispatch(setPlantImage(base64Image));
-
           navigation.navigate("ResultScreen");
         })
         .catch((error) => {
