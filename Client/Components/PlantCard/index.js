@@ -101,12 +101,13 @@ export default function PlantCard({
         </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.resultName}>{name}</Text>
-          <Text style={styles.resultPrice}>{price} $</Text>
+          <Text style={styles.resultPrice}>$ {price} </Text>
           <Text style={styles.resultDesciptions}>
-            {country},{city},{street}
+            {street},{city},{country}
           </Text>
+          <ContactButton title="WhatsApp" handle={sendMessage} />
         </View>
-        <ContactButton title="WhatsApp" handle={sendMessage} />
+   
       </View>
     );
   }
@@ -122,12 +123,12 @@ export default function PlantCard({
         </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.resultName}>{name}</Text>
-          <Text style={styles.resultPrice}>{price} $</Text>
+          <Text style={styles.resultPrice}> $ {price}</Text>
           <Text style={styles.resultDesciptions}>
-            {country},{city},{street}
+          {street},{city},{country}
           </Text>
         </View>
-        <EditButton title="Edit" handle={switchInputs} />
+        <EditButton title="Edit"  />
       </View>
     );
   }
@@ -161,9 +162,9 @@ export default function PlantCard({
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.price}>{price} $</Text>
+        <Text style={styles.price}>$ {price}</Text>
         <Text style={styles.description}>
-          {country},{city},{street}
+        {street},{city},{country}
         </Text>
       </View>
     </View>
@@ -173,7 +174,6 @@ export default function PlantCard({
 const styles = StyleSheet.create({
   cardContainer: {
     width: 180,
-    height: 372,
     backgroundColor: colors.LightBlue,
     borderRadius: 20,
   },
@@ -222,15 +222,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   previewImageContainer: {
-    height: "70%",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    height: "65%",
+    width:"100%",
     overflow: "hidden",
   },
   resultImageContainer: {
     marginTop: 10,
-    width: "80%",
-    height: "70%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     overflow: "hidden",
