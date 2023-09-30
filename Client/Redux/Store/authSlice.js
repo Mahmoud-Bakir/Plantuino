@@ -6,7 +6,7 @@ const initialState = {
   token: "",
   name: "",
   phoneNumber: "",
-  id: "",
+  _id: "",
   country: "",
   city: "",
   street: "",
@@ -23,7 +23,7 @@ const authSlice = createSlice({
         token,
         name,
         phoneNumber,
-        id,
+        _id,
         userType,
         located,
       } = action.payload;
@@ -31,7 +31,7 @@ const authSlice = createSlice({
       state.token = token;
       state.name = name;
       state.phoneNumber = phoneNumber;
-      state.id = id;
+      state._id = _id;
       state.userType = userType;
       state.located=located
     },
