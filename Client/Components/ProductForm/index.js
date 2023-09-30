@@ -16,8 +16,7 @@ export default function ProductForm() {
   const info = {
     name: "",
     price: "",
-    location: "default",
-    imageUrl: "",
+    image: "",
   };
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
@@ -40,12 +39,12 @@ export default function ProductForm() {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 1,
+        quality: 0.2,
+        base64:true,
       });
 
       if (!result.canceled) {
-        const selectedImageUri = result.uri;
-        setData({ ...data, imageUrl: selectedImageUri });
+        setData({ ...data, image: result.base64 });
       }
     } catch (error) {
       console.error("Error picking image", error);
@@ -69,7 +68,7 @@ export default function ProductForm() {
       if (is_empty(data.price)) return Seterr("Please set a price");
 
       const response = await axios.post(
-        "http://192.168.1.5:8000/users/add",
+        "http://192.168.1.5:3000/users/add",
         data,
         {
           headers,
@@ -78,8 +77,9 @@ export default function ProductForm() {
       const newProduct = {
         name: response.data.newProduct.name,
         price: response.data.newProduct.price,
-        destination: response.data.newProduct.location,
-        image_url: `data:image/jpeg;base64,${response.data.newProduct.imageUrl}`,
+        city: response.data.newProduct.city,
+        country:response.data.newProduct.country,
+        street:response.data.newProduct.street
       };
 
       console.log("Added Successfully:", newProduct);
