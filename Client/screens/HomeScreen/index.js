@@ -23,19 +23,21 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { setProducts } from "../../Redux/Store/productSlice";
-import { selectPlantName } from "../../Redux/Store/plantSlice";
+import {selectPlantDetails } from "../../Redux/Store/plantSlice";
+import baseURL from "../../config";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
   const authState = useSelector(selectAuthState);
-  const plantName = useSelector(selectPlantName);
   const userType = authState.userType;
   const token = authState.token;
   const country = authState.country;
   const city = authState.city;
   const street = authState.street;
   const located = authState.located;
-  const selectedPlant = useSelector(selectPlantName);
+  const selectedPlant = useSelector(selectPlantDetails);
+  const defined=selectedPlant.defined
+  const plantName=selectedPlant.name
 
   const addressing = {
     country,
@@ -53,8 +55,7 @@ export default function HomeScreen() {
   });
 
   useEffect(() => {
-    console.log("Useeffect is running")
-    console.log(selectedPlant)
+    console.log("Useeffect is running");
     console.log(plantName);
     const getData = async () => {
       try {
@@ -62,7 +63,7 @@ export default function HomeScreen() {
           try {
             setSelectedChoice("My Market");
             const response = await axios.get(
-              "http://192.168.1.82:3000/users/personalMarket",
+              `http://${baseURL}:3000/users/personalMarket`,
               { headers }
             );
             dispatch(setProducts(response.data));
@@ -71,7 +72,7 @@ export default function HomeScreen() {
             try {
               console.log("addressing", addressing);
               await axios.put(
-                "http://192.168.1.82:3000/users/updateAddress",
+               `http://${baseURL}:3000/users/updateAddress`,
                 addressing,
                 { headers }
               );
@@ -81,7 +82,7 @@ export default function HomeScreen() {
           setSelectedChoice("My Garden");
           try {
             const response = await axios.get(
-              "http://192.168.1.82:3000/users/publicMarket",
+              `http://${baseURL}:3000/users/publicMarket`,
               { headers }
             );
             dispatch(setProducts(response.data));
@@ -90,7 +91,7 @@ export default function HomeScreen() {
             try {
               console.log("addressing", addressing);
               await axios.put(
-                "http://192.168.1.82:3000/users/updateAddress",
+                `http://${baseURL}:3000/users/updateAddress`,
                 addressing,
                 { headers }
               );
@@ -103,7 +104,7 @@ export default function HomeScreen() {
     };
 
     getData();
-  }, [dispatch]);
+  }, [dispatch,plantName]);
 
   const handleChoiceSelection = (choice) => {
     console.log(selectedChoice);
@@ -127,7 +128,9 @@ export default function HomeScreen() {
           onChoiceSelected={handleChoiceSelection}
         />
         <ScrollView style={styles.marketContainer}>
-          <UserMarket />
+          <View>
+            <UserMarket />
+          </View>
         </ScrollView>
         <TouchableOpacity
           style={styles.addIcon}
@@ -155,9 +158,9 @@ export default function HomeScreen() {
         {selectedChoice === "My Garden" ? (
           <ScrollView>
             <SafeAreaView style={styles.container}>
-              {selectedPlant ? (
+              {defined ? (
                 <View style={styles.contentContainer}>
-                  <Text style={styles.title}>{selectedPlant}</Text>
+                  <Text style={styles.title}>{plantName}</Text>
                 </View>
               ) : (
                 <View style={styles.contentContainer}>
@@ -171,14 +174,11 @@ export default function HomeScreen() {
             </SafeAreaView>
           </ScrollView>
         ) : selectedChoice === "Market" ? (
-          <>
-            <SearchInput />
-            <ScrollView style={styles.scroll}>
-              <View style={styles.productsContainer}>
-                <UserMarket />
-              </View>
-            </ScrollView>
-          </>
+          <ScrollView style={styles.marketContainer}>
+            <View>
+              <UserMarket />
+            </View>
+          </ScrollView>
         ) : (
           <></>
         )}
@@ -189,6 +189,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
+    marginVertical: 200,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -240,5 +241,9 @@ const styles = StyleSheet.create({
   },
   marketContainer: {
     marginTop: 5,
+ 
+  },
+  productsContainer: {
+    flex: 1,
   },
 });
