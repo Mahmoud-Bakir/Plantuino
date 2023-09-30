@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BarChart } from "react-native-chart-kit";
@@ -15,6 +16,9 @@ import { selectAuthState } from "../../Redux/Store/authSlice";
 import { useSelector } from "react-redux";
 import { useFonts } from "expo-font";
 import { selectPlantDetails } from "../../Redux/Store/plantSlice";
+import { LargeButton } from "../../Components/Buttons/LargeButton";
+import { useNavigation } from "@react-navigation/native";
+import baseURL from "../../config";
 
 export default function AnalyticsScreen() {
   const [loading, setLoading] = useState(true);
@@ -22,21 +26,18 @@ export default function AnalyticsScreen() {
   const plant = useSelector(selectPlantDetails);
   const auth = useSelector(selectAuthState);
   const id = auth._id;
-  const maxL = plant.maxLight;
-  const minL = plant.minLight;
-  const maxM = plant.maxMoisture;
-  const minM = plant.minMoisture;
-  const name = plant.name;
+  const { maxLight, minLight, maxMoisture, minMoisture,plantName } = plant;
+  const defined = plant.defined;
   const [latestMoisture, setLatestMoisture] = useState(0);
   const [latestSunlight, setLatestSunlight] = useState(0);
-  const authState = useSelector(selectAuthState);
-  const [fontsLoaded] = useFonts({
+  const latestMoistureRef = useRef(latestMoisture);
+  const latestSunlightRef = useRef(latestSunlight);
+  const navigation = useNavigation();
+
+  useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
   });
-
-  const latestMoistureRef = useRef(latestMoisture);
-  const latestSunlightRef = useRef(latestSunlight);
 
   const getDayOfWeek = (timestamp) => {
     const daysOfWeek = [
@@ -59,7 +60,7 @@ export default function AnalyticsScreen() {
       appId: 12747,
       appToken: "BDt99Jcmi6Wq2atbqo1sGR",
       title: `WARNING`,
-      message: `${name} needs Water!`,
+      message: `${plantName} needs Water!`,
     });
   };
 
@@ -69,7 +70,7 @@ export default function AnalyticsScreen() {
       appId: 12747,
       appToken: "BDt99Jcmi6Wq2atbqo1sGR",
       title: `WARNING`,
-      message: `${name} is in excess of Water!`,
+      message: `${plantName} is in excess of Water!`,
     });
   };
 
@@ -79,7 +80,7 @@ export default function AnalyticsScreen() {
       appId: 12747,
       appToken: "BDt99Jcmi6Wq2atbqo1sGR",
       title: `WARNING`,
-      message: `${name} needs Sunlight!`,
+      message: `${plantName} needs Sunlight!`,
     });
   };
 
@@ -89,19 +90,27 @@ export default function AnalyticsScreen() {
       appId: 12747,
       appToken: "BDt99Jcmi6Wq2atbqo1sGR",
       title: `WARNING`,
-      message: `${name} needs shade!`,
+      message: `${plantName} needs shade!`,
     });
   };
 
   const test = () => {
-    console.log(minL, maxL, minM, maxM, latestMoisture, latestSunlight);
+    console.log(
+      minLight,
+      maxLight,
+      minMoisture,
+      maxMoisture,
+      latestMoisture,
+      latestSunlight
+    );
   };
 
   useEffect(() => {
+    if (!defined) return;
     try {
       console.log("Hello from Analytics");
       test();
-      axios.get("http://192.168.1.5:3000/arduino/getData").then((response) => {
+      axios.get(`http://${baseURL}:3000/arduino/getData`).then((response) => {
         setData(response.data);
         setLoading(false);
         const lastItem = response.data[response.data.length - 1];
@@ -111,10 +120,10 @@ export default function AnalyticsScreen() {
         setLatestSunlight(lastItem.sunlight);
         latestMoistureRef.current = lastItem.moisture;
         latestSunlightRef.current = lastItem.sunlight;
-        if (lastItem.moisture < minM) lowMoistureAlert();
-        if (lastItem.moisture > maxM) highMoistureAlert();
-        if (lastItem.sunlight < minL) lowLightAlert();
-        if (lastItem.sunlight > maxL) highLightAlert();
+        if (lastItem.moisture < minMoisture) lowMoistureAlert();
+        if (lastItem.moisture > maxMoisture) highMoistureAlert();
+        if (lastItem.sunlight < minLight) lowLightAlert();
+        if (lastItem.sunlight > maxLight) highLightAlert();
       });
     } catch (error) {
       console.error(error);
@@ -124,7 +133,7 @@ export default function AnalyticsScreen() {
       console.log(latestMoistureRef.current, latestSunlightRef.current);
       console.log("Second TIme");
       axios
-        .get("http://192.168.1.5:3000/arduino/getData")
+        .get(`http://${baseURL}:3000/arduino/getData`)
         .then((response) => {
           setData(response.data);
           setLoading(false);
@@ -145,7 +154,7 @@ export default function AnalyticsScreen() {
     }, 0.5 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [defined]);
 
   const processData = () => {
     const result = {
@@ -184,100 +193,115 @@ export default function AnalyticsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader component={Analytics} />
-      {loading ? (
-        <ActivityIndicator size="large" color="#38D13E" />
-      ) : (
-        <ScrollView>
-          <View>
-            <Text style={[styles.title]}>Weekly Average Moisture</Text>
-            <BarChart
-              data={{
-                labels: daysOfWeek,
-                datasets: [
-                  {
-                    data: [
-                      averagedData.moisture.Sunday || 0,
-                      averagedData.moisture.Monday || 0,
-                      averagedData.moisture.Tuesday || 0,
-                      averagedData.moisture.Wednesday || 0,
-                      averagedData.moisture.Thursday || 0,
-                      averagedData.moisture.Friday || 0,
-                      averagedData.moisture.Saturday || 0,
-                    ],
-                  },
-                ],
-              }}
-              width={400}
-              height={500}
-              yAxisSuffix="%"
-              yAxisInterval={1}
-              chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#000000",
-                backgroundGradientTo: "#000000",
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(78, 172, 222, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-                barPercentage: 0.5,
-                categoryPercentage: 2,
-              }}
-              style={{
-                marginVertical: 20,
-                borderRadius: 16,
-              }}
-            />
-            <Text style={[styles.feedBack, styles.moisture]}>
-              Last Moisture level: {latestMoisture} %
-            </Text>
-
-            <Text style={styles.title}>Weekly Average Sunlinght</Text>
-            <BarChart
-              data={{
-                labels: daysOfWeek,
-                datasets: [
-                  {
-                    data: [
-                      averagedData.sunlight.Sunday || 0,
-                      averagedData.sunlight.Monday || 0,
-                      averagedData.sunlight.Tuesday || 0,
-                      averagedData.sunlight.Wednesday || 0,
-                      averagedData.sunlight.Thursday || 0,
-                      averagedData.sunlight.Friday || 0,
-                      averagedData.sunlight.Saturday || 0,
-                    ],
-                  },
-                ],
-              }}
-              width={400}
-              height={500}
-              yAxisSuffix="%"
-              yAxisInterval={1}
-              chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#000000",
-                backgroundGradientTo: "#000000",
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(227, 141, 62, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-                barPercentage: 0.5,
-                categoryPercentage: 2,
-              }}
-              style={{
-                marginVertical: 20,
-                borderRadius: 16,
-              }}
-            />
-            <Text style={[styles.feedBack, styles.sunlight]}>
-              Last Sunlight Level: {latestSunlight} %
-            </Text>
+      {defined ? (
+        loading ? (
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" color="#38D13E" />
           </View>
-        </ScrollView>
+        ) : (
+          <ScrollView>
+            <View>
+              <Text style={[styles.title]}>Weekly Average Moisture</Text>
+              <BarChart
+                data={{
+                  labels: daysOfWeek,
+                  datasets: [
+                    {
+                      data: [
+                        averagedData.moisture.Sunday || 0,
+                        averagedData.moisture.Monday || 0,
+                        averagedData.moisture.Tuesday || 0,
+                        averagedData.moisture.Wednesday || 0,
+                        averagedData.moisture.Thursday || 0,
+                        averagedData.moisture.Friday || 0,
+                        averagedData.moisture.Saturday || 0,
+                      ],
+                    },
+                  ],
+                }}
+                width={400}
+                height={500}
+                yAxisSuffix="%"
+                yAxisInterval={1}
+                chartConfig={{
+                  backgroundColor: "#e26a00",
+                  backgroundGradientFrom: "#000000",
+                  backgroundGradientTo: "#000000",
+                  decimalPlaces: 0,
+                  color: (opacity = 1) => `rgba(78, 172, 222, ${opacity})`,
+                  labelColor: (opacity = 1) =>
+                    `rgba(255, 255, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 16,
+                  },
+                  barPercentage: 0.5,
+                  categoryPercentage: 2,
+                }}
+                style={{
+                  marginVertical: 20,
+                  borderRadius: 16,
+                }}
+              />
+              <Text style={[styles.feedBack, styles.moisture]}>
+                Last Moisture level: {latestMoisture} %
+              </Text>
+
+              <Text style={styles.title}>Weekly Average Sunlinght</Text>
+              <BarChart
+                data={{
+                  labels: daysOfWeek,
+                  datasets: [
+                    {
+                      data: [
+                        averagedData.sunlight.Sunday || 0,
+                        averagedData.sunlight.Monday || 0,
+                        averagedData.sunlight.Tuesday || 0,
+                        averagedData.sunlight.Wednesday || 0,
+                        averagedData.sunlight.Thursday || 0,
+                        averagedData.sunlight.Friday || 0,
+                        averagedData.sunlight.Saturday || 0,
+                      ],
+                    },
+                  ],
+                }}
+                width={400}
+                height={500}
+                yAxisSuffix="%"
+                yAxisInterval={1}
+                chartConfig={{
+                  backgroundColor: "#e26a00",
+                  backgroundGradientFrom: "#000000",
+                  backgroundGradientTo: "#000000",
+                  decimalPlaces: 0,
+                  color: (opacity = 1) => `rgba(227, 141, 62, ${opacity})`,
+                  labelColor: (opacity = 1) =>
+                    `rgba(255, 255, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 16,
+                  },
+                  barPercentage: 0.5,
+                  categoryPercentage: 2,
+                }}
+                style={{
+                  marginVertical: 20,
+                  borderRadius: 16,
+                }}
+              />
+              <Text style={[styles.feedBack, styles.sunlight]}>
+                Last Sunlight Level: {latestSunlight} %
+              </Text>
+            </View>
+          </ScrollView>
+        )
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.feedBack}> </Text>
+          <Text style={styles.feedBack}>Please Scan your Plant First</Text>
+          <LargeButton
+            title="Scan"
+            handle={() => navigation.navigate("CameraScreen")}
+          />
+        </View>
       )}
     </SafeAreaView>
   );
@@ -289,6 +313,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  // emptyContainer: {
+  //   flex: 1,
+  //   flexDirection: "colomn",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
   title: {
     marginTop: 40,
     fontSize: 24,
@@ -303,5 +333,11 @@ const styles = StyleSheet.create({
   },
   sunlight: {
     color: "rgb(227, 141, 62)",
+  },
+  loading: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 600,
   },
 });
