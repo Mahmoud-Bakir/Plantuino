@@ -76,6 +76,7 @@ export default function ProductForm() {
       );
       const newProduct = {
         name: response.data.newProduct.name,
+        image:response.data.newProduct.image,
         price: response.data.newProduct.price,
         city: response.data.newProduct.city,
         country:response.data.newProduct.country,
