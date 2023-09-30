@@ -28,11 +28,12 @@ const Data = require("../models/data.model");
   }
   const getData = async (req, res) => {
     try {
-      const allData = await Data.find({});
-      res.json({ data: allData });
+      const allData = await Data.find();
+      res.send(allData);
     } catch (error) {
       console.error('Error fetching data:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
+  
 module.exports = {sendData,deleteAllData,getData};
