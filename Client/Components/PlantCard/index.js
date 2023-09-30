@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { useNavigation } from "@react-navigation/native";
 import { setPlantDetails } from "../../Redux/Store/plantSlice";
+import baseURL from '../../config';
 
 import axios from "axios";
 
@@ -52,7 +53,7 @@ export default function PlantCard({
   const handleSave = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/users/getPreferences",
+        `http://${baseURL}:3000/users/getPreferences`,
         { prompt: name },
         { headers }
       );
@@ -66,7 +67,7 @@ export default function PlantCard({
       dispatch(setPlantDetails(combinedResult));
 
       const updateResponse = await axios.post(
-        "http://192.168.1.5:3000/users/updatePlants",
+       `http://${baseURL}:3000/users/updatePlants`,
         {
           maxLight: combinedResult.maxLight,
           maxMoisture: combinedResult.maxMoisture,
@@ -140,7 +141,7 @@ export default function PlantCard({
         </View>
         <View style={styles.resultImageContainer}>
           <Image
-            source={{ uri: `${image}` }}
+            source={{ uri:image }}
             style={styles.image}
             resizeMode="contain"
           />
