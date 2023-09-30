@@ -11,7 +11,7 @@ import { LargeButton } from "../Buttons/LargeButton";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { setProducts, selectProducts } from "../../Redux/Store/productSlice";
-
+import baseURL from "../../config";
 export default function ProductForm() {
   const info = {
     name: "",
@@ -68,7 +68,7 @@ export default function ProductForm() {
       if (is_empty(data.price)) return Seterr("Please set a price");
 
       const response = await axios.post(
-        "http://192.168.1.5:3000/users/add",
+        `http://${baseURL}:3000/users/add`,
         data,
         {
           headers,

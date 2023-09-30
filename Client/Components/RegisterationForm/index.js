@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LabeledInput from "../../Components/LabeledInput";
 import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
-import { GoogleButton } from "../Buttons/GoogleButton";
-
+import baseURL from "../../config";
 export default function RegisterationForm() {
   const info = {
     name: "",
@@ -74,7 +73,7 @@ export default function RegisterationForm() {
         setData(updatedData);
   
       const response = await axios.post(
-        "http://192.168.1.5:8000/auth/register",
+        `http://${baseURL}:3000/auth/register`,
         updatedData 
       );
 

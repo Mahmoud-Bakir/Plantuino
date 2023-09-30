@@ -12,19 +12,16 @@ import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
 import { LargeButton } from "../Buttons/LargeButton";
 import { GoogleButton } from "../Buttons/GoogleButton";
-import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { registerIndieID } from "native-notify";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setAddressData,
-  setAuthData,
-  selectAuthState,
-} from "../../Redux/Store/authSlice";
+import { useDispatch } from "react-redux";
+import { setAddressData, setAuthData } from "../../Redux/Store/authSlice";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
+import { setPlantDetails } from "../../Redux/Store/plantSlice";
+import baseURL from '../../config';
 
 export default SigninForm = () => {
   const [fontsLoaded] = useFonts({
@@ -46,8 +43,6 @@ export default SigninForm = () => {
   const [data, setData] = useState(info);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-  const authState = useSelector(selectAuthState);
-  const [verified, setVerified] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -93,8 +88,8 @@ export default SigninForm = () => {
   };
 
   const is_empty = (name) => {
-    const test = name.trim();
-    return test === "";
+    const full = name.trim();
+    return full === "";
   };
 
   const is_valid_email = (email) => {
@@ -109,7 +104,7 @@ export default SigninForm = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.5:8000/auth/login",
+        `http://${baseURL}:3000/auth/login`,
         data
       );
 
@@ -124,7 +119,9 @@ export default SigninForm = () => {
         country,
         street,
         located,
+        plants,
       } = response.data.user;
+      registerIndieID(_id, 12747, "BDt99Jcmi6Wq2atbqo1sGR");
 
       if (located) {
         dispatch(
@@ -155,16 +152,28 @@ export default SigninForm = () => {
         );
         await getUserLocation();
       }
-
-      axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-        subID: { _id },
-        appId: 12377,
-        appToken: "YCjAsF4USBdjSLbUwETH8H",
-        title: "Damn Son",
-        message: "IT IS WORKING",
+      if (plants.length > 0) {
+        const firstPlant = plants[0];
+        console.log(plants);
+        dispatch(
+          setPlantDetails({
+            name: firstPlant.plantName,
+            maxLight: firstPlant.maxLight,
+            maxMoisture: firstPlant.maxMoisture,
+            minLight: firstPlant.minLight,
+            minMoisture: firstPlant.minMoisture,
+          })
+        );
+        console.log(firstPlant.plantName);
+        navigation.navigate("Home");
+      }
+       axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+        subID: _id,
+        appId: 12747,
+        appToken: "BDt99Jcmi6Wq2atbqo1sGR",
+        title: `Welcome ${name}`,
+        message: "Are you ready for today?",
       });
-
-      registerIndieID({ _id }, 12377, "YCjAsF4USBdjSLbUwETH8H");
       navigation.navigate("Home");
     } catch (error) {
       console.log("Error" + error.message);
@@ -215,6 +224,7 @@ export default SigninForm = () => {
         {loading && (
           <View style={styles.activityIndicator}>
             <ActivityIndicator size="large" color={Colors.Green} />
+            <Text></Text>
           </View>
         )}
       </View>
