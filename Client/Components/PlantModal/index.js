@@ -12,7 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 const PlantModal = ({
   name,
   price,
-  imageUrl,
+  image,
   closeModal,
   visible,
   phoneNumber,
@@ -33,7 +33,7 @@ const PlantModal = ({
               edit={true}
               name={name}
               price={price}
-              imageUrl={imageUrl}
+              image={image}
               city={city}
               country={country}
               street={street}
@@ -58,7 +58,7 @@ const PlantModal = ({
               city={city}
               country={country}
               street={street}
-              imageUrl={imageUrl}
+              image={image}
               phoneNumber={phoneNumber}
             />
           </SafeAreaView>
