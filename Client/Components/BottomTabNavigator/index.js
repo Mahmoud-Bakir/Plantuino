@@ -1,6 +1,5 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import Analytics from "../../assets/pictures/chart.svg";
 import Camera from "../../assets/pictures/camera.svg";
 import Home from "../../assets/pictures/home.svg";
@@ -9,22 +8,25 @@ import Profile from "../../assets/pictures/profile.svg";
 import AnalyticsActive from "../../assets/pictures/chart_active.svg";
 import CameraActive from "../../assets/pictures/camera_active.svg";
 import HomeActive from "../../assets/pictures/home_active.svg";
+import Chart from "../../assets/pictures/chart.svg";
+import ChartActive from "../../assets/pictures/chart_active.svg";
 import NotificationsActive from "../../assets/pictures/notifications_active.svg";
 import ProfileActive from "../../assets/pictures/profile_active.svg";
 import RecognitionScreen from "../../screens/RecognitionScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import ChatScreen from "../../screens/ChatBotScreen";
+import AnalyticsScreen from "../../screens/AnalyticsScreen";
 
 export default function BottomTabNavigator() {
   const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+    initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         tabBarStyle: {
           backgroundColor: "black",
-          height: 90,
+          height: 85,
           borderTopWidth: 0,
         },
         tabBarShowLabel: false,
@@ -41,6 +43,8 @@ export default function BottomTabNavigator() {
             icon = focused ? <NotificationsActive /> : <Notifications />;
           } else if (route.name === "ProfileScreen") {
             icon = focused ? <ProfileActive /> : <Profile />;
+          } else if (route.name === "AnalyticsScreen") {
+            icon = focused ? <ChartActive /> : <Chart />;
           }
 
           return icon;
@@ -48,15 +52,22 @@ export default function BottomTabNavigator() {
       })}
     >
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="AnalyticsScreen"
+        component={AnalyticsScreen}
         options={{ headerShown: false }}
       />
-      <Tab.Screen
+        <Tab.Screen
         name="CameraScreen"
         component={RecognitionScreen}
         options={{ headerShown: false }}
       />
+
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+    
       <Tab.Screen
         name="ChatBotScreen"
         component={ChatScreen}
