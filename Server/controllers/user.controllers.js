@@ -87,7 +87,7 @@ const updateAddress = async (req, res) => {
 };
 const updatePlants = async (req, res) => {
   try {
-    const { maxLight, maxMoisture, minLight, minMoisture, plantName } =
+    const { maxLight, maxMoisture, minLight, minMoisture, plantName,image} =
       req.body;
     const id = req.user._id;
     const user = await User.findById(id);
@@ -100,6 +100,7 @@ const updatePlants = async (req, res) => {
       maxMoisture,
       minLight,
       minMoisture,
+      image
     };
     user.plants.push(newPlant);
     await user.save();
