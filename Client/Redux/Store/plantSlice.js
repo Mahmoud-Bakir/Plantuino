@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  name: "",
+  plantName: "",
   image: "",
   maxLight: null,
   maxMoisture: null,
@@ -26,13 +26,13 @@ const plantSlice = createSlice({
         maxMoisture,
         minLight,
         minMoisture,
-        name
+        plantName
       } = action.payload;
       state.maxLight = maxLight;
       state.maxMoisture = maxMoisture;
       state.minLight = minLight;
       state.minMoisture = minMoisture;
-      state.name = name;
+      state.plantName = plantName;
       state.defined = true; 
     },
     setDefinedTrue(state) {
