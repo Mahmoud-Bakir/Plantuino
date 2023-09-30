@@ -2,10 +2,11 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
-export default function Message({ type, message,time }) {
+export default function Message({ type, message, time, date }) {
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -22,8 +23,10 @@ export default function Message({ type, message,time }) {
         <Text style={[styles.message, type == "bot" && styles.botMessage]}>
           {message}
         </Text>
-        <Text style={[styles.userTimeStamp, type == "bot" && styles.botTimeStamp]}>
-          {time}
+        <Text
+          style={[styles.userTimeStamp, type == "bot" && styles.botTimeStamp]}
+        >
+          {time} / {date}
         </Text>
       </View>
     </View>
@@ -63,12 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   userTimeStamp: {
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Roboto-Regular",
     fontSize: 10,
     color: colors.LightGrey,
   },
   botTimeStamp: {
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Roboto-Regular",
     fontSize: 10,
     color: colors.Grey,
     alignSelf: "flex-end",
