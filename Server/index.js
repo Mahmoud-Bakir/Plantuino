@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-
+const PORT=3000
 const app = express();
 const cors = require("cors");
 app.use(cors());
@@ -25,9 +25,7 @@ app.use("/admin", adminMiddleware, adminRouter);
 app.use('/arduino', arduinoRouter);
 
 
-
-
-app.listen(3000, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
     console.error(err);
     return;
