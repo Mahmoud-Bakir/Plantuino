@@ -24,14 +24,13 @@ const personalMarket = async (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    const { name, price, picture } = req.body;
+    const { name, price, image } = req.body;
     const id = req.user._id;
     const user = await User.findById(id);
     const userPhoneNumber = user.phoneNumber;
     const country = user.country;
     const city = user.city;
     const street = user.street;
-
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -39,7 +38,7 @@ const addProduct = async (req, res) => {
     const newProduct = {
       name,
       price,
-      imageUrl,
+      image,
       userId: id,
       userPhoneNumber,
       country,
