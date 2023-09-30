@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import PlantCard from "../PlantCard";
 import colors from "../../assets/colors/colors";
 import { useSelector } from "react-redux";
@@ -17,7 +16,6 @@ export default function UserMarket() {
   const authState = useSelector(selectAuthState);
   const userType = authState.userType;
   const products = useSelector(selectProducts);
-  const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedPlant, setSelectedPlant] = useState(null);
 
@@ -33,7 +31,6 @@ export default function UserMarket() {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedPlant(null);
-
   };
 
   return (
@@ -51,8 +48,10 @@ export default function UserMarket() {
                 <PlantCard
                   name={plant.name}
                   price={plant.price}
-                  destination={plant.destination}
-                  imageUrl={plant.imageUrl}
+                  country={plant.country}
+                  city={plant.city}
+                  street={plant.street}
+                  image={plant.image}
                 />
               </TouchableOpacity>
             );
@@ -63,8 +62,10 @@ export default function UserMarket() {
       {userType === 1 && selectedPlant && (
         <PlantModal
           name={selectedPlant.name}
-          imageUrl={selectedPlant.imageUrl}
-          destination={selectedPlant.destination}
+          image={selectedPlant.image}
+          country={selectedPlant.country}
+          city={selectedPlant.city}
+          street={selectedPlant.street}
           price={selectedPlant.price}
           closeModal={closeModal}
           visible={isModalVisible}
@@ -72,11 +73,12 @@ export default function UserMarket() {
           userType="seller"
         />
       )}
-          {userType === 0 && selectedPlant && (
+      {userType === 0 && selectedPlant && (
         <PlantModal
           name={selectedPlant.name}
-          imageUrl={selectedPlant.imageUrl}
-          destination={selectedPlant.destination}
+          image={selectedPlant.image}
+          city={selectedPlant.city}
+          street={selectedPlant.street}
           price={selectedPlant.price}
           closeModal={closeModal}
           visible={isModalVisible}
