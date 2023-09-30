@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   loadingContainer: {
+    flex:1,
+    height:600,
     alignItems: "center",
     justifyContent: "center",
   },
