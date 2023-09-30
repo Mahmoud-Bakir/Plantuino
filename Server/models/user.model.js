@@ -11,6 +11,7 @@ const productsSchema = new Schema({
   street: String,
 });
 const plantsSchema = new Schema({
+  image:String,
   plantName: String,
   minLight: Number,
   maxLight: Number,
