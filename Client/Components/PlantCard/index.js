@@ -58,22 +58,17 @@ export default function PlantCard({
         { headers }
       );
 
-      const combinedResult = {
-        plantName: response.data.result.plantName,
-        ...response.data.result,
-      };
 
-      console.log("Combined Result:", combinedResult);
-      dispatch(setPlantDetails(combinedResult));
+      dispatch(setPlantDetails(response.data.result));
 
       const updateResponse = await axios.post(
        `http://${baseURL}:3000/users/updatePlants`,
         {
-          maxLight: combinedResult.maxLight,
-          maxMoisture: combinedResult.maxMoisture,
-          minLight: combinedResult.minLight,
-          minMoisture: combinedResult.minMoisture,
-          plantName: combinedResult.plantName,
+          maxLight: response.data.result.maxLight,
+          maxMoisture: response.data.result.maxMoisture,
+          minLight: response.data.result.minLight,
+          minMoisture: response.data.result.minMoisture,
+          plantName: response.data.result.plantName,
         },
         { headers }
       );
@@ -90,7 +85,7 @@ export default function PlantCard({
     return <Text>Loading...</Text>;
   }
 
-  if (contact == true) {
+  if (contact) {
     return (
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
@@ -112,7 +107,7 @@ export default function PlantCard({
       </View>
     );
   }
-  if (edit == true) {
+  if (edit) {
     return (
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
@@ -133,7 +128,7 @@ export default function PlantCard({
       </View>
     );
   }
-  if (result == true) {
+  if (result) {
     return (
       <View style={styles.resultContainer}>
         <View style={styles.detailsContainer}>
@@ -141,7 +136,8 @@ export default function PlantCard({
         </View>
         <View style={styles.resultImageContainer}>
           <Image
-            source={{ uri:image }}
+            source={{ uri: `${image}` }}
+           
             style={styles.image}
             resizeMode="contain"
           />
