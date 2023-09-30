@@ -17,7 +17,7 @@ export default function PlantCard({
   country,
   city,
   street,
-  imageUrl,
+  image,
   contact = false,
   edit = false,
   result = false,
@@ -52,7 +52,7 @@ export default function PlantCard({
   const handleSave = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.82:3000/users/getPreferences",
+        "http://192.168.1.5:3000/users/getPreferences",
         { prompt: name },
         { headers }
       );
@@ -66,7 +66,7 @@ export default function PlantCard({
       dispatch(setPlantDetails(combinedResult));
 
       const updateResponse = await axios.post(
-        "http://192.168.1.82:3000/users/updatePlants",
+        "http://192.168.1.5:3000/users/updatePlants",
         {
           maxLight: combinedResult.maxLight,
           maxMoisture: combinedResult.maxMoisture,
@@ -79,7 +79,7 @@ export default function PlantCard({
 
       console.log("Update Response:", updateResponse.data.message);
 
-      navigation.navigate("Home");
+      navigation.navigate("HomeScreen");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -94,7 +94,7 @@ export default function PlantCard({
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
           <Image
-            source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -115,7 +115,7 @@ export default function PlantCard({
       <View style={styles.previewContainer}>
         <View style={styles.previewImageContainer}>
           <Image
-            source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
+            source={{ uri: `data:image/jpeg;base64,${image}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -139,7 +139,7 @@ export default function PlantCard({
         </View>
         <View style={styles.resultImageContainer}>
           <Image
-            source={{ uri: `${imageUrl}` }}
+            source={{ uri: `${image}` }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -154,9 +154,9 @@ export default function PlantCard({
     <View style={styles.cardContainer}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: `data:image/jpeg;base64,${imageUrl}` }}
+          source={{ uri: `data:image/jpeg;base64,${image}` }}
           style={styles.image}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
       <View style={styles.detailsContainer}>
@@ -173,7 +173,7 @@ export default function PlantCard({
 const styles = StyleSheet.create({
   cardContainer: {
     width: 180,
-    height: 350,
+    height: 372,
     backgroundColor: colors.LightBlue,
     borderRadius: 20,
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
+    resizeMode: "cover",
   },
   detailsContainer: {
     padding: 10,
