@@ -16,13 +16,18 @@ import RecognitionScreen from "../../screens/RecognitionScreen";
 import HomeScreen from "../../screens/HomeScreen";
 import ChatScreen from "../../screens/ChatBotScreen";
 import AnalyticsScreen from "../../screens/AnalyticsScreen";
+import { selectAuthState } from "../../Redux/Store/authSlice";
+import { useSelector } from "react-redux";
+import ProfileScreen from "../../screens/ProfileScreen";
 
 export default function BottomTabNavigator() {
   const Tab = createBottomTabNavigator();
+  const authState = useSelector(selectAuthState);
+  const userType = authState.userType;
 
   return (
     <Tab.Navigator
-    initialRouteName="HomeScreen"
+      initialRouteName="HomeScreen"
       screenOptions={({ route }) => ({
         tabBarStyle: {
           backgroundColor: "black",
@@ -37,40 +42,47 @@ export default function BottomTabNavigator() {
             icon = focused ? <HomeActive /> : <Home />;
           } else if (route.name === "CameraScreen") {
             icon = focused ? <CameraActive /> : <Camera />;
-          } else if (route.name === "AnalyticsScreen") {
-            icon = focused ? <AnalyticsActive /> : <Analytics />;
           } else if (route.name === "ChatBotScreen") {
             icon = focused ? <NotificationsActive /> : <Notifications />;
           } else if (route.name === "ProfileScreen") {
             icon = focused ? <ProfileActive /> : <Profile />;
           } else if (route.name === "AnalyticsScreen") {
             icon = focused ? <ChartActive /> : <Chart />;
+          }else if (route.name === "ProfileScreen") {
+            icon = focused ? <Profile /> : <ProfileActive />;
           }
 
           return icon;
         },
       })}
     >
-      <Tab.Screen
-        name="AnalyticsScreen"
-        component={AnalyticsScreen}
-        options={{ headerShown: false }}
-      />
+      {userType === 0 && (
         <Tab.Screen
-        name="CameraScreen"
-        component={RecognitionScreen}
-        options={{ headerShown: false }}
-      />
-
+          name="AnalyticsScreen"
+          component={AnalyticsScreen}
+          options={{ headerShown: false }}
+        />
+      )}
+      {userType === 0 && (
+        <Tab.Screen
+          name="CameraScreen"
+          component={RecognitionScreen}
+          options={{ headerShown: false }}
+        />
+      )}
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-    
       <Tab.Screen
         name="ChatBotScreen"
         component={ChatScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
