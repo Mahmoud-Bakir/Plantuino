@@ -136,7 +136,7 @@ export default function RegisterationForm() {
       </View>
 
       <LabeledInput
-        title="Are you a?"
+        title="Are you a"
         holder="test"
         picker={true}
         onChange={handleDataChange}
