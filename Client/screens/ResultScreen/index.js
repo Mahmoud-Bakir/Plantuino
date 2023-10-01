@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ScreenHeader from "../../Components/ScreensHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet } from "react-native";
 import Result from "../../assets/pictures/Result.svg";
 import PlantCard from "../../Components/PlantCard";
 import {
@@ -16,7 +16,7 @@ export default function ResultScreen({}) {
   return (
     <SafeAreaView style={styles.container}>
       <ScreenHeader component={Result}/>
-      <PlantCard result={true} imageUrl={plantImage} name={plantName} />
+      <PlantCard result={true} image={plantImage} name={plantName} />
     </SafeAreaView>
   );
 }
