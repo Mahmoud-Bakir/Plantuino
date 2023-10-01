@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../../assets/colors/colors";
@@ -34,15 +35,23 @@ import Colors from "../../assets/colors/colors";
 export default function ChatBotScreen() {
   const [selectedChoice, setSelectedChoice] = useState("ChatBot");
   const [message, setMessage] = useState("");
+  const [oldMessage, setOldMessage] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const authState = useSelector(selectAuthState);
+  const scrollViewRef = useRef();
   const _id = authState._id;
   const token = authState.token;
   const headers = {
     Authorization: `Bearer ${token}`,
   };
+
+  const [fontsLoaded] = useFonts({
+    "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+  });
 
   useEffect(async () => {
     const fetchMessages = async () => {
@@ -63,7 +72,8 @@ export default function ChatBotScreen() {
         let notifications = await getIndieNotificationInbox(
           _id,
           12747,
-          "BDt99Jcmi6Wq2atbqo1sGR"
+          "BDt99Jcmi6Wq2atbqo1sGR",
+          "Asia/Beirut"
         );
         console.log("notifications: ", notifications);
         setData(notifications);
@@ -82,7 +92,7 @@ export default function ChatBotScreen() {
     console.log(choice);
   };
 
-  const sendeMessage = async () => {
+  const sendMessage = async () => {
     const data = {
       messageType: "user",
       messageContent: message,
@@ -96,7 +106,6 @@ export default function ChatBotScreen() {
           headers,
         }
       );
-
       setMessage("");
       setMessages([...messages, response.data.newMessage]);
       console.log(response.data.newMessage);
@@ -113,6 +122,7 @@ export default function ChatBotScreen() {
     // ];
   };
   const respond = async (message) => {
+    setLoading(true);
     const answerResponse = await axios.post(
       `http://${baseURL}:3000/users/answer`,
       { prompt: message },
@@ -131,15 +141,11 @@ export default function ChatBotScreen() {
       botMessage,
       { headers }
     );
+    setLoading(false);
     console.log(response.data);
     setMessages((prevMessages) => [...prevMessages, response.data.newMessage]);
   };
-  4;
 
-  const [fontsLoaded] = useFonts({
-    "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
-    "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
-  });
   const handleDeleteNotification = async (notificationId) => {
     let notifications = await deleteIndieNotificationInbox(
       _id,
@@ -171,7 +177,13 @@ export default function ChatBotScreen() {
       />
       {selectedChoice === "ChatBot" ? (
         <>
-          <ScrollView style={styles.chatArea}>
+          <ScrollView
+            style={styles.chatArea}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+          >
             {messages.length > 0 ? (
               messages.map((msg, index) => (
                 <View
@@ -213,12 +225,15 @@ export default function ChatBotScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="Type your message..."
-                value={message}
-                onChangeText={(text) => setMessage(text)}
+                value={oldMessage}
+                onChangeText={(text) => {setMessage(text),setOldMessage(text)}}
               />
               <TouchableOpacity
                 style={styles.sendButton}
-                onPress={sendeMessage}
+                onPress={() => {
+                  sendMessage();
+                  setOldMessage("");
+                }}
               >
                 <Text style={styles.sendButtonText}>Send</Text>
               </TouchableOpacity>
@@ -334,6 +349,7 @@ const styles = StyleSheet.create({
   emptyMessage: {
     fontSize: 24,
     textAlign: "center",
+    fontFamily:"Raleway-Bold"
   },
   emptyMessageContainer: {
     flex: 1,
@@ -360,7 +376,7 @@ const styles = StyleSheet.create({
   },
   notificationDate: {
     fontSize: 14,
-    fontFamily: "Raleway-Regular",
+    fontFamily: "Roboto-Regular",
     color: Colors.Grey,
   },
   binContainer: {
