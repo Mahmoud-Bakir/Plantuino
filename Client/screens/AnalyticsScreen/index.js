@@ -151,7 +151,7 @@ export default function AnalyticsScreen() {
           console.error(error);
           setLoading(false);
         });
-    }, 0.5 * 60 * 1000);
+    }, 1 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, [defined]);
@@ -219,7 +219,7 @@ export default function AnalyticsScreen() {
                     },
                   ],
                 }}
-                width={400}
+                width={380}
                 height={500}
                 yAxisSuffix="%"
                 yAxisInterval={1}
@@ -232,14 +232,13 @@ export default function AnalyticsScreen() {
                   labelColor: (opacity = 1) =>
                     `rgba(255, 255, 255, ${opacity})`,
                   style: {
-                    borderRadius: 16,
                   },
                   barPercentage: 0.5,
                   categoryPercentage: 2,
                 }}
                 style={{
                   marginVertical: 20,
-                  borderRadius: 16,
+                  borderRadius:20,
                 }}
               />
               <Text style={[styles.feedBack, styles.moisture]}>
@@ -264,7 +263,7 @@ export default function AnalyticsScreen() {
                     },
                   ],
                 }}
-                width={400}
+                width={380}
                 height={500}
                 yAxisSuffix="%"
                 yAxisInterval={1}
@@ -277,14 +276,13 @@ export default function AnalyticsScreen() {
                   labelColor: (opacity = 1) =>
                     `rgba(255, 255, 255, ${opacity})`,
                   style: {
-                    borderRadius: 16,
                   },
                   barPercentage: 0.5,
                   categoryPercentage: 2,
                 }}
                 style={{
+                  borderRadius:20,
                   marginVertical: 20,
-                  borderRadius: 16,
                 }}
               />
               <Text style={[styles.feedBack, styles.sunlight]}>
