@@ -103,6 +103,7 @@ export default SigninForm = () => {
     if (!is_valid_email(data.email)) return setErr("Incorrect credentials");
 
     try {
+      setLoading(true)
       const response = await axios.post(
         `http://${baseURL}:3000/auth/login`,
         data
@@ -151,17 +152,19 @@ export default SigninForm = () => {
           })
         );
         await getUserLocation();
+        setLoading(false)
       }
       if (plants.length > 0) {
         const firstPlant = plants[0];
         console.log(plants);
         dispatch(
           setPlantDetails({
-            name: firstPlant.plantName,
+            plantName: firstPlant.plantName,
             maxLight: firstPlant.maxLight,
             maxMoisture: firstPlant.maxMoisture,
             minLight: firstPlant.minLight,
             minMoisture: firstPlant.minMoisture,
+            image:firstPlant.image
           })
         );
         console.log(firstPlant.plantName);
@@ -179,6 +182,7 @@ export default SigninForm = () => {
       console.log("Error" + error.message);
       if (error.message === "Request failed with status code 404")
         setErr("Incorrect credentials");
+      setLoading(false)
     }
   };
 
