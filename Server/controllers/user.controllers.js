@@ -250,14 +250,16 @@ const deleteProduct = async (req, res) => {
     const id = req.user._id;
     const productId = req.body.productId;
     const updatedUser = await User.findOneAndUpdate(
-      { _id: id },
+      { _id: id, "products._id": productId },
       { $pull: { products: { _id: productId } } },
       { new: true }
     );
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res
+        .status(404)
+        .json({ message: "Product not found or does not belong to the user" });
     }
-    res.json({ message: "Product deleted successfully" });
+    res.json({ message: "Product deleted successfully", updatedUser });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
