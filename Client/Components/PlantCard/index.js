@@ -24,6 +24,7 @@ import Colors from "../../assets/colors/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProducts } from "../../Redux/Store/productSlice";
 import { SaveButton } from "../Buttons/SaveButton";
+import * as ImagePicker from "expo-image-picker";
 
 export default function PlantCard({
   name,
@@ -53,13 +54,14 @@ export default function PlantCard({
     "Roboto-Bold": require("../../assets/fonts/Roboto-Bold.ttf"),
   });
   const info = {
-    newName: name,
-    newPrice: price,
-    newStreet: street,
-    newCity: city,
-    newCountry: country,
+    name,
+    price,
+    street,
+    city,
+    country,
+    image
   };
-  const [newAddress, setNewAddress] = useState(info);
+  const [newEdition, setNewEdition] = useState(info);
   const sendMessage = () => {
     const message = "Hello! ";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
@@ -73,11 +75,11 @@ export default function PlantCard({
     });
   };
   const handleDataChange = (key, value) => {
-    setNewAddress((prev) => ({
+    setNewEdition((prev) => ({
       ...prev,
       [key]: value,
     }));
-    console.log(newAddress);
+    console.log(newEdition);
   };
   const handleSave = async () => {
     try {
@@ -131,9 +133,35 @@ export default function PlantCard({
       console.log(error);
     }
   };
-  const handleSaveChanges = async()=>{
+  const handleImageUpload = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        aspect: [4, 3],
+        quality: 0.2,
+        base64: true,
+      });
 
-  }
+      if (!result.canceled) {
+        setNewEdition({ ...newEdition, image: result.base64 });
+      }
+    } catch (error) {
+      console.error("Error picking image", error);
+    }
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const response = await axios.post(
+        `http://${baseURL}:3000/users/editProduct`,
+        { newEdition, productId },
+        { headers }
+      );
+      dispatch(setProducts(response.data.updatedUser.products));
+      closeModal();
+      console.log(response.data);
+    } catch (error) {}
+  };
 
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -165,32 +193,32 @@ export default function PlantCard({
       <View style={isEditing ? styles.editContainer : styles.previewContainer}>
         {isEditing ? (
           <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.editInput}
-                value={newAddress.newName}
-                onChangeText={(text) => handleDataChange("name", text)}
-              />
-              <TextInput
-                style={styles.editInput}
-                value={newAddress.newPrice.toString()}
-                onChangeText={(text) => handleDataChange("price", text)}
-              />
-              <TextInput
-                style={styles.editInput}
-                value={newAddress.newStreet}
-                onChangeText={(text) => handleDataChange("street", text)}
-              />
-              <TextInput
-                style={styles.editInput}
-                value={newAddress.newCity}
-                onChangeText={(text) => handleDataChange("city", text)}
-              />
-              <TextInput
-                style={styles.editInput}
-                value={newAddress.newCountry}
-                onChangeText={(text) => handleDataChange("country", text)}
-              />
-              <LargeButton title="Change Image"/>
+            <TextInput
+              style={styles.editInput}
+              value={newEdition.name}
+              onChangeText={(text) => handleDataChange("name", text)}
+            />
+            <TextInput
+              style={styles.editInput}
+              value={newEdition.price.toString()}
+              onChangeText={(text) => handleDataChange("price", text)}
+            />
+            <TextInput
+              style={styles.editInput}
+              value={newEdition.street}
+              onChangeText={(text) => handleDataChange("street", text)}
+            />
+            <TextInput
+              style={styles.editInput}
+              value={newEdition.city}
+              onChangeText={(text) => handleDataChange("city", text)}
+            />
+            <TextInput
+              style={styles.editInput}
+              value={newEdition.country}
+              onChangeText={(text) => handleDataChange("country", text)}
+            />
+            <LargeButton title="Change Image" handle={handleImageUpload} />
           </View>
         ) : (
           <>
@@ -210,7 +238,7 @@ export default function PlantCard({
             </View>
           </>
         )}
-  
+
         {isEditing ? (
           <View style={styles.editButtonsContainer}>
             <DeleteButton title="Delete" handle={handleDelete} />
@@ -222,7 +250,7 @@ export default function PlantCard({
       </View>
     );
   }
-  
+
   if (result) {
     return (
       <View style={styles.resultContainer}>
@@ -303,7 +331,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.White,
     borderRadius: 20,
   },
-  editContainer:{
+  editContainer: {
     width: "100%",
     height: 550,
     backgroundColor: colors.White,
@@ -363,8 +391,8 @@ const styles = StyleSheet.create({
   editButtonsContainer: {
     flexDirection: "row",
     gap: 10,
-    alignContent:"center",
-    justifyContent:"center"
+    alignContent: "center",
+    justifyContent: "center",
   },
   editInput: {
     width: "90%",
@@ -373,14 +401,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     borderColor: Colors.LightGrey,
-    backgroundColor:colors.LigherGrey,
+    backgroundColor: colors.LigherGrey,
     borderRadius: 5,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
   inputContainer: {
-    marginTop:30,
-    paddingVertical:30,
+    marginTop: 30,
+    paddingVertical: 30,
     alignItems: "center",
     gap: 15,
   },
