@@ -264,6 +264,25 @@ const deleteProduct = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const editProduct = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { productId, newEdition } = req.body;
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId, "products._id": productId },
+      { $set: { "products.$": newEdition } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Product not found or does not belong to the user" });
+    }
+    res.json({ message: "Product Edited successfully", updatedUser });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { editProduct };
 
 module.exports = {
   addProduct,
@@ -276,4 +295,5 @@ module.exports = {
   getPreferences,
   updatePlants,
   deleteProduct,
+  editProduct,
 };
