@@ -12,9 +12,7 @@ router.post("/answer",userController.answer)
 router.post("/getPreferences",userController.getPreferences)
 router.post("/updatePlants",userController.updatePlants)
 router.post("/deleteProduct",userController.deleteProduct)
-
-
-
+router.post("/editProduct",userController.editProduct)
 
 
 module.exports = router;
