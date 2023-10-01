@@ -7,6 +7,7 @@ import {
   Linking,
   TextInput,
   Button,
+  ActivityIndicator,
 } from "react-native";
 import colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
@@ -44,6 +45,7 @@ export default function PlantCard({
   const token = authState.token;
   const headers = { Authorization: `Bearer ${token}` };
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const combinedAddress = ` ${street},${city},${country}`;
@@ -59,7 +61,7 @@ export default function PlantCard({
     street,
     city,
     country,
-    image
+    image,
   };
   const [newEdition, setNewEdition] = useState(info);
   const sendMessage = () => {
@@ -83,6 +85,7 @@ export default function PlantCard({
   };
   const handleSave = async () => {
     try {
+      setLoading(true);
       const response = await axios.post(
         `http://${baseURL}:3000/users/getPreferences`,
         { prompt: name },
@@ -108,7 +111,8 @@ export default function PlantCard({
         );
 
         console.log("Update Response:", updatedResponse.data.message);
-        navigation.navigate("HomeScreen");
+        setLoading(false);
+        navigation.navigate("Home");
       } catch (updateError) {
         console.error("Update Error:", updateError);
       }
@@ -151,12 +155,14 @@ export default function PlantCard({
   };
 
   const handleSaveChanges = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `http://${baseURL}:3000/users/editProduct`,
         { newEdition, productId },
         { headers }
       );
+      setLoading(false);
       dispatch(setProducts(response.data.updatedUser.products));
       closeModal();
       console.log(response.data);
@@ -181,7 +187,9 @@ export default function PlantCard({
           <Text style={styles.resultName}>{name}</Text>
           <Text style={styles.resultPrice}>$ {price} </Text>
           <Text style={styles.resultDesciptions}>
-            {street},{city},{country}
+            {street!= ""
+              ? ({ street }, { city }, { country })
+              : ({ city }, { country })}
           </Text>
           <ContactButton title="WhatsApp" handle={sendMessage} />
         </View>
@@ -247,6 +255,11 @@ export default function PlantCard({
         ) : (
           <EditButton title="Edit" handle={() => setIsEditing(true)} />
         )}
+        {loading ? (
+          <ActivityIndicator size="large" color={Colors.Green} />
+        ) : (
+          <></>
+        )}
       </View>
     );
   }
@@ -267,6 +280,11 @@ export default function PlantCard({
         <View style={styles.saveButtonContainer}>
           <EditButton title="Save" handle={handleSave} />
         </View>
+        {loading ? (
+          <ActivityIndicator size="large" color={Colors.Green} />
+        ) : (
+          <></>
+        )}
       </View>
     );
   }
@@ -298,14 +316,16 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: 270,
-    borderRadius: 25,
     overflow: "hidden",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   image: {
     flex: 1,
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+    borderRadius: 5,
   },
   detailsContainer: {
     padding: 10,
@@ -329,13 +349,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "90%",
     backgroundColor: colors.White,
-    borderRadius: 20,
+    borderRadius: 15,
   },
   editContainer: {
     width: "100%",
-    height: 550,
+    height: 570,
     backgroundColor: colors.White,
-    borderRadius: 20,
+    borderRadius: 15,
   },
   resultContainer: {
     padding: 20,
@@ -386,7 +406,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     width: "100%",
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   editButtonsContainer: {
     flexDirection: "row",
