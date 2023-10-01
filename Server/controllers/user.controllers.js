@@ -87,7 +87,7 @@ const updateAddress = async (req, res) => {
 };
 const updatePlants = async (req, res) => {
   try {
-    const { maxLight, maxMoisture, minLight, minMoisture, plantName,image} =
+    const { maxLight, maxMoisture, minLight, minMoisture, plantName, image } =
       req.body;
     const id = req.user._id;
     const user = await User.findById(id);
@@ -100,7 +100,7 @@ const updatePlants = async (req, res) => {
       maxMoisture,
       minLight,
       minMoisture,
-      image
+      image,
     };
     user.plants.push(newPlant);
     await user.save();
@@ -245,6 +245,23 @@ const getPreferences = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const deleteProduct = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const productId = req.body.productId;
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { $pull: { products: { _id: productId } } },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   addProduct,
@@ -256,4 +273,5 @@ module.exports = {
   answer,
   getPreferences,
   updatePlants,
+  deleteProduct,
 };
