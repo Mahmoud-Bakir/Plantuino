@@ -6,6 +6,8 @@ router.get("/getUsers", adminController.getUsers);
 router.get("/getSellers", adminController.getSellers);
 router.get("/getPlantOwners", adminController.getPlantOwners);
 router.post("/delete", adminController.deleteUser);
+router.get("/deleteAllUsers", adminController.deleteAllUsers);
+
 
 
 
