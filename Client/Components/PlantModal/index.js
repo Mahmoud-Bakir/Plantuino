@@ -19,9 +19,11 @@ const PlantModal = ({
   userType,
   city,
   country,
-  street
+  street,
+  productId
 }) => {
   if (userType === "seller") {
+    console.log("second test",productId)
     return (
       <Modal animationType="slide" transparent={true} visible={visible}>
         <View style={styles.modalContainer}>
@@ -38,6 +40,8 @@ const PlantModal = ({
               country={country}
               street={street}
               phoneNumber={phoneNumber}
+              productId={productId}
+              closeModal={closeModal}
             />
           </SafeAreaView>
         </View>
