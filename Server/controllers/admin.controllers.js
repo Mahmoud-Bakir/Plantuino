@@ -43,5 +43,16 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const deleteAllUsers = async (req, res) => {
+  try {
+    const deletedUsers = await User.deleteMany({});
+    if (!deletedUsers || deletedUsers.deletedCount === 0) {
+      return res.status(404).json({ error: "No users found" });
+    }
+    res.json({ message: "All users deleted successfully", deletedUsers });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-module.exports = { getUsers, getSellers, getPlantOwners, deleteUser };
+module.exports = { getUsers, getSellers, getPlantOwners, deleteUser,deleteAllUsers };
