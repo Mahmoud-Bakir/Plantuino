@@ -17,6 +17,7 @@ import { useFonts } from "expo-font";
 import { LargeButton } from "../../Components/Buttons/LargeButton";
 import { NotificationsScreen } from "../NotificationsScreen";
 import ChatBot from "../../assets/pictures/chatBot.svg";
+import Bin from "../../assets/pictures/bin.svg";
 import Notification from "../../assets/pictures/notification.svg";
 import Toggle from "../../Components/Toggle";
 import axios from "axios";
@@ -139,7 +140,16 @@ export default function ChatBotScreen() {
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
   });
-
+  const handleDeleteNotification = async (notificationId) => {
+    let notifications = await deleteIndieNotificationInbox(
+      _id,
+      notificationId,
+      12747,
+      "BDt99Jcmi6Wq2atbqo1sGR"
+    );
+    console.log("notifications: ", notifications);
+    setData(notifications);
+  };
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -219,12 +229,22 @@ export default function ChatBotScreen() {
         <ScrollView style={styles.chatArea}>
           {data.map((notification, index) => (
             <View key={index} style={styles.notification}>
-              <Text style={styles.notificationMessage}>
-                {notification.message}
-              </Text>
-              <Text style={styles.notificationDate}>
-                Date: {notification.date}
-              </Text>
+              <View>
+                <Text style={styles.notificationMessage}>
+                  {notification.message}
+                </Text>
+                <Text style={styles.notificationDate}>
+                  Date: {notification.date}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={styles.binContainer}
+                onPress={() =>
+                  handleDeleteNotification(notification.notification_id)
+                }
+              >
+                <Bin />
+              </TouchableOpacity>
             </View>
           ))}
         </ScrollView>
@@ -324,6 +344,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   notification: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 15,
     marginHorizontal: 30,
     paddingVertical: 10,
@@ -340,5 +362,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Raleway-Regular",
     color: Colors.Grey,
+  },
+  binContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
 });
