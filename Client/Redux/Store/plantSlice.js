@@ -26,13 +26,15 @@ const plantSlice = createSlice({
         maxMoisture,
         minLight,
         minMoisture,
-        plantName
+        plantName,
+        image
       } = action.payload;
       state.maxLight = maxLight;
       state.maxMoisture = maxMoisture;
       state.minLight = minLight;
       state.minMoisture = minMoisture;
       state.plantName = plantName;
+      state.image = image;
       state.defined = true; 
     },
     setDefinedTrue(state) {
