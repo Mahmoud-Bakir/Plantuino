@@ -54,7 +54,10 @@ const addProduct = async (req, res) => {
 
     res.json({
       message: "Product added successfully",
-      newProduct,
+      newProduct: {
+        ...newProduct,
+        _id: user.products[user.products.length - 1]._id,
+      },
       products,
     });
   } catch (error) {
