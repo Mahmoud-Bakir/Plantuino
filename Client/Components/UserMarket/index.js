@@ -42,7 +42,6 @@ export default function UserMarket() {
       ) : (
         <View style={styles.productsContainer}>
           {products.map((plant, index) => {
-            console.log("Phone Number:", plant.userPhoneNumber);
             return (
               <TouchableOpacity key={index} onPress={() => openModal(plant)}>
                 <PlantCard
@@ -52,6 +51,7 @@ export default function UserMarket() {
                   city={plant.city}
                   street={plant.street}
                   image={plant.image}
+                  productId={plant._id}
                 />
               </TouchableOpacity>
             );
@@ -71,6 +71,8 @@ export default function UserMarket() {
           visible={isModalVisible}
           phoneNumber={selectedPlant.userPhoneNumber}
           userType="seller"
+          productId={selectedPlant._id}
+
         />
       )}
       {userType === 0 && selectedPlant && (
