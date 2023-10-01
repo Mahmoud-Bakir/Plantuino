@@ -142,10 +142,10 @@ export default function AnalyticsScreen() {
           setLatestSunlight(lastItem.sunlight);
           latestMoistureRef.current = lastItem.moisture;
           latestSunlightRef.current = lastItem.sunlight;
-          if (lastItem.moisture < minM) lowMoistureAlert();
-          if (lastItem.moisture > maxM) highMoistureAlert();
-          if (lastItem.sunlight < minL) lowLightAlert();
-          if (lastItem.sunlight > maxL) highLightAlert();
+          if (lastItem.moisture < minMoisture) lowMoistureAlert();
+          if (lastItem.moisture > maxMoisture) highMoistureAlert();
+          if (lastItem.sunlight < minLight) lowLightAlert();
+          if (lastItem.sunlight > maxLight) highLightAlert();
         })
         .catch((error) => {
           console.error(error);
