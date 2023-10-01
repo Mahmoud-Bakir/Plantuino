@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
@@ -23,8 +24,12 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import { setProducts } from "../../Redux/Store/productSlice";
-import {selectPlantDetails } from "../../Redux/Store/plantSlice";
+import {
+  selectPlantDetails,
+  selectPlantImage,
+} from "../../Redux/Store/plantSlice";
 import baseURL from "../../config";
+import Colors from "../../assets/colors/colors";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -36,8 +41,9 @@ export default function HomeScreen() {
   const street = authState.street;
   const located = authState.located;
   const selectedPlant = useSelector(selectPlantDetails);
-  const defined=selectedPlant.defined
-  const plantName=selectedPlant.name
+  const defined = selectedPlant.defined;
+  const plantName = selectedPlant.plantName;
+  const plantImage = selectedPlant.image;
 
   const addressing = {
     country,
@@ -56,7 +62,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     console.log("Useeffect is running");
-    console.log(plantName);
+    console.log(plantName, plantImage);
     const getData = async () => {
       try {
         if (userType == 1) {
@@ -72,7 +78,7 @@ export default function HomeScreen() {
             try {
               console.log("addressing", addressing);
               await axios.put(
-               `http://${baseURL}:3000/users/updateAddress`,
+                `http://${baseURL}:3000/users/updateAddress`,
                 addressing,
                 { headers }
               );
@@ -85,6 +91,7 @@ export default function HomeScreen() {
               `http://${baseURL}:3000/users/publicMarket`,
               { headers }
             );
+            console.log("response testing ",response.data)
             dispatch(setProducts(response.data));
           } catch (error) {}
           if (!located) {
@@ -95,6 +102,7 @@ export default function HomeScreen() {
                 addressing,
                 { headers }
               );
+              console.log("updated",response.data)
             } catch (error) {}
           }
         }
@@ -104,7 +112,7 @@ export default function HomeScreen() {
     };
 
     getData();
-  }, [dispatch,plantName]);
+  }, [dispatch, plantName]);
 
   const handleChoiceSelection = (choice) => {
     console.log(selectedChoice);
@@ -136,7 +144,7 @@ export default function HomeScreen() {
           style={styles.addIcon}
           onPress={() => navigation.navigate("AddProductScreen")}
         >
-          <AntDesign name="pluscircle" size={50} color="Black" />
+          <AntDesign name="pluscircle" size={70} color="Black" />
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -156,23 +164,28 @@ export default function HomeScreen() {
           onChoiceSelected={handleChoiceSelection}
         />
         {selectedChoice === "My Garden" ? (
-          <ScrollView>
-            <SafeAreaView style={styles.container}>
-              {defined ? (
-                <View style={styles.contentContainer}>
-                  <Text style={styles.title}>{plantName}</Text>
+          <View style={styles.container}>
+            {defined ? (
+              <View style={styles.contentContainer}>
+                <Text style={styles.imageTitle}>{plantName}</Text>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{ uri: `${plantImage}` }}
+                    style={styles.image}
+                    resizeMode="contain"
+                  />
                 </View>
-              ) : (
-                <View style={styles.contentContainer}>
-                  <Text style={styles.title}>No Plants</Text>
-                  <Text style={styles.subtitle}>
-                    Start by connecting your arduino kit
-                  </Text>
-                  <LargeButton title={"Connect"} />
-                </View>
-              )}
-            </SafeAreaView>
-          </ScrollView>
+              </View>
+            ) : (
+              <View style={styles.contentContainer}>
+                <Text style={styles.title}>No Plants</Text>
+                <Text style={styles.subtitle}>
+                  Start by connecting your arduino kit
+                </Text>
+                <LargeButton title={"Connect"} handle={()=>navigation.navigate("CameraScreen")}/>
+              </View>
+            )}
+          </View>
         ) : selectedChoice === "Market" ? (
           <ScrollView style={styles.marketContainer}>
             <View>
@@ -187,16 +200,25 @@ export default function HomeScreen() {
   }
 }
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+
+  },
   contentContainer: {
-    flex: 1,
-    marginVertical: 200,
+    marginTop: 25,
+    width: 350,
+    alignSelf: "center",
+    padding: 20,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: Colors.LightBlue,
   },
   title: {
     fontFamily: "Raleway-Bold",
     fontSize: 24,
-    marginBottom: 16,
   },
   subtitle: {
     fontFamily: "Raleway-Regular",
@@ -236,14 +258,29 @@ const styles = StyleSheet.create({
   },
   addIcon: {
     position: "absolute",
-    bottom: "10%",
-    right: "10%",
+    bottom: "3%",
+    right: "5%",
   },
   marketContainer: {
     marginTop: 5,
- 
   },
   productsContainer: {
     flex: 1,
+  },
+  image: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    borderRadius: 35,
+  },
+  imageContainer: {
+    height: 500,
+    width: 250,
+  },
+  imageTitle: {
+    fontFamily: "Raleway-Bold",
+    fontSize: 24,
+    marginBottom:10
   },
 });
