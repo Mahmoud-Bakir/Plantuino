@@ -22,9 +22,10 @@ import Toggle from "../../Components/Toggle";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
+import baseURL from "../../config";
 
 export default function ChatBotScreen() {
-  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [selectedChoice, setSelectedChoice] = useState("ChatBot");
   const [message, setMessage] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -38,7 +39,7 @@ export default function ChatBotScreen() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.1.5:3000/users/getMessages",
+          `http://${baseURL}:3000/users/getMessages`,
           {
             headers,
           }
@@ -65,7 +66,7 @@ export default function ChatBotScreen() {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/users/saveMessage",
+        `http://${baseURL}:3000/users/saveMessage`,
         data,
         {
           headers,
@@ -74,43 +75,42 @@ export default function ChatBotScreen() {
 
       setMessage("");
       setMessages([...messages, response.data.newMessage]);
-
-      // const conversation = [
-      //   ...messages,
-      //   {
-      //     messageType: "user",
-      //     messageContent: `message: ${messages.length + 1}\n${message}`,
-      //   },
-      // ];
-
-      const answerResponse = await axios.post(
-        "http://192.168.1.5:3000/users/answer",
-        { prompt: message },
-        { headers }
-      );
-
-      const generatedResponse = answerResponse.data.result;
-      
-      const botMessage = {
-        messageType: "bot",
-        messageContent: generatedResponse,
-      };
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { messageType: "bot", messageContent: generatedResponse },
-      ]);
-
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
-
-      await axios.post(
-        "http://192.168.1.5:3000/users/saveMessage",
-        botMessage,
-        { headers }
-      );
+      console.log(response.data.newMessage);
+      respond(message);
     } catch (error) {
       console.error("Error:", error);
     }
+    // const conversation = [
+    //   ...messages,
+    //   {
+    //     messageType: "user",
+    //     messageContent: `message: ${messages.length + 1}\n${message}`,
+    //   },
+    // ];
   };
+  const respond = async (message) => {
+    const answerResponse = await axios.post(
+      `http://${baseURL}:3000/users/answer`,
+      { prompt: message },
+      { headers }
+    );
+
+    const generatedResponse = answerResponse.data.result;
+
+    const botMessage = {
+      messageType: "bot",
+      messageContent: generatedResponse,
+    };
+
+    const response = await axios.post(
+      `http://${baseURL}:3000/users/saveMessage`,
+      botMessage,
+      { headers }
+    );
+    console.log(response.data);
+    setMessages((prevMessages) => [...prevMessages, response.data.newMessage]);
+  };
+  4;
 
   const [fontsLoaded] = useFonts({
     "Raleway-Bold": require("../../assets/fonts/Raleway-Bold.ttf"),
@@ -125,13 +125,9 @@ export default function ChatBotScreen() {
     <View style={styles.container}>
       <SafeAreaView style={styles.topSafeArea} edges={["top"]} />
       {selectedChoice === "Notifications" ? (
-        <>
-          <ScreenHeader component={Notification} />
-        </>
+        <ScreenHeader component={Notification} />
       ) : (
-        <>
-          <ScreenHeader component={ChatBot} />
-        </>
+        <ScreenHeader component={ChatBot} />
       )}
       <Toggle
         choice1="ChatBot"
@@ -140,47 +136,65 @@ export default function ChatBotScreen() {
         choices={2}
         onChoiceSelected={handleChoiceSelection}
       />
-      <ScrollView style={styles.chatArea}>
-        {messages.map((msg, index) => (
-          <View
-            style={
-              msg.messageType === "user"
-                ? styles.userMessage
-                : styles.botMessage
-            }
-            key={index}
+      {selectedChoice === "ChatBot" ? (
+        <>
+          <ScrollView style={styles.chatArea}>
+            {messages.length > 0 ? (
+              messages.map((msg, index) => (
+                <View
+                  style={
+                    msg.messageType === "user"
+                      ? styles.userMessage
+                      : styles.botMessage
+                  }
+                  key={index}
+                >
+                  <Message
+                    type={msg.messageType}
+                    message={msg.messageContent}
+                    time={new Date(msg.createdAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                    date={new Date(msg.createdAt).toLocaleDateString([], {
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  />
+                  {console.log(msg.createdAt)}
+                </View>
+              ))
+            ) : (
+              <View style={styles.emptyMessageContainer}>
+                <Text style={styles.emptyMessage}>
+                  Ask any question you want!
+                </Text>
+              </View>
+            )}
+          </ScrollView>
+          <KeyboardAvoidingView
+            style={styles.keyboardContainer}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <Message
-              type={msg.messageType}
-              message={msg.messageContent}
-              time={new Date(msg.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            />
-            {console.log(msg.timestamp)}
-          </View>
-        ))}
-      </ScrollView>
-      <KeyboardAvoidingView
-        style={styles.keyboardContainer}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Type your message..."
-            value={message}
-            onChangeText={(text) => setMessage(text)}
-          />
-          <TouchableOpacity
-            style={styles.sendButton}
-            onPress={sendeMessage}
-          >
-            <Text style={styles.sendButtonText}>Send</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Type your message..."
+                value={message}
+                onChangeText={(text) => setMessage(text)}
+              />
+              <TouchableOpacity
+                style={styles.sendButton}
+                onPress={sendeMessage}
+              >
+                <Text style={styles.sendButtonText}>Send</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </>
+      ) : (
+        <></>
+      )}
     </View>
   );
 }
@@ -262,4 +276,16 @@ const styles = StyleSheet.create({
     fontFamily: "Raleway-Bold",
     fontSize: 16,
   },
+  emptyMessage: {
+    fontSize: 24,
+    textAlign:"center"
+  },
+  emptyMessageContainer:{
+    flex:1,
+    width:300,
+    height:500,
+    alignSelf:"center",
+    justifyContent:"center",
+    alignContent:"center"
+  }
 });
