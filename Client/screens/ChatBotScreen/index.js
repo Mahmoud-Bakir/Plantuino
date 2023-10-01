@@ -23,13 +23,21 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthState } from "../../Redux/Store/authSlice";
 import baseURL from "../../config";
+import {
+  getNotificationInbox,
+  getIndieNotificationInbox,
+  deleteIndieNotificationInbox,
+} from "native-notify";
+import Colors from "../../assets/colors/colors";
 
 export default function ChatBotScreen() {
   const [selectedChoice, setSelectedChoice] = useState("ChatBot");
   const [message, setMessage] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [data, setData] = useState([]);
   const authState = useSelector(selectAuthState);
+  const _id = authState._id;
   const token = authState.token;
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -49,8 +57,23 @@ export default function ChatBotScreen() {
         console.error("Error:", error);
       }
     };
+    const getNofifications = async () => {
+      try {
+        let notifications = await getIndieNotificationInbox(
+          _id,
+          12747,
+          "BDt99Jcmi6Wq2atbqo1sGR"
+        );
+        console.log("notifications: ", notifications);
+        setData(notifications);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching :", error);
+      }
+    };
 
     fetchMessages();
+    getNofifications();
   }, []);
 
   const handleChoiceSelection = (choice) => {
@@ -193,7 +216,18 @@ export default function ChatBotScreen() {
           </KeyboardAvoidingView>
         </>
       ) : (
-        <></>
+        <ScrollView style={styles.chatArea}>
+          {data.map((notification, index) => (
+            <View key={index} style={styles.notification}>
+              <Text style={styles.notificationMessage}>
+                {notification.message}
+              </Text>
+              <Text style={styles.notificationDate}>
+                Date: {notification.date}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
       )}
     </View>
   );
@@ -244,6 +278,7 @@ const styles = StyleSheet.create({
   chatArea: {
     marginTop: 20,
   },
+
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -278,14 +313,32 @@ const styles = StyleSheet.create({
   },
   emptyMessage: {
     fontSize: 24,
-    textAlign:"center"
+    textAlign: "center",
   },
-  emptyMessageContainer:{
-    flex:1,
-    width:300,
-    height:500,
-    alignSelf:"center",
-    justifyContent:"center",
-    alignContent:"center"
-  }
+  emptyMessageContainer: {
+    flex: 1,
+    width: 300,
+    height: 500,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  notification: {
+    paddingHorizontal: 15,
+    marginHorizontal: 30,
+    paddingVertical: 10,
+    backgroundColor: Colors.LightBlue,
+    borderRadius: 10,
+    marginBottom: 10,
+    gap: 5,
+  },
+  notificationMessage: {
+    fontSize: 16,
+    fontFamily: "Raleway-Bold",
+  },
+  notificationDate: {
+    fontSize: 14,
+    fontFamily: "Raleway-Regular",
+    color: Colors.Grey,
+  },
 });
