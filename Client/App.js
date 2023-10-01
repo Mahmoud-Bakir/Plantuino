@@ -13,6 +13,8 @@ import store from "./Redux/Store";
 import { Provider } from "react-redux";
 import "expo-dev-client";
 import "firebase/auth";
+import AnalyticsScreen from "./screens/AnalyticsScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 function Home() {
@@ -49,6 +51,11 @@ export default function App() {
           <Stack.Screen
             name="ResultScreen"
             component={ResultScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="AnalyticsScreen"
+            component={AnalyticsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
