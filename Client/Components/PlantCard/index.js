@@ -23,6 +23,7 @@ import { DeleteButton } from "../Buttons/DeleteButton";
 import Colors from "../../assets/colors/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { setProducts } from "../../Redux/Store/productSlice";
+import { SaveButton } from "../Buttons/SaveButton";
 
 export default function PlantCard({
   name,
@@ -36,7 +37,7 @@ export default function PlantCard({
   result = false,
   phoneNumber,
   productId,
-  closeModal
+  closeModal,
 }) {
   const authState = useSelector(selectAuthState);
   const token = authState.token;
@@ -52,11 +53,13 @@ export default function PlantCard({
     "Roboto-Bold": require("../../assets/fonts/Roboto-Bold.ttf"),
   });
   const info = {
-    newName: "",
-    newPrice: "",
-    newAddress: "",
+    newName: name,
+    newPrice: price,
+    newStreet: street,
+    newCity: city,
+    newCountry: country,
   };
-
+  const [newAddress, setNewAddress] = useState(info);
   const sendMessage = () => {
     const message = "Hello! ";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
@@ -69,7 +72,13 @@ export default function PlantCard({
       }
     });
   };
-
+  const handleDataChange = (key, value) => {
+    setNewAddress((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+    console.log(newAddress);
+  };
   const handleSave = async () => {
     try {
       const response = await axios.post(
@@ -122,6 +131,9 @@ export default function PlantCard({
       console.log(error);
     }
   };
+  const handleSaveChanges = async()=>{
+
+  }
 
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
@@ -150,70 +162,67 @@ export default function PlantCard({
   }
   if (edit) {
     return (
-      <View style={styles.previewContainer}>
-        <View style={styles.previewImageContainer}>
-          <Image
-            source={{ uri: `data:image/jpeg;base64,${image}` }}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.detailsContainer}>
-          {isEditing ? (
-            <View style={styles.inputContainer}>
-              <View style={styles.inputSection}>
-                <TextInput
-                  style={styles.editInput}
-                  value={name}
-                  onChangeText={(text) => setName(text)}
-                />
-                <TextInput
-                  style={styles.editInput}
-                  value={price}
-                  onChangeText={(text) => setName(text)}
-                />
-                <TextInput
-                  style={styles.editInput}
-                  value={street}
-                  onChangeText={(text) => setName(text)}
-                />
-              </View>
-              <View style={styles.inputSection}>
-                <TextInput
-                  style={styles.editInput}
-                  value={city}
-                  onChangeText={(text) => setName(text)}
-                />
-                <TextInput
-                  style={styles.editInput}
-                  value={country}
-                  onChangeText={(text) => setName(text)}
-                />
-                <Button title="Change Image"></Button>
-              </View>
+      <View style={isEditing ? styles.editContainer : styles.previewContainer}>
+        {isEditing ? (
+          <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.editInput}
+                value={newAddress.newName}
+                onChangeText={(text) => handleDataChange("name", text)}
+              />
+              <TextInput
+                style={styles.editInput}
+                value={newAddress.newPrice.toString()}
+                onChangeText={(text) => handleDataChange("price", text)}
+              />
+              <TextInput
+                style={styles.editInput}
+                value={newAddress.newStreet}
+                onChangeText={(text) => handleDataChange("street", text)}
+              />
+              <TextInput
+                style={styles.editInput}
+                value={newAddress.newCity}
+                onChangeText={(text) => handleDataChange("city", text)}
+              />
+              <TextInput
+                style={styles.editInput}
+                value={newAddress.newCountry}
+                onChangeText={(text) => handleDataChange("country", text)}
+              />
+              <LargeButton title="Change Image"/>
+          </View>
+        ) : (
+          <>
+            <View style={styles.previewImageContainer}>
+              <Image
+                source={{ uri: `data:image/jpeg;base64,${image}` }}
+                style={styles.image}
+                resizeMode="contain"
+              />
             </View>
-          ) : (
-            <>
+            <View style={styles.detailsContainer}>
               <Text style={styles.resultName}>{name}</Text>
               <Text style={styles.resultPrice}> $ {price}</Text>
               <Text style={styles.resultDesciptions}>
                 {street},{city},{country}
               </Text>
-            </>
-          )}
-
-          {isEditing ? (
-            <View style={styles.editButtonsContainer}>
-              <DeleteButton title="Delete" handle={handleDelete} />
-              <LargeButton title="Save" handle={handleSave} />
             </View>
-          ) : (
-            <EditButton title="Edit" handle={() => setIsEditing(true)} />
-          )}
-        </View>
+          </>
+        )}
+  
+        {isEditing ? (
+          <View style={styles.editButtonsContainer}>
+            <DeleteButton title="Delete" handle={handleDelete} />
+            <SaveButton title="Save" handle={handleSaveChanges} />
+          </View>
+        ) : (
+          <EditButton title="Edit" handle={() => setIsEditing(true)} />
+        )}
       </View>
     );
   }
+  
   if (result) {
     return (
       <View style={styles.resultContainer}>
@@ -294,6 +303,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.White,
     borderRadius: 20,
   },
+  editContainer:{
+    width: "100%",
+    height: 550,
+    backgroundColor: colors.White,
+    borderRadius: 20,
+  },
   resultContainer: {
     padding: 20,
     marginVertical: 20,
@@ -348,25 +363,25 @@ const styles = StyleSheet.create({
   editButtonsContainer: {
     flexDirection: "row",
     gap: 10,
+    alignContent:"center",
+    justifyContent:"center"
   },
   editInput: {
-    width: 150,
-    height: 30,
+    width: "90%",
+    height: 40,
     fontFamily: "Raleway-Regular",
     fontSize: 18,
     borderWidth: 1,
     borderColor: Colors.LightGrey,
+    backgroundColor:colors.LigherGrey,
     borderRadius: 5,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
   inputContainer: {
-    flexDirection: "row",
-    gap: 5,
-  },
-  inputSection: {
-    gap: 5,
-    justifyContent: "center",
+    marginTop:30,
+    paddingVertical:30,
     alignItems: "center",
+    gap: 15,
   },
 });
