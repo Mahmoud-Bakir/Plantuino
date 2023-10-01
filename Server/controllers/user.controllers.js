@@ -274,7 +274,9 @@ const editProduct = async (req, res) => {
       { new: true }
     );
     if (!updatedUser) {
-      return res.status(404).json({ message: "Product not found or does not belong to the user" });
+      return res
+        .status(404)
+        .json({ message: "Product not found or does not belong to the user" });
     }
     res.json({ message: "Product Edited successfully", updatedUser });
   } catch (error) {
@@ -282,8 +284,23 @@ const editProduct = async (req, res) => {
   }
 };
 
-module.exports = { editProduct };
+const searchProducts = async (req, res) => {
+  const { searchCriteria } = req.body;
+  try {
+    const allUsers = await User.find({}, "products");
+    const allProducts = allUsers.reduce((acc, user) => {
+      return [...acc, ...user.products];
+    }, []);
 
+    const matchingProducts = allProducts.filter((product) => {
+      return product.name.toLowerCase().includes(searchCriteria.toLowerCase());
+    });
+
+    res.json(matchingProducts);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 module.exports = {
   addProduct,
   publicMarket,
@@ -296,4 +313,5 @@ module.exports = {
   updatePlants,
   deleteProduct,
   editProduct,
+  searchProducts,
 };
