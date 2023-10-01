@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import * as SecureStore from "expo-secure-store";
 import LabeledInput from "../../Components/LabeledInput";
 import Colors from "../../assets/colors/colors";
 import { useFonts } from "expo-font";
@@ -21,6 +20,8 @@ export default function ProductForm() {
   const [fontsLoaded] = useFonts({
     "Raleway-Regular": require("../../assets/fonts/Raleway-Regular.ttf"),
     "Raleway-SemiBold": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
+
   });
   const authState = useSelector(selectAuthState);
   const dispatch = useDispatch();
@@ -32,12 +33,13 @@ export default function ProductForm() {
   const [data, setData] = useState(info);
   const [err, Seterr] = useState("");
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+
 
   const handleImageUpload = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
         aspect: [4, 3],
         quality: 0.2,
         base64:true,
@@ -66,7 +68,7 @@ export default function ProductForm() {
     try {
       if (is_empty(data.name)) return Seterr("Please provide a name");
       if (is_empty(data.price)) return Seterr("Please set a price");
-
+      setLoading(true);
       const response = await axios.post(
         `http://${baseURL}:3000/users/add`,
         data,
@@ -80,7 +82,8 @@ export default function ProductForm() {
         price: response.data.newProduct.price,
         city: response.data.newProduct.city,
         country:response.data.newProduct.country,
-        street:response.data.newProduct.street
+        street:response.data.newProduct.street,
+        _id:response.data.newProduct._id
       };
 
       console.log("Added Successfully:", newProduct);
@@ -89,6 +92,8 @@ export default function ProductForm() {
       navigation.navigate("HomeScreen");
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -123,7 +128,11 @@ export default function ProductForm() {
         handleAdd={handleImageUpload}
       />
       <Text style={styles.error}>{err}</Text>
-      <LargeButton title="Add Product" handle={handleAdd} />
+      {loading ? (
+        <ActivityIndicator size="large" color={Colors.Green} />
+      ) : (
+        <LargeButton title="Add Product" handle={handleAdd} />
+      )}
     </View>
   );
 }
