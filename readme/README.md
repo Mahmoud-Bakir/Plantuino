@@ -1,20 +1,20 @@
-<img src="./readme/title1.svg"/>
+<img src="./title1.svg"/>
 
 <br><br>
 
 <!-- project philosophy -->
-<img src="./title1.svg"/>
+<img src="./title2.svg"/>
 
-> A mobile app tha takes care of your homeplants even when you are not around them through and Arduino. It helps you in recognizing your plant, knowing its preferables, and opens a door for you to discover new plants on the market.
+>Your go-to Arduino/mobile app for remote plant care.
 >
-> Plantuino aims to streamline the nurtuting process of your homeplants by providing a user-friendly platform for users to get notified about their plants health and taking care of it in addition to a friendly chatBot. Plantuino places your homeplant in safe IOT hands.
+>Offering plant recognition, AI ChatBot, and market updates
 
 ### User Stories
-- As a user I want to view daily graphical analysis about my homeplant so I can review it’s progress.
-- As a user, I want to chat with a bot, so I can know more about my homeplant.
-- As a user I want to capture an image of my plant so that I can have information about it.
-- As a user I want to buy other homeplants so that I can engrow my lovely garden.
-- As a user I want to recieve push notifications so that I can be informed about my homeplant status.
+- As a user I want to view daily graphical analysis about my houseplant so I can review it’s progress.
+- As a user, I want to chat with a bot, so I can know more about my houseplant.
+- As a user I want to capture an image of a plant so that I can have information about it.
+- As a user I want to buy other houseplants so that I can engrow my lovely garden.
+- As a user I want to recieve push notifications so that I can be informed about my hosseplant status.
 
 <br><br>
 
@@ -25,11 +25,23 @@
 
 
 ### Mockups
-| Home screen  | Menu Screen | Order Screen |
+
+-Authentication Screens
+
+| Login screen  | Singup Screen| Owner Home Screen |
 | ---| ---| ---|
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png) | ![fsdaf](./demo/PlantOwner.png) |
 
 <br><br>
+
+-Owner Screens
+
+| Login screen  | Singup Screen| Owner Home Screen |
+| ---| ---| ---|
+| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png) | ![fsdaf](./demo/PlantOwner.png) 
+
+<br><br>
+
 
 <!-- Implementation -->
 <img src="./title4.svg"/>

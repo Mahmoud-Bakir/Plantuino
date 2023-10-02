@@ -8,7 +8,7 @@ const Colors = {
     Red:'#FF0000',
     LightGrey:'#CCCCCC',
     LigherGrey:'#F5F5F5',
-    LightBlue:"#dae0e7",
+    LightBlue:"#ECEFF4",
     GreyTransparent:"rgba(106, 106, 106, 0.4)"
 
   };
