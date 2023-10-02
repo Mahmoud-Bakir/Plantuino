@@ -4,6 +4,7 @@
 
 <!-- project philosophy -->
 <img src="./title2.svg"/>
+<br>
 
 >Your go-to Arduino/mobile app for remote plant care.
 >
@@ -26,23 +27,32 @@
 
 ### Mockups
 
--Authentication Screens
+- Authentication Screens
 
 | Login screen  | Singup Screen|
 | ---| ---|
 | ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png)
 
 <br><br>
--Owner Screens
+
+- Owner Screens
+
 
 | Home Screen  | AI Recognition Screen| Loading Screen |
 | ---| ---| ---|
 | ![Landing](./demo/PlantOwner.png) | ![fsdaf](./demo/Ai.png) | ![fsdaf](./demo/Loading.png) 
 
 <br><br>
-| Home Screen  | AI Recognition Screen| Loading Screen |
+
+| Result Screen  | Owner Home Screen(Updated) | Market |
 | ---| ---| ---|
-| ![Landing](./demo/PlantOwner.png) | | ![fsdaf](./demo/Loading.png) 
+| ![Landing](./demo/Result.png) | ![fsdaf](./demo/HomeScreen(Updated).png)| ![fsdaf](./demo/Market.png) 
+
+<br><br>
+
+| Chat (empty)  | Owner Home Screen(Updated) | Market |
+| ---| ---| ---|
+| ![Landing](./demo/emptychat.png) | ![fsdaf](./demo/HomeScreen(Updated).png)| ![fsdaf](./demo/Market.png) 
 
 
 <!-- Implementation -->
