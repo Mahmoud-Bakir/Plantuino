@@ -28,19 +28,21 @@
 
 -Authentication Screens
 
-| Login screen  | Singup Screen| Owner Home Screen |
-| ---| ---| ---|
-| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png) | ![fsdaf](./demo/PlantOwner.png) |
+| Login screen  | Singup Screen|
+| ---| ---|
+| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png)
 
 <br><br>
-
 -Owner Screens
 
-| Login screen  | Singup Screen| Owner Home Screen |
+| Home Screen  | AI Recognition Screen| Loading Screen |
 | ---| ---| ---|
-| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png) | ![fsdaf](./demo/PlantOwner.png) 
+| ![Landing](./demo/PlantOwner.png) | ![fsdaf](./demo/Ai.png) | ![fsdaf](./demo/Loading.png) 
 
 <br><br>
+| Home Screen  | AI Recognition Screen| Loading Screen |
+| ---| ---| ---|
+| ![Landing](./demo/PlantOwner.png) | | ![fsdaf](./demo/Loading.png) 
 
 
 <!-- Implementation -->
