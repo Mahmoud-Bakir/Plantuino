@@ -176,7 +176,14 @@ Plantuino utilizes these technologies to provide a seamless and comprehensive wi
 | Delete Product                              | Profile                         
 | ![Landing](./readme/demo/Gifs/delete.gif) | ![fsdaf](./readme/demo/Gifs/profile.gif) 
 
+### Admin Screens (Web)
+| Login screen                              | All Users Dashboard                         | Sellers Dashboard                        | Plant Owners Dashboard                          |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![Landing](./readme/demo/Gifs/auth.gif) | ![fsdaf](./readme/demo/Gifs/allusers.gif) | ![fsdaf](./readme/demo/Gifs/sellers.gif) | ![fsdaf](./readme/demo/Gifs/plantowners.gif) |![fsdaf](./readme/demo/Gifs/plantowners.gif)|
 
+| Delete User                              | 
+| ----------------------------------------- | 
+| ![Landing](./readme/demo/Gifs/deleteuser.gif) |
 
 ### Arduino
 
