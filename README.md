@@ -115,7 +115,7 @@ As an Admin:
 
 | My Market                              |                            |                           |
 | -------------------------------------- | ------------------------------------- | ----------------------------------- |
-| ![Landing](./readme/demo/profile.png) | 
+| ![Landing](./readme/demo/Profile.png) | 
 
 <br><br>
 
@@ -175,7 +175,7 @@ Plantuino is built using the following technologies:
 - **Arduino:** Utilized for sensor data collection in the field.
 - **OpenAI API:** Empowers ChatBot and Analysis.
 - **Native Notify:** Used for real-time notifications.
-EcoTech utilizes these technologies to provide a seamless and comprehensive wildfire prevention and community engagement experience.
+Plantuino utilizes these technologies to provide a seamless and comprehensive wildfire prevention and community engagement experience.
 
 
 
