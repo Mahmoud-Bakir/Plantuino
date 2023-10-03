@@ -27,46 +27,46 @@
 
 ### Mockups
 
-- Authentication Screens
+#### Authentication Screens
 
-| Login screen                       | Singup Screen                     |
-| ---------------------------------- | --------------------------------- |
+| Login screen                              | Singup Screen                            |
+| ----------------------------------------- | ---------------------------------------- |
 | ![Landing](./readme/demo/LoginScreen.png) | ![fsdaf](./readme/demo/SignupScreen.png) |
 
 <br><br>
 
-- Owners Screens
+#### Owners Screens
 
-| Home Screen                       | AI Recognition Screen   | Loading Screen               |
-| --------------------------------- | ----------------------- | ---------------------------- |
+| Home Screen                              | AI Recognition Screen          | Loading Screen                      |
+| ---------------------------------------- | ------------------------------ | ----------------------------------- |
 | ![Landing](./readme/demo/PlantOwner.png) | ![fsdaf](./readme/demo/Ai.png) | ![fsdaf](./readme/demo/Loading.png) |
 
-| Result Screen                 | Owner Home Screen (Updated)                | Market                      |
-| ----------------------------- | ------------------------------------------ | --------------------------- |
-| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/HomeScreen(updated).png) | ![fsdaf](./readme/demo/Market.png) |
+| Result Screen                        | Owner Home Screen (Updated)                       | Market                             |
+| ------------------------------------ | ------------------------------------------------- | ---------------------------------- |
+| ![Landing](./readme/demo/Result.png) | ![fsdaf](<./readme/demo/HomeScreen(updated).png>) | ![fsdaf](./readme/demo/Market.png) |
 
-| Contact Modal                       | ChatScreen (Empty)             | Chat                      |
-| ----------------------------------- | ------------------------------ | ------------------------- |
+| Contact Modal                              | ChatScreen (Empty)                    | Chat                             |
+| ------------------------------------------ | ------------------------------------- | -------------------------------- |
 | ![Landing](./readme/demo/ContactModal.png) | ![fsdaf](./readme/demo/emptychat.png) | ![fsdaf](./readme/demo/Chat.png) |
 
-| Notifications                        | Analytics (Empty)                   | Analytics                       |
-| ------------------------------------ | ----------------------------------- | ------------------------------- |
+| Notifications                               | Analytics (Empty)                          | Analytics                              |
+| ------------------------------------------- | ------------------------------------------ | -------------------------------------- |
 | ![Landing](./readme/demo/Notifications.png) | ![fsdaf](./readme/demo/analyticsempty.png) | ![fsdaf](./readme/demo/Analytics.jpeg) |
 
-- Sellers Screens
+#### Sellers Screens
 
-| My Market                       | EditModal                      | Editing                      |
-| ------------------------------- | ------------------------------ | ---------------------------- |
+| My Market                              | EditModal                             | Editing                             |
+| -------------------------------------- | ------------------------------------- | ----------------------------------- |
 | ![Landing](./readme/demo/mymarket.png) | ![fsdaf](./readme/demo/EditModal.png) | ![fsdaf](./readme/demo/Editing.png) |
 
 <br><br>
 
-- Profile Screen
+#### Profile Screen
 
 | Profile |
 | ------- |
 
- ![Landing](./readme/demo/Profile.png)
+![Landing](./readme/demo/Profile.png)
 
 <br><br>
 
@@ -83,7 +83,7 @@
 | Home screen                               | Menu Screen                             | Order Screen                            | Checkout Screen                         |
 | ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
 
-### Admin Screens (Web)
+#### Admin Screens (Web)
 
 | Login screen                            | Register screen                       | Landing screen                        |
 | --------------------------------------- | ------------------------------------- | ------------------------------------- |
@@ -96,13 +96,28 @@
 <!-- Tech stack -->
 <img src="./readme/title5.svg"/>
 
-### Coffee Express is built using the following technologies:
+### EcoTech is built using the following technologies:
 
-- This project uses the [Flutter app development framework](https://flutter.dev/). Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
-- For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
-- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
-  - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
-- The app uses the font ["Work Sans"](https://fonts.google.com/specimen/Work+Sans) as its main font, and the design of the app adheres to the material design guidelines.
+## Frontend (Mobile App)
+
+<a name="Frontend" ></a>
+
+- **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
+- **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
+- **[Redux Toolkit](https://redux-toolkit.js.org/):** Manages app data and state effectively.development.
+- **[Native Notify](https://nativenotify.com/):** Handles push notifications.development.
+- **React Navigation:** Handles navigation within the app.
+- **Axios:** Enables network requests to the backend.
+
+<br>
+
+- This project uses:[NodeJS](https://nodejs.org/en). React Native is an open-source framework for building mobile applications. It's developed and maintained by Facebook and the React community. React Native allows developers to use JavaScript and React to build mobile applications that run on iOS and Android devices.
+- For persistent storage (database), the app uses the [MongoDB](https://www.mongodb.com/) package which allows the app to create a custom storage schema and save it to a local database.
+- To send local push notifications, the app uses the [Native Notify](https://nativenotify.com/) package which supports Android, iOS.
+- For ChatBot, The app uses [OpenAI API](https://openai.com/blog/openai-api) which is responsible of generating answers to users questions.
+- For AI Recognition, The app uses [Plant.id](https://plant.id/) API which is responsible of identifying the name of the photographed plant through uploading an image.
+- To store users information, The app uses [Redux ToolKit] (https://redux-toolkit.js.org/) package which is capable of creating reducers for each type of information that needs to be saved.
+- This app uses the font ["Raleway"](https://fonts.google.com/specimen/Raleway) as its main font and the fonto ["Robot"](https://fonts.google.com/specimen/Roboto) as a font for numbers.The design of the app adheres to the material design guidelines.
 
 <br><br>
 
