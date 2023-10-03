@@ -93,7 +93,7 @@ As an Admin:
 
 | Result Screen                        | Owner Home Screen (Updated)                       | Market                             |
 | ------------------------------------ | ------------------------------------------------- | ---------------------------------- |
-| ![Landing](./readme/demo/Result.png) | ![fsdaf](<./readme/demo/HomeScreen(updated).png>) | ![fsdaf](./readme/demo/Market.png) |
+| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/homeScreen(updated).png>) | ![fsdaf](./readme/demo/Market.png) |
 
 | Contact Modal                              | ChatScreen (Empty)                    | Chat                             |
 | ------------------------------------------ | ------------------------------------- | -------------------------------- |
@@ -113,10 +113,9 @@ As an Admin:
 
 #### Profile Screen
 
-| Profile |
-| ------- |
-
-![Landing](./readme/demo/Profile.png)
+| My Market                              |                            |                           |
+| -------------------------------------- | ------------------------------------- | ----------------------------------- |
+| ![Landing](./readme/demo/profile.png) | 
 
 <br><br>
 
