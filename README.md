@@ -138,25 +138,41 @@ As an Admin:
 
 #### Admin Screens (Web)
 
-| Login screen                            | Register screen                       | Landing screen                        |
+| Login screen                            | Users                     |  Sellers                        |
 | --------------------------------------- | ------------------------------------- | ------------------------------------- |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-| Home screen                             | Menu Screen                           | Order Screen                          |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| ![Landing](./readme/demo/adminlogin.png) | ![fsdaf](./readme/demo/allusers.png) | ![fsdaf](./readme/demo/sellers.png) |
+| Plant Owners                             | Menu Screen                           | Order Screen                          |
+| ![Landing](./readme/demo/plantowners.png) | 
 
-<br><br>
+<br>
+
+### Arduino
+
+| Circuit Diagram | 
+---|
+| ![Circuit Diagram](readme/Circuit_Diagram.png) |
+<br>
+
+Circuit Design |
+---| 
+ | ![Circuit Design](readme/Circuit.jpg) |
+
+
+
+<br><br> 
 
 <!-- Tech stack -->
 <a name="tech-stack"></a>
 
 <img src="./readme/title5.svg"/>
->The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis,plant.id API for plant Recognition, and Native Notify for real-time notifications.
+>The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis, plant.id API for plant Recognition, and Native Notify for real-time notifications.
 <br>
 Plantuino is built using the following technologies:
 
 ## Frontend
 
 <a name="Frontend" ></a>
+
 - **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
 - **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
 - **[Redux Toolkit](https://redux-toolkit.js.org/):** Manages app data and state effectively.development.
@@ -173,7 +189,8 @@ Plantuino is built using the following technologies:
 - **[MongoDB Atlas ](https://www.mongodb.com/):**  Cloud-based database service for data storage.
 - **AWS (Amazon Web Services):** Cloud infrastructure for hosting the server and application.
 - **Arduino:** Utilized for sensor data collection in the field.
-- **OpenAI API:** Empowers ChatBot and Analysis.
+- **OpenAI API:** Empowers ChatBot and Analysis of favorable light and moisture percentages.
+- **Plant.id API:** Used for identifying plants through pictures.
 - **Native Notify:** Used for real-time notifications.
 Plantuino utilizes these technologies to provide a seamless and comprehensive wildfire prevention and community engagement experience.
 
@@ -224,6 +241,25 @@ git clone https://github.com/Mahmoud-Bakir/Plantuino
 
    ```bash  
    npx expo start  
+   ``` 
+<br>
+
+#### Frontend (Web) 
+
+1. Navigate to the `web` directory: 
+
+   ```bash  
+   cd Plantuino/web
+   ``` 
+2. Install dependencies:  
+
+   ```bash  
+     npm install 
+   ``` 
+3. Start development server: 
+
+   ```bash  
+   npm start  
    ``` 
 <br>
 
