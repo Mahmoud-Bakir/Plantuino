@@ -141,7 +141,7 @@ As an Admin:
 | Login screen                            | Users                     |  Sellers                        |
 | --------------------------------------- | ------------------------------------- | ------------------------------------- |
 | ![Landing](./readme/demo/adminlogin.png) | ![fsdaf](./readme/demo/allusers.png) | ![fsdaf](./readme/demo/sellers.png) |
-| Plant Owners                             | Menu Screen                           | Order Screen                          |
+| Plant Owners                             | 
 | ![Landing](./readme/demo/plantowners.png) | 
 
 <br>
@@ -150,12 +150,12 @@ As an Admin:
 
 | Circuit Diagram | 
 ---|
-| ![Circuit Diagram](readme/Circuit_Diagram.png) |
+| ![Circuit Diagram](./readme/demo/arduino.jpeg) |
 <br>
 
 Circuit Design |
 ---| 
- | ![Circuit Design](readme/Circuit.jpg) |
+ | ![Circuit Design](./readme/demo//circuit.png) |
 
 
 
