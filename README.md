@@ -1,9 +1,9 @@
-<img src="./title1.svg"/>
+<img src="./readme/title1.svg"/>
 
 <br><br>
 
 <!-- project philosophy -->
-<img src="./title2.svg"/>
+<img src="./readme/title2.svg"/>
 <br>
 
 > Your go-to Arduino/mobile app for remote plant care.
@@ -21,7 +21,7 @@
 <br><br>
 
 <!-- Prototyping -->
-<img src="./title3.svg"/>
+<img src="./readme/title3.svg"/>
 
 > I designed Plantuino using mockups, iterating on the design until I reached the ideal layout for easy navigation and an unforgettable user experience.
 
@@ -71,7 +71,7 @@
 <br><br>
 
 <!-- Implementation -->
-<img src="./title4.svg"/>
+<img src="./readme/title4.svg"/>
 
 > Using the mockups as a guide, I implemented the Plantuino app with the following features:
 
@@ -94,7 +94,7 @@
 <br><br>
 
 <!-- Tech stack -->
-<img src="./title5.svg"/>
+<img src="./readme/title5.svg"/>
 
 ### Coffee Express is built using the following technologies:
 
@@ -107,7 +107,7 @@
 <br><br>
 
 <!-- How to run -->
-<img src="./title6.svg"/>
+<img src="./readme/title6.svg"/>
 
 > To set up Coffee Express locally, follow these steps:
 
