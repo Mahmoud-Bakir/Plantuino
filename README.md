@@ -7,7 +7,7 @@
 - [User Types](#user-types)
 - [Features of the App](#features-of-the-app)
 - [Tech Stack](#tech-stack)
-  - [Frontend](#Frontend)
+  - [Frontend](#end)
   - [Backend](#Backend)
 - [Prototyping](#prototyping)
 - [Demo](#Demo)
@@ -22,11 +22,14 @@
 <!-- project philosophy -->
 
 <a name="project-description"></a>
+
 <img src="./readme/title2.svg"/>
 
 > Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates
 
 <br>
+
+### Project Description
 Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light,and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorabile light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner.Moreover, the arduino is responsible of supplying water to the plant if needed.The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages.Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
 <br><br>
 On a secondary level, the app connects Plant Owners to Plant Sellers and vice-versa through embeded markets; Plant Owners have the access to view Sellers products uploaded.
@@ -66,6 +69,8 @@ As an Admin:
 <br><br>
 
 <!-- Prototyping -->
+<a name="prototyping"></a>
+
 <img src="./readme/title3.svg"/>
 
 > I designed Plantuino using mockups, iterating on the design until I reached the ideal layout for easy navigation and an unforgettable user experience.
@@ -74,7 +79,7 @@ As an Admin:
 
 #### Authentication Screens
 
-| Login screen                              | Singup Screen                            |
+| Signin screen                              | Register Screen                            |
 | ----------------------------------------- | ---------------------------------------- |
 | ![Landing](./readme/demo/LoginScreen.png) | ![fsdaf](./readme/demo/SignupScreen.png) |
 
@@ -116,6 +121,8 @@ As an Admin:
 <br><br>
 
 <!-- Implementation -->
+
+<a name="Demo" ></a>
 <img src="./readme/title4.svg"/>
 
 > Using the mockups as a guide, I implemented the Plantuino app with the following features:
@@ -124,7 +131,7 @@ As an Admin:
 
 | Login screen                              | Register screen                         | Landing screen                          | Loading screen                          |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
 | Home screen                               | Menu Screen                             | Order Screen                            | Checkout Screen                         |
 | ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
 
@@ -139,14 +146,13 @@ As an Admin:
 <br><br>
 
 <!-- Tech stack -->
+<a name="tech-stack" ></a>
 <img src="./readme/title5.svg"/>
-
-### EcoTech is built using the following technologies:
-
-## Frontend (Mobile App)
-
+>The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis,plant.id API for plant Recognition, and Native Notify for real-time notifications.
+<br>
+Plantuino is built using the following technologies:
+## Frontend
 <a name="Frontend" ></a>
-
 - **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
 - **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
 - **[Redux Toolkit](https://redux-toolkit.js.org/):** Manages app data and state effectively.development.
@@ -155,27 +161,19 @@ As an Admin:
 - **Axios:** Enables network requests to the backend.
   <br>
 
-## Backend (Server)
-
+## Backend
 <a name="Backend" ></a>
 
-- **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
-- **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
-- **[Redux Toolkit](https://redux-toolkit.js.org/):** Manages app data and state effectively.development.
-- **[Native Notify](https://nativenotify.com/):** Handles push notifications.development.
-- **React Navigation:** Handles navigation within the app.
-- **Axios:** Enables network requests to the backend.
+- **[Node.js](https://expo.dev/) with Express:**  Powers the backend server for API requests and logic.
+- **Mongoose:** Object Data Modeling (ODM) library for MongoDB.
+- **[MongoDB Atlas ](https://www.mongodb.com/):**  Cloud-based database service for data storage.
+- **AWS (Amazon Web Services):** Cloud infrastructure for hosting the server and application.
+- **Arduino:** Utilized for sensor data collection in the field.
+- **OpenAI API:** Empowers ChatBot and Analysis.
+- **Native Notify:** Used for real-time notifications.
+EcoTech utilizes these technologies to provide a seamless and comprehensive wildfire prevention and community engagement experience.
 
-<br>
-- This project uses:[NodeJS](https://nodejs.org/en). React Native is an open-source framework for building mobile applications. It's developed and maintained by Facebook and the React community. React Native allows developers to use JavaScript and React to build mobile applications that run on iOS and Android devices.
-- For persistent storage (database), the app uses the [MongoDB](https://www.mongodb.com/) package which allows the app to create a custom storage schema and save it to a local database.
-- To send local push notifications, the app uses the [Native Notify](https://nativenotify.com/) package which supports Android, iOS.
-- For ChatBot, The app uses [OpenAI API](https://openai.com/blog/openai-api) which is responsible of generating answers to users questions.
-- For AI Recognition, The app uses [Plant.id](https://plant.id/) API which is responsible of identifying the name of the photographed plant through uploading an image.
-- To store users information, The app uses [Redux ToolKit] (https://redux-toolkit.js.org/) package which is capable of creating reducers for each type of information that needs to be saved.
-- This app uses the font ["Raleway"](https://fonts.google.com/specimen/Raleway) as its main font and the fonto ["Robot"](https://fonts.google.com/specimen/Roboto) as a font for numbers.The design of the app adheres to the material design guidelines.
 
-<br><br>
 
 <!-- How to run -->
 <img src="./readme/title6.svg"/>
