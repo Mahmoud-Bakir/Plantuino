@@ -43,11 +43,11 @@
 
 | Result Screen                 | Owner Home Screen (Updated)                | Market                      |
 | ----------------------------- | ------------------------------------------ | --------------------------- |
-| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/homescreen(updated).png) | ![fsdaf](./readme/demo/market.png) |
+| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/HomeScreen(updated).png) | ![fsdaf](./readme/demo/Market.png) |
 
 | Contact Modal                       | ChatScreen (Empty)             | Chat                      |
 | ----------------------------------- | ------------------------------ | ------------------------- |
-| ![Landing](./readme/demo/ContactModal.png) | ![fsdaf](./readme/demo/emptychat.png) | ![fsdaf](./readme/demo/chat.png) |
+| ![Landing](./readme/demo/ContactModal.png) | ![fsdaf](./readme/demo/emptychat.png) | ![fsdaf](./readme/demo/Chat.png) |
 
 | Notifications                        | Analytics (Empty)                   | Analytics                       |
 | ------------------------------------ | ----------------------------------- | ------------------------------- |
