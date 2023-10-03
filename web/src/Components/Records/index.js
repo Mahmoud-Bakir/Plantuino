@@ -12,7 +12,6 @@ export const Records = ({
   city,
   street,
   handleDelete,
-  handleEdit,
   all,
   users,
   sellers,
@@ -45,11 +44,6 @@ export const Records = ({
           <td>{street}</td>
         </>
       )}
-      <td>
-        <button className="edit " onClick={handleEdit}>
-          edit
-        </button>
-      </td>
       <td>
         <button className="delete " onClick={handleDelete}>
           delete

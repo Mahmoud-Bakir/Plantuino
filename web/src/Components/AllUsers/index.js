@@ -56,9 +56,8 @@ const AllUsers = () => {
         t6={"Country"}
         t7={"City"}
         t8={"Street"}
-        t9={"Edit"}
-        t10={"Delete"}
-        count={10}
+        t9={"Delete"}
+        count={9}
       />
       <Map records={records} setter={setRecords} />
     </table>

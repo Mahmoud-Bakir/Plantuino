@@ -53,9 +53,8 @@ const Sellers = () => {
         t5={"Country"}
         t6={"City"}
         t7={"Street"}
-        t8={"Edit"}
-        t9={"Delete"}
-        count={9}
+        t8={"Delete"}
+        count={8}
       />
       <Map records={records} setter={setRecords} count={9} />
     </table>

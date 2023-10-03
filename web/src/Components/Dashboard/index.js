@@ -3,7 +3,6 @@ import "./style.css";
 import AllUsers from "../AllUsers";
 import Sellers from "../Sellers";
 import PlantOwners from "../PlantOwners";
-import AddUserForm from "../AddUserForm";
 
 const Dashboard = ({ title }) => {
   console.log(title);
@@ -15,10 +14,10 @@ const Dashboard = ({ title }) => {
       ) : title == "Sellers" ? (
         <Sellers />
       ) : title == "Plant Owners" ? (
-        <PlantOwners/>
-      ):title=="Add User"?(
-        <AddUserForm/>
-      ):(<></>)}
+        <PlantOwners />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

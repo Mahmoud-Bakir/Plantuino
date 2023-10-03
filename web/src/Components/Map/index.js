@@ -7,17 +7,17 @@ export const Map = ({ records, setter, count }) => {
   console.log(records);
 
   const remove = async (id) => {
-    await axios.post(`http://${baseURL}:3000/auth/delete`, { id }, {
-      headers: {
-        Authorization: "Bearer " + token,
+    await axios.post(
+      `http://${baseURL}:3000/admin/delete`,
+      { id },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       }
-    });
+    );
     setter(records.filter((record) => record.id !== id));
   };
-  const edit = async (id) => {
-    console.log("edit");
-  };
-
   return (
     <>
       {records.map(
@@ -33,7 +33,6 @@ export const Map = ({ records, setter, count }) => {
               city={record.city}
               street={record.street}
               handleDelete={() => remove(record.id)}
-              handleEdit={() => edit(record.id)}
               key={record.id}
               all={false}
             />
@@ -52,7 +51,6 @@ export const Map = ({ records, setter, count }) => {
               city={record.city}
               street={record.street}
               handleDelete={() => remove(record.id)}
-              handleEdit={() => edit(record.id)}
               key={record.id}
               all={true}
             />

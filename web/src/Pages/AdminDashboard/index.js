@@ -3,8 +3,6 @@ import NavBar from "../../Components/NavBar";
 import "./style.css";
 import SideMenu from "../../Components/SideMenu";
 import Dashboard from "../../Components/Dashboard";
-import Modal from "../../Components/Modal";
-import AddUserForm from "../../Components/AddUserForm";
 
 const AdminDashboard = () => {
   const token = localStorage.getItem("token");
@@ -14,22 +12,7 @@ const AdminDashboard = () => {
     setChoice(choice);
   };
 
-  const handleModalClose = () => {
-    setChoice("All Users");
-  };
   if (!token) return <></>;
-  if (choice === "Add User") {
-    return (
-      <div>
-        <NavBar />
-        <div className="containerContent">
-          <SideMenu handleChoice={getChoice} />
-          <Dashboard title={choice} />
-          <AddUserForm handleModalClose={handleModalClose} />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="container">

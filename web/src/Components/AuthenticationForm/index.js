@@ -1,11 +1,10 @@
 import React from "react";
 import "./style.css";
-import LabeledInput from "../LabeledInput";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseURL from "../../config";
-
+import LabeledInput from "../LabeledInput";
 const AuthenticationForm = () => {
   const navigater = useNavigate();
   const moveToDashboard = () => navigater("/Dashboard");

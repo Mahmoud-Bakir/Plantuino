@@ -11,6 +11,8 @@
     height:550px;
     background-color: white;
     font-family: 'Raleway', sans-serif;
+    overflow: auto;
+
 }
 .title{
     font-size: 36px;

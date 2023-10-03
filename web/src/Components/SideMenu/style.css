@@ -9,7 +9,7 @@
     padding:20px;
     display: flex;
     flex-direction: column;
-    background-color: var(--Green);
+    background-color: var(--Black);
     width: 20%;
     height: 550px;
     border-radius: 20px;
@@ -45,9 +45,9 @@
 }
 .categoryContainer:hover{
     cursor: pointer;
-    background-color: #000000;
+    background-color: var(--Green);
 }
 .categoryContainer.selected {
-    background-color: #000000;
+    background-color: var(--Green);
   }
   
