@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import Map from "../Map";
+import baseURL from "../../config";
 const AllUsers = () => {
   const token = localStorage.getItem("token");
   const [records, setRecords] = useState([]);
@@ -12,7 +13,7 @@ const AllUsers = () => {
     async function getUsers() {
       try {
         const response = await axios.get(
-          "http://192.168.1.5:8000/admin/getUsers",
+          `http://${baseURL}:3000/admin/getUsers`,
           {
             headers: {
               Authorization: "Bearer " + token,

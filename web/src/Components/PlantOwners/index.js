@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import Map from "../Map";
+import baseURL from "../../config";
 const PlantOwners = () => {
   const token = localStorage.getItem("token");
   const [records, setRecords] = useState([]);
@@ -11,7 +12,7 @@ const PlantOwners = () => {
     async function getPlantOwners() {
       try {
         const response = await axios.get(
-          "http://192.168.1.5:8000/admin/getPlantOwners",
+          `http://${baseURL}:3000/admin/getPlantOwners`,
           {
             headers: {
               Authorization: "Bearer " + token,

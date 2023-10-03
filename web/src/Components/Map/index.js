@@ -1,14 +1,13 @@
 import axios from "axios";
 import { Records } from "../Records";
+import baseURL from "../../config";
 
 export const Map = ({ records, setter, count }) => {
   const token = localStorage.getItem("token");
   console.log(records);
 
   const remove = async (id) => {
-   const data={id:id}
-   console.log(data)
-    await axios.post("http://192.168.1.5:8000/admin/delete", data, {
+    await axios.post(`http://${baseURL}:3000/auth/delete`, { id }, {
       headers: {
         Authorization: "Bearer " + token,
       }

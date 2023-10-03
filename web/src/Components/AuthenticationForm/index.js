@@ -4,6 +4,7 @@ import LabeledInput from "../LabeledInput";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import baseURL from "../../config";
 
 const AuthenticationForm = () => {
   const navigater = useNavigate();
@@ -31,7 +32,7 @@ const AuthenticationForm = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.5:3000/auth/login",
+        `http://${baseURL}:3000/auth/login`,
         data
       );
       window.localStorage.setItem("token", response.data.token);

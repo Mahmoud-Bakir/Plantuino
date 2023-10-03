@@ -24,7 +24,7 @@ const AdminDashboard = () => {
         <NavBar />
         <div className="containerContent">
           <SideMenu handleChoice={getChoice} />
-          <Dashboard title={"All Users"} />
+          <Dashboard title={choice} />
           <AddUserForm handleModalClose={handleModalClose} />
         </div>
       </div>
