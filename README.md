@@ -166,24 +166,41 @@ Plantuino utilizes these technologies to provide a seamless and comprehensive wi
 
 ### User Screens (Mobile)
 
-| Login screen                              | Register screen                         | Recognition Screen                         | Loading screen                          |
-| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](./readme/demo/Gifs/recognition.gif) | ![fsdaf](./readme/demo/Gifs/savingplant.gif) |
-| Public Market                               | Contact Modal                             | Chat Screen                            | Chart Screen                         |
-| ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![fsdaf](./readme/demo/Gifs/notifications.gif) | |
-| Charts                              | Dynamic Charts                              | Add product Screen                            | Edit Product                         |
-| ![Landing](./readme/demo/Gifs/chart.gif) | ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) 
-| Delete Product                              | Profile                         
-| ![Landing](./readme/demo/Gifs/delete.gif) | ![fsdaf](./readme/demo/Gifs/profile.gif) 
+| Login screen                              | Register screen                         | Recognition Screen                         |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](./readme/demo/Gifs/recognition.gif) |
+
+| Loading screen                            | Public Market                             | Contact Modal                             |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/savingplant.gif) | ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) |
+
+| Chat Screen                            | Chart Screen                            | Dynamic Charts                              |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/chat.gif) | ![Landing](./readme/demo/Gifs/notifications.gif) | ![fsdaf](./readme/demo/Gifs/chart.gif) |
+
+| Add Product Screen                            | Edit Product                              | Delete Product                              |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![Landing](./readme/demo/Gifs/editproduct.gif) | ![fsdaf](./readme/demo/Gifs/delete.gif) |
+
+| Profile                                    |
+| ----------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/profile.gif)  |
+
 
 ### Admin Screens (Web)
-| Login screen                              | All Users Dashboard                         | Sellers Dashboard                        | Plant Owners Dashboard                          |
-| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](./readme/demo/Gifs/auth.gif) | ![fsdaf](./readme/demo/Gifs/allusers.gif) | ![fsdaf](./readme/demo/Gifs/sellers.gif) | ![fsdaf](./readme/demo/Gifs/plantowners.gif) |![fsdaf](./readme/demo/Gifs/plantowners.gif)|
-
-| Delete User                              | 
+| Signin Screen                              | 
 | ----------------------------------------- | 
-| ![Landing](./readme/demo/Gifs/deleteuser.gif) |
+| ![Landing](./readme/demo/Gifs/auth.gif) |
+
+| Delete User                              | All Users Dashboard                         |
+| ----------------------------------------- | --------------------------------------- |
+| ![Landing](./readme/demo/Gifs/deleteuser.gif) | ![fsdaf](./readme/demo/Gifs/allusers.gif) |
+
+| Sellers Dashboard                        | Plant Owners Dashboard                          |
+| --------------------------------------- | --------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/sellers.gif) |![fsdaf](./readme/demo/Gifs/plantowners.gif) |
+
+
 
 ### Arduino
 
