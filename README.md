@@ -31,7 +31,7 @@
 
 | Login screen                       | Singup Screen                     |
 | ---------------------------------- | --------------------------------- |
-| ![Landing](./demo/LoginScreen.png) | ![fsdaf](./demo/SignupScreen.png) |
+| ![Landing](./readme/demo/LoginScreen.png) | ![fsdaf](./readme/demo/SignupScreen.png) |
 
 <br><br>
 
@@ -39,40 +39,41 @@
 
 | Home Screen                       | AI Recognition Screen   | Loading Screen               |
 | --------------------------------- | ----------------------- | ---------------------------- |
-| ![Landing](./demo/PlantOwner.png) | ![fsdaf](./demo/Ai.png) | ![fsdaf](./demo/Loading.png) |
+| ![Landing](./readme/demo/PlantOwner.png) | ![fsdaf](./readme/demo/Ai.png) | ![fsdaf](./readme/demo/Loading.png) |
 
-
-| Result Screen                 | Owner Home Screen (Updated)                 | Market                      |
+| Result Screen                 | Owner Home Screen (Updated)                | Market                      |
 | ----------------------------- | ------------------------------------------ | --------------------------- |
-| ![Landing](./demo/Result.png) | ![fsdaf](<./demo/HomeScreen(Updated).png>) | ![fsdaf](./demo/market.png) |
+| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/homescreen(updated).png) | ![fsdaf](./readme/demo/market.png) |
 
+| Contact Modal                       | ChatScreen (Empty)             | Chat                      |
+| ----------------------------------- | ------------------------------ | ------------------------- |
+| ![Landing](./readme/demo/ContactModal.png) | ![fsdaf](./readme/demo/emptychat.png) | ![fsdaf](./readme/demo/chat.png) |
 
-| Contact Modal              | ChatScreen (Empty)                | Chat                      |
-| -------------------------------- | ------------------------- | --------------------------- |
-| ![Landing](./demo/ContactModal.png) | ![fsdaf](./demo/emptychat.png) | ![fsdaf](./demo/chat.png) |
-
-
-| Notifications              | Analytics (Empty)                | Analytics                      |
-| -------------------------------- | ------------------------- | --------------------------- |
-| ![Landing](./demo/Notifications.png) | ![fsdaf](./demo/analyticsempty.png) | ![fsdaf](./demo/Analytics.jpeg) |
+| Notifications                        | Analytics (Empty)                   | Analytics                       |
+| ------------------------------------ | ----------------------------------- | ------------------------------- |
+| ![Landing](./readme/demo/Notifications.png) | ![fsdaf](./readme/demo/analyticsempty.png) | ![fsdaf](./readme/demo/Analytics.jpeg) |
 
 - Sellers Screens
 
-| My Market             | EditModal                | Market                      |
-| -------------------------------- | ------------------------- | --------------------------- |
-| ![Landing](./demo/mymarket.png) | ![fsdaf](./demo/EditModal.png) | ![fsdaf](./demo/Market.png) |
+| My Market                       | EditModal                      | Editing                      |
+| ------------------------------- | ------------------------------ | ---------------------------- |
+| ![Landing](./readme/demo/mymarket.png) | ![fsdaf](./readme/demo/EditModal.png) | ![fsdaf](./readme/demo/Editing.png) |
 
 <br><br>
-- Common Screens
 
-| ChatScreen (empty)               | ChatScreen                | Market                      |
-| -------------------------------- | ------------------------- | --------------------------- |
-| ![Landing](./demo/emptychat.png) | ![fsdaf](./demo/Chat.png) | ![fsdaf](./demo/Market.png) |
+- Profile Screen
+
+| Profile |
+| ------- |
+
+ ![Landing](./readme/demo/Profile.png)
+
+<br><br>
 
 <!-- Implementation -->
 <img src="./title4.svg"/>
 
-> Using the wireframes and mockups as a guide, we implemented the Coffee Express app with the following features:
+> Using the mockups as a guide, I implemented the Plantuino app with the following features:
 
 ### User Screens (Mobile)
 
