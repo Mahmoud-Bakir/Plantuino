@@ -103,6 +103,7 @@ As an Admin:
 | My Market                              | EditModal                             | Editing                             |
 | -------------------------------------- | ------------------------------------- | ----------------------------------- |
 | ![Landing](./readme/demo/mymarket.png) | ![fsdaf](./readme/demo/EditModal.png) | ![fsdaf](./readme/demo/Editing.png) |
+| ![Landing](./readme/demo/Profile.png) | 
 
 <br><br>
 
@@ -117,7 +118,7 @@ As an Admin:
 <br>
 #### Profile Screen
 
-| ![Landing](./readme/demo/Profile.png) | 
+
 
 <br><br>
 
