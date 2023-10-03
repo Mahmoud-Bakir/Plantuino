@@ -113,8 +113,6 @@ As an Admin:
 
 #### Profile Screen
 
-|                              |                            |                           |
-| -------------------------------------- | ------------------------------------- | ----------------------------------- |
 | ![Landing](./readme/demo/Profile.png) | 
 
 <br><br>
@@ -155,7 +153,9 @@ As an Admin:
 >The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis,plant.id API for plant Recognition, and Native Notify for real-time notifications.
 <br>
 Plantuino is built using the following technologies:
+
 ## Frontend
+
 <a name="Frontend" ></a>
 - **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
 - **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
