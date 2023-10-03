@@ -129,11 +129,15 @@ As an Admin:
 
 ### User Screens (Mobile)
 
-| Login screen                              | Register screen                         | Landing screen                          | Loading screen                          |
+| Login screen                              | Register screen                         | Recognition Screen                         | Loading screen                          |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
-| Home screen                               | Menu Screen                             | Order Screen                            | Checkout Screen                         |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](./readme/demo/Gifs/recognition.gif) | ![fsdaf](./readme/demo/Gifs/savingplant.gif) |
+| Public Market                               | Contact Modal                             | Chat Screen                            | Chart Screen                         |
+| ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![fsdaf](./readme/demo/Gifs/notifications.gif) | |
+| Charts                              | Dynamic Charts                              | Add product Screen                            | Edit Product                         |
+| ![Landing](./readme/demo/Gifs/chart.gif) | ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) 
+| Delete Product                              | Profile                         
+| ![Landing](./readme/demo/Gifs/delete.gif) | ![fsdaf](./readme/demo/Gifs/profile.gif) 
 
 #### Admin Screens (Web)
 
