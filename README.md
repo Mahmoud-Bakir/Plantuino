@@ -3,16 +3,13 @@
 <br><br>
 <img src="./readme/title0.svg"/>
 
-- [Project Description](#project-description)
-- [User Types](#user-types)
-- [Features of the App](#features-of-the-app)
+- [Project Philosophy](#project-description)
+  - [User Types](#user-types)
+- [Prototyping](#prototyping)
 - [Tech Stack](#tech-stack)
   - [Frontend](#Frontend)
   - [Backend](#Backend)
-- [Prototyping](#prototyping)
 - [Demo](#Demo)
-- [OpenAi](#OpenAi)
-- [Performance](#Performance)
 - [How to Run](#how-to-run)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -29,7 +26,6 @@
 
 <br>
 
-### Project Description
 Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light,and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorabile light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner.Moreover, the arduino is responsible of supplying water to the plant if needed.The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages.Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
 <br><br>
 On a secondary level, the app connects Plant Owners to Plant Sellers and vice-versa through embeded markets; Plant Owners have the access to view Sellers products uploaded.
@@ -62,8 +58,7 @@ As a Seller:
 
 As an Admin:
 - View All and specific type of users so that I can check for app activity.
-- Create a new users so that I can add them to the community.
-- Have access to edit actions so that I change user details 
+
 - Have access to delete actions so that I can remove users
 
 <br><br>
@@ -111,31 +106,6 @@ As an Admin:
 
 <br><br>
 
-#### Profile Screen
-
-| ![Landing](./readme/demo/Profile.png) | 
-
-<br><br>
-
-<!-- Implementation -->
-
-<a name="Demo" ></a>
-<img src="./readme/title4.svg"/>
-
-> Using the mockups as a guide, I implemented the Plantuino app with the following features:
-
-### User Screens (Mobile)
-
-| Login screen                              | Register screen                         | Recognition Screen                         | Loading screen                          |
-| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](./readme/demo/Gifs/recognition.gif) | ![fsdaf](./readme/demo/Gifs/savingplant.gif) |
-| Public Market                               | Contact Modal                             | Chat Screen                            | Chart Screen                         |
-| ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![fsdaf](./readme/demo/Gifs/notifications.gif) | |
-| Charts                              | Dynamic Charts                              | Add product Screen                            | Edit Product                         |
-| ![Landing](./readme/demo/Gifs/chart.gif) | ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) 
-| Delete Product                              | Profile                         
-| ![Landing](./readme/demo/Gifs/delete.gif) | ![fsdaf](./readme/demo/Gifs/profile.gif) 
-
 #### Admin Screens (Web)
 
 | Login screen                            | Users                     |  Sellers                        |
@@ -145,22 +115,13 @@ As an Admin:
 | ![Landing](./readme/demo/plantowners.png) | 
 
 <br>
+#### Profile Screen
 
-### Arduino
+| ![Landing](./readme/demo/Profile.png) | 
 
-| Circuit Diagram | 
----|
-| ![Circuit Diagram](./readme/demo/arduino.jpeg) |
-<br>
+<br><br>
 
-Circuit Design |
----| 
- | ![Circuit Design](./readme/demo//circuit.png) |
-
-
-
-<br><br> 
-
+<!-- Implementation -->
 <!-- Tech stack -->
 <a name="tech-stack"></a>
 
@@ -193,13 +154,51 @@ Plantuino is built using the following technologies:
 - **Plant.id API:** Used for identifying plants through pictures.
 - **Native Notify:** Used for real-time notifications.
 Plantuino utilizes these technologies to provide a seamless and comprehensive wildfire prevention and community engagement experience.
+- **Jsonwebtoken:** Manages JSON Web Tokens (JWT) for authentication.
+
+<br><br>
+
+
+<a name="Demo" ></a>
+<img src="./readme/title4.svg"/>
+
+> Using the mockups as a guide, I implemented the Plantuino app with the following features:
+
+### User Screens (Mobile)
+
+| Login screen                              | Register screen                         | Recognition Screen                         | Loading screen                          |
+| ----------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![Landing](./readme/demo/Gifs/signin.gif) | ![fsdaf](./readme/demo/Gifs/register.gif) | ![fsdaf](./readme/demo/Gifs/recognition.gif) | ![fsdaf](./readme/demo/Gifs/savingplant.gif) |
+| Public Market                               | Contact Modal                             | Chat Screen                            | Chart Screen                         |
+| ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![fsdaf](./readme/demo/Gifs/notifications.gif) | |
+| Charts                              | Dynamic Charts                              | Add product Screen                            | Edit Product                         |
+| ![Landing](./readme/demo/Gifs/chart.gif) | ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) 
+| Delete Product                              | Profile                         
+| ![Landing](./readme/demo/Gifs/delete.gif) | ![fsdaf](./readme/demo/Gifs/profile.gif) 
+
+
+
+### Arduino
+
+| Circuit Diagram | 
+---|
+| ![Circuit Diagram](./readme/demo/arduino.jpeg) |
+<br>
+
+Circuit Design |
+---| 
+ | ![Circuit Design](./readme/demo//circuit.png) |
+
+
+
+<br><br> 
 
 
 
 <!-- How to run -->
 <a name="how-to-run" ></a>
 <img src="./readme/title6.svg"/> 
-> To set up EcoTech locally, follow these steps: 
+> To set up Plantuino locally, follow these steps: 
 <br>
 
 ### Prerequisites 
