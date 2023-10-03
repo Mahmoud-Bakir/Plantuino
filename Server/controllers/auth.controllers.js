@@ -24,18 +24,29 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  console.log(req.body);
-  const { password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = new User({
-    ...req.body,
-    password: hashedPassword,
-  });
+  try {
+    console.log(req.body);
+    const { email, password } = req.body;
 
-  user.save();
+    // Check if the email already exists
+    const existingUser = await User.findOne({ email });
 
-  res.send({ user });
-  console.log(user);
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({
+      ...req.body,
+      password: hashedPassword,
+    });
+    await user.save();
+
+    res.json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
 module.exports = { login, register };
