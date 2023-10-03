@@ -1,22 +1,67 @@
 <img src="./readme/title1.svg"/>
 
 <br><br>
+<img src="./readme/title0.svg"/>
+
+- [Project Description](#project-description)
+- [User Types](#user-types)
+- [Features of the App](#features-of-the-app)
+- [Tech Stack](#tech-stack)
+  - [Frontend](#Frontend)
+  - [Backend](#Backend)
+- [Prototyping](#prototyping)
+- [Demo](#Demo)
+- [OpenAi](#OpenAi)
+- [Performance](#Performance)
+- [How to Run](#how-to-run)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+
+<br><br>
 
 <!-- project philosophy -->
+
+<a name="project-description"></a>
 <img src="./readme/title2.svg"/>
+
+> Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates
+
+<br>
+Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light,and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorabile light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner.Moreover, the arduino is responsible of supplying water to the plant if needed.The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages.Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
+<br><br>
+On a secondary level, the app connects Plant Owners to Plant Sellers and vice-versa through embeded markets; Plant Owners have the access to view Sellers products uploaded.
+<br><br>
+In addition, An Admin Dashboard is implemented to be able to view, edit, and delete users.
+<br><br>
+
+### User Types 
+
+1. Plant Owner 
+2. Seller
+3. Admin
+
+
+
 <br>
 
-> Your go-to Arduino/mobile app for remote plant care.
->
-> Offering plant recognition, AI ChatBot, and market updates
+### Features of the App 
+As a Plant Owner:
+- View daily graphical analysis about my houseplant so I can review it’s progress.
+- Chat with a bot, so I can know more about my houseplant.
+- Identify type of a plant so that I can have information about it.
+- Buy other houseplants so that I can engrow my lovely garden.
+- Recieve push notifications so that I can be informed about my hosseplant status.
 
-### User Stories
+As a Seller:
+- Upload new products on my store so I can sell them to clients.
+- Edit products details so that I can change them whenever I want.
+- Delete a product so that it won't show to clients.
 
-- As a user I want to view daily graphical analysis about my houseplant so I can review it’s progress.
-- As a user, I want to chat with a bot, so I can know more about my houseplant.
-- As a user I want to capture an image of a plant so that I can have information about it.
-- As a user I want to buy other houseplants so that I can engrow my lovely garden.
-- As a user I want to recieve push notifications so that I can be informed about my hosseplant status.
+As an Admin:
+- View All and specific type of users so that I can check for app activity.
+- Create a new users so that I can add them to the community.
+- Have access to edit actions so that I change user details 
+- Have access to delete actions so that I can remove users
 
 <br><br>
 
@@ -108,9 +153,20 @@
 - **[Native Notify](https://nativenotify.com/):** Handles push notifications.development.
 - **React Navigation:** Handles navigation within the app.
 - **Axios:** Enables network requests to the backend.
+  <br>
+
+## Backend (Server)
+
+<a name="Backend" ></a>
+
+- **[React Native (Expo)](https://expo.dev/):** Used for cross-platform mobile app development.
+- **[Expo Packages](https://docs.expo.dev/workflow/using-libraries/):** Various Expo packages for accessing device features and UI components.
+- **[Redux Toolkit](https://redux-toolkit.js.org/):** Manages app data and state effectively.development.
+- **[Native Notify](https://nativenotify.com/):** Handles push notifications.development.
+- **React Navigation:** Handles navigation within the app.
+- **Axios:** Enables network requests to the backend.
 
 <br>
-
 - This project uses:[NodeJS](https://nodejs.org/en). React Native is an open-source framework for building mobile applications. It's developed and maintained by Facebook and the React community. React Native allows developers to use JavaScript and React to build mobile applications that run on iOS and Android devices.
 - For persistent storage (database), the app uses the [MongoDB](https://www.mongodb.com/) package which allows the app to create a custom storage schema and save it to a local database.
 - To send local push notifications, the app uses the [Native Notify](https://nativenotify.com/) package which supports Android, iOS.
