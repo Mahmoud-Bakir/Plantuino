@@ -7,7 +7,7 @@
 - [User Types](#user-types)
 - [Features of the App](#features-of-the-app)
 - [Tech Stack](#tech-stack)
-  - [Frontend](#end)
+  - [Frontend](#Frontend)
   - [Backend](#Backend)
 - [Prototyping](#prototyping)
 - [Demo](#Demo)
@@ -93,7 +93,7 @@ As an Admin:
 
 | Result Screen                        | Owner Home Screen (Updated)                       | Market                             |
 | ------------------------------------ | ------------------------------------------------- | ---------------------------------- |
-| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/HomeScreen(updated).png) | ![fsdaf](./readme/demo/Market.png) |
+| ![Landing](./readme/demo/Result.png) | ![fsdaf](./readme/demo/testing.png) | ![fsdaf](./readme/demo/Market.png) |
 
 | Contact Modal                              | ChatScreen (Empty)                    | Chat                             |
 | ------------------------------------------ | ------------------------------------- | -------------------------------- |
@@ -149,7 +149,8 @@ As an Admin:
 <br><br>
 
 <!-- Tech stack -->
-<a name="tech-stack" ></a>
+<a name="tech-stack"></a>
+
 <img src="./readme/title5.svg"/>
 >The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis,plant.id API for plant Recognition, and Native Notify for real-time notifications.
 <br>
