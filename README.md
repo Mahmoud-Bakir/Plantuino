@@ -180,35 +180,77 @@ EcoTech utilizes these technologies to provide a seamless and comprehensive wild
 
 
 <!-- How to run -->
-<img src="./readme/title6.svg"/>
+<a name="how-to-run" ></a>
+<img src="./readme/title6.svg"/> 
+> To set up EcoTech locally, follow these steps: 
+<br>
 
-> To set up Coffee Express locally, follow these steps:
+### Prerequisites 
+<br>
+Ensure you have the following software and dependencies installed: 
 
-### Prerequisites
+1. Node.js and npm (Node Package Manager). You can install them from [nodejs.org](https://nodejs.org/). 
+2. Expo CLI for React Native. You can install it globally using the command: 
 
-This is an example of how to list things you need to use the software and how to install them.
+```sh 
+npm install -g expo-cli 
+```
+3. Clone the GitHub repository: 
 
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+```sh 
+git clone https://github.com/Mahmoud-Bakir/Plantuino
+```
 
-### Installation
+<br>
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+### Installation 
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
+<br>
 
-Now, you should be able to run Coffee Express locally and explore its features.
+#### Frontend (Mobile App) 
+
+
+1. Navigate to the `client` directory: 
+
+   ```bash  
+   cd Plantuino/Client
+   ``` 
+2. Install dependencies:  
+
+   ```bash  
+     npm install 
+   ``` 
+3. Start development server: 
+
+   ```bash  
+   npx expo start  
+   ``` 
+<br>
+
+#### Backend (Server) 
+
+1. Navigate to the `server` directory: 
+
+   ```bash 
+   cd Plantuino/server 
+   ``` 
+
+2. Install dependencies: 
+
+   ```bash   
+   npm install 
+   ```  
+
+3. Create a `.env` file with your credentials
+
+   ```bash  
+   cp .env.example .env
+   ``` 
+  
+4. Start the server: 
+
+   ```bash 
+   nodemon index.js 
+   ``` 
+
+Now you can run the app locally and test out its features. Make sure to run both frontend and backend concurrently. 
