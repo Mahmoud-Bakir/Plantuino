@@ -45,16 +45,16 @@ In addition, an Admin Dashboard is implemented to be able to view, edit, and del
 
 ### Features of the App 
 As a Plant Owner:
--View daily graphical analysis about my houseplant so I can review its progress.
--Chat with a bot, so I can learn more about my houseplant.
--Identify the type of a plant so that I can access specific information about it.
--Purchase other houseplants to enhance my lovely garden.
--Receive push notifications to stay informed about my houseplant's status.
+- View daily graphical analysis about my houseplant so I can review its progress.
+- Chat with a bot, so I can learn more about my houseplant.
+- Identify the type of a plant so that I can access specific information about it.
+- Purchase other houseplants to enhance my lovely garden.
+- Receive push notifications to stay informed about my houseplant's status.
 
 As a Seller:
--Upload new products to my store so I can offer them to clients.
--Edit product details to make changes whenever I want.
--Delete a product to remove it from view for clients.
+- Upload new products to my store so I can offer them to clients.
+- Edit product details to make changes whenever I want.
+- Delete a product to remove it from view for clients.
 
 As an Admin:
 - View All and specific type of users so that I can check for app activity.
