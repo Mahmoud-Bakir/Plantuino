@@ -172,17 +172,18 @@ Plantuino utilizes these technologies to provide a seamless and comprehensive wi
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![fsdaf](./readme/demo/Gifs/savingplant.gif) | ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) |
 
-| Chat Screen                            | Chart Screen                            | Dynamic Charts                              |
+| Chat Screen                            | Inbox Screen                            |  Charts                              |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![Landing](./readme/demo/Gifs/notifications.gif) | ![fsdaf](./readme/demo/Gifs/chart.gif) |
 
-| Add Product Screen                            | Edit Product                              | Delete Product                              |
+|       Dynamic Charts                    |         Add Product Screen                        |   Edit Product                           |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![Landing](./readme/demo/Gifs/editproduct.gif) | ![fsdaf](./readme/demo/Gifs/delete.gif) |
+| ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![Landing](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) |
 
-| Profile                                    |
-| ----------------------------------------- |
-| ![fsdaf](./readme/demo/Gifs/profile.gif)  |
+| Delete Product                             | Profile                                         |
+| ----------------------------------------- | ------------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/delete.gif) | ![Landing](./readme/demo/Gifs/profile.gif) | 
+
 
 
 ### Admin Screens (Web)
