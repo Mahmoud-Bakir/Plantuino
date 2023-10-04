@@ -45,20 +45,19 @@ In addition, an Admin Dashboard is implemented to be able to view, edit, and del
 
 ### Features of the App 
 As a Plant Owner:
-- View daily graphical analysis about my houseplant so I can review it’s progress.
-- Chat with a bot, so I can know more about my houseplant.
-- Identify type of a plant so that I can have information about it.
-- Buy other houseplants so that I can engrow my lovely garden.
-- Recieve push notifications so that I can be informed about my hosseplant status.
+-View daily graphical analysis about my houseplant so I can review its progress.
+-Chat with a bot, so I can learn more about my houseplant.
+-Identify the type of a plant so that I can access specific information about it.
+-Purchase other houseplants to enhance my lovely garden.
+-Receive push notifications to stay informed about my houseplant's status.
 
 As a Seller:
-- Upload new products on my store so I can sell them to clients.
-- Edit products details so that I can change them whenever I want.
-- Delete a product so that it won't show to clients.
+-Upload new products to my store so I can offer them to clients.
+-Edit product details to make changes whenever I want.
+-Delete a product to remove it from view for clients.
 
 As an Admin:
 - View All and specific type of users so that I can check for app activity.
-
 - Have access to delete actions so that I can remove users
 
 <br><br>
@@ -127,7 +126,7 @@ As an Admin:
 <a name="tech-stack"></a>
 
 <img src="./readme/title5.svg"/>
->The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis, plant.id API for plant Recognition, and Native Notify for real-time notifications.
+>The application leverages React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, an AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and analysis, the plant.id API for plant recognition, and Native Notify for real-time notifications.
 <br>
 Plantuino is built using the following technologies:
 
