@@ -22,16 +22,16 @@
 
 <img src="./readme/title2.svg"/>
 
-> Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates
+> Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates.
 
 <br>
 
-Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light,and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorabile light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner.Moreover, the arduino is responsible of supplying water to the plant if needed.The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages.Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
+
+Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorable light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner. Moreover, the Arduino is responsible for supplying water to the plant if needed. The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages. Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
 <br><br>
-On a secondary level, the app connects Plant Owners to Plant Sellers and vice-versa through embeded markets; Plant Owners have the access to view Sellers products uploaded.
+On a secondary level, the app connects Plant Owners to Plant Sellers and vice versa through embedded markets; Plant Owners have access to view Sellers' products uploaded.
 <br><br>
-In addition, An Admin Dashboard is implemented to be able to view, edit, and delete users.
-<br><br>
+In addition, an Admin Dashboard is implemented to be able to view, edit, and delete users.
 
 ### User Types 
 
