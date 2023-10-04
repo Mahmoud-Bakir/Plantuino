@@ -115,8 +115,6 @@ As an Admin:
 | ![Landing](./readme/demo/plantowners.png) | 
 
 <br>
-#### Profile Screen
-
 
 
 <br><br>
@@ -217,7 +215,7 @@ Circuit Design |
 
 <br><br> 
 
-
+The application leverages React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, an AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and analysis, the plant.id API for plant recognition, and Native Notify for real-time notifications.
 
 <!-- How to run -->
 <a name="how-to-run" ></a>
