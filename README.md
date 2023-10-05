@@ -22,16 +22,16 @@
 
 <img src="./readme/title2.svg"/>
 
-> Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates
+> Your go-to Arduino/mobile app for remote plant care while offering plant recognition, AI ChatBot, and market updates.
 
 <br>
 
-Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light,and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorabile light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner.Moreover, the arduino is responsible of supplying water to the plant if needed.The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages.Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
+
+Plantuino's primary goal is to help Plant Owners nurture their House Plants in a hybrid way by collecting vital data such as light and moisture percentages and thus notifying the user about the plant's state. This data is gathered through sensors connected to an Arduino and sent to the mobile app that, after AI analysis of the plant type, compares it to its favorable light and moisture percentages. If a deficiency or excess of light or moisture is detected, the app sends real-time notifications to the Plant Owner. Moreover, the Arduino is responsible for supplying water to the plant if needed. The average moisture and light percentages are presented in charts that dynamically inform the user of the plant's moisture and light present percentages. Also, The app offers the feature of chatting with a ChatBot that can answer any of users' questions.
 <br><br>
-On a secondary level, the app connects Plant Owners to Plant Sellers and vice-versa through embeded markets; Plant Owners have the access to view Sellers products uploaded.
+On a secondary level, the app connects Plant Owners to Plant Sellers and vice versa through embedded markets; Plant Owners have access to view Sellers' products uploaded.
 <br><br>
-In addition, An Admin Dashboard is implemented to be able to view, edit, and delete users.
-<br><br>
+In addition, an Admin Dashboard is implemented to be able to view, edit, and delete users.
 
 ### User Types 
 
@@ -45,20 +45,19 @@ In addition, An Admin Dashboard is implemented to be able to view, edit, and del
 
 ### Features of the App 
 As a Plant Owner:
-- View daily graphical analysis about my houseplant so I can review it’s progress.
-- Chat with a bot, so I can know more about my houseplant.
-- Identify type of a plant so that I can have information about it.
-- Buy other houseplants so that I can engrow my lovely garden.
-- Recieve push notifications so that I can be informed about my hosseplant status.
+- View daily graphical analysis about my houseplant so I can review its progress.
+- Chat with a bot, so I can learn more about my houseplant.
+- Identify the type of a plant so that I can access specific information about it.
+- Purchase other houseplants to enhance my lovely garden.
+- Receive push notifications to stay informed about my houseplant's status.
 
 As a Seller:
-- Upload new products on my store so I can sell them to clients.
-- Edit products details so that I can change them whenever I want.
-- Delete a product so that it won't show to clients.
+- Upload new products to my store so I can offer them to clients.
+- Edit product details to make changes whenever I want.
+- Delete a product to remove it from view for clients.
 
 As an Admin:
 - View All and specific type of users so that I can check for app activity.
-
 - Have access to delete actions so that I can remove users
 
 <br><br>
@@ -116,8 +115,6 @@ As an Admin:
 | ![Landing](./readme/demo/plantowners.png) | 
 
 <br>
-#### Profile Screen
-
 
 
 <br><br>
@@ -127,7 +124,7 @@ As an Admin:
 <a name="tech-stack"></a>
 
 <img src="./readme/title5.svg"/>
->The application utilizes React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and Analysis, plant.id API for plant Recognition, and Native Notify for real-time notifications.
+>The application leverages React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, an AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and analysis, the plant.id API for plant recognition, and Native Notify for real-time notifications.
 <br>
 Plantuino is built using the following technologies:
 
@@ -175,17 +172,18 @@ Plantuino utilizes these technologies to provide a seamless and comprehensive wi
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![fsdaf](./readme/demo/Gifs/savingplant.gif) | ![Landing](./readme/demo/Gifs/publicmarket.gif) | ![fsdaf](./readme/demo/Gifs/contact.gif) |
 
-| Chat Screen                            | Chart Screen                            | Dynamic Charts                              |
+| Chat Screen                            | Inbox Screen                            |  Charts                              |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![fsdaf](./readme/demo/Gifs/chat.gif) | ![Landing](./readme/demo/Gifs/notifications.gif) | ![fsdaf](./readme/demo/Gifs/chart.gif) |
 
-| Add Product Screen                            | Edit Product                              | Delete Product                              |
+|       Dynamic Charts                    |         Add Product Screen                        |   Edit Product                           |
 | ----------------------------------------- | --------------------------------------- | --------------------------------------- |
-| ![fsdaf](./readme/demo/Gifs/addproduct.gif) | ![Landing](./readme/demo/Gifs/editproduct.gif) | ![fsdaf](./readme/demo/Gifs/delete.gif) |
+| ![fsdaf](./readme/demo/Gifs/dynamichart.gif) | ![Landing](./readme/demo/Gifs/addproduct.gif) | ![fsdaf](./readme/demo/Gifs/editproduct.gif) |
 
-| Profile                                    |
-| ----------------------------------------- |
-| ![fsdaf](./readme/demo/Gifs/profile.gif)  |
+| Delete Product                             | Profile                                         |
+| ----------------------------------------- | ------------------------------------------- |
+| ![fsdaf](./readme/demo/Gifs/delete.gif) | ![Landing](./readme/demo/Gifs/profile.gif) | 
+
 
 
 ### Admin Screens (Web)
@@ -218,7 +216,7 @@ Circuit Design |
 
 <br><br> 
 
-
+The application leverages React Native (Expo) for the mobile app, Node.js with Express for the backend, MongoDB Atlas for database storage, an AWS server for cloud infrastructure, Arduino for sensor data collection, OpenAI for ChatBot and analysis, the plant.id API for plant recognition, and Native Notify for real-time notifications.
 
 <!-- How to run -->
 <a name="how-to-run" ></a>
